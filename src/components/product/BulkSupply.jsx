@@ -20,14 +20,10 @@ const Connector = ({ x, y, angle, length = 120 }) => {
       style={{
         left: `${x}px`,
         top: `${y}px`,
-        transform: `rotate(${angle}deg)`,
+        transform: `translate(-50%, -50%) rotate(${angle}deg)`,
       }}
     >
       <div className="flex items-center">
-        {/* Inner Dot */}
-        <div className="w-3 h-3 rounded-full bg-[#C49A2A]" />
-
-        {/* Dashed Line */}
         <div
           className="border-t-2 border-dashed border-[#C49A2A]/60"
           style={{
@@ -35,7 +31,6 @@ const Connector = ({ x, y, angle, length = 120 }) => {
           }}
         />
 
-        {/* Outer Dot */}
         <div className="w-3 h-3 rounded-full bg-[#C49A2A]" />
       </div>
     </div>
@@ -126,91 +121,66 @@ const items = [
 ];
 
 // Dot positions on circle (6 dots, evenly spaced at 60deg apart starting from top-right)
-const DOT_ANGLES = [30, 90, 150, 210, 270, 330];
+const DOT_ANGLES = [50, 130, 180, 230, 312, 360];
 
 export default function BulkSupply() {
   const R = 220; // circle radius in px
   const CX = 50; // center x %
   const CY = 50; // center y %
 
-  const connectors = [
-    {
-      x: R,
-      y: 0,
-      angle: -90,
-      length: 140,
-    },
-    {
-      x: 0,
-      y: R,
-      angle: 180,
-      length: 120,
-    },
-    {
-      x: R,
-      y: R * 2,
-      angle: 60,
-      length: 140,
-    },
-    {
-      x: R,
-      y: 0,
-      angle: 60,
-      length: 140,
-    },
-    {
-      x: R * 2,
-      y: R,
-      angle: 0,
-      length: 120,
-    },
-    {
-      x: R,
-      y: R * 2,
-      angle: -60,
-      length: 140,
-    },
+  const CONNECTOR_LENGTHS = [
+    90, // top-right
+    90, // top
+    70, // top-left
+    70, // bottom-left
+    75, // bottom
+    60, // bottom-right
   ];
 
   return (
-    <section className="relative bg-[#f5f0e7] overflow-hidden py-20 lg:py-24">
+    <section className="relative bg-[#f5f0e7] overflow-hidden py-20 lg:py-12">
       <div className="mx-auto max-w-7xl px-6 lg:px-16">
         {/* ── HEADING ── */}
-        <div className="text-center mb-10">
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <div className="h-px w-12 bg-[#C49A2A]/50" />
-            <p
-              className={`${montserrat.className} text-[10px] uppercase tracking-[0.25em] text-[#C49A2A]`}
-              style={{ fontWeight: 600 }}
-            >
-              Bulk Supply
-            </p>
-            <div className="h-px w-12 bg-[#C49A2A]/50" />
-          </div>
-          <div className="flex justify-center mb-3">
-            <img
-              src="/icons/Untitle1.png"
-              alt=""
-              className="w-5 h-5 object-contain opacity-30"
-            />
-          </div>
-          <h2
-            className={`${cormorant.className} text-[36px] lg:text-[60px] font-semibold text-[#241A12] leading-tight`}
-          >
-            A Trusted Partner for Your Business
-          </h2>
-          <div className="mx-auto mt-3 mb-4 h-px w-16 bg-[#C49A2A]/40" />
-          <p
-            className={`${montserrat.className} text-[13px] lg:text-[14px] text-[#5f5146] leading-[1.8] max-w-lg mx-auto`}
-            style={{ fontWeight: 400 }}
-          >
-            From our farm to your business — we deliver freshness, quality and
-            reliability in every bulk order.
-          </p>
-        </div>
+       <div className="mb-10">
+  {/* Top Row — eyebrow left, headline centered */}
+  <div className="flex items-start gap-8 relative">
+
+    {/* Left Eyebrow */}
+    <div className="flex items-center gap-3 flex-shrink-0 pt-2">
+      <div className="flex flex-col items-center">
+        <img src="/icons/Untitle1.png" alt="" className="w-8 h-8 object-contain opacity-70" />
+        <div className="mb-2 border-t border-[#d8d2c4] w-10" />
+      </div>
+      <div className="flex flex-col">
+        <p className={`${montserrat.className} text-[10px] uppercase tracking-[0.2em] text-[#6E7E45]`}
+          style={{ fontWeight: 500 }}>
+          Bulk Supply
+        </p>
+        <div className="mt-2 h-[0.5px] w-[115px] bg-[#d8d2c4]" />
+      </div>
+    </div>
+
+    {/* Headline — absolute centered */}
+    <h2 className={`${cormorant.className} leading-[1.0] text-[#241A12] absolute left-0 right-0 text-center`}>
+      <span className="text-[36px] lg:text-[60px] font-semibold">A Trusted Partner </span> <br/>
+      <span className="text-[36px] lg:text-[60px] italic font-medium text-[#6E7E45]">for Your Business.</span>
+    </h2>
+
+  </div>
+
+  {/* Subtext */}
+  <p className={`${montserrat.className} text-[13px] lg:text-[14px] text-[#5f5146] leading-[1.8] pt-24 text-center max-w-lg mx-auto`}
+    style={{ fontWeight: 400 }}>
+    From our farm to your business — we deliver freshness, quality
+    and reliability in every bulk order.
+  </p>
+</div>
 
         {/* ── RADIAL SECTION ── */}
-        <div className="relative w-full" style={{ height: "600px" }}>
+        <div
+          className="relative w-full"
+          style={{ height: "600px" }}
+        >
           {/* ── DASHED CIRCLE + DOTS ── */}
           <div
             className="absolute"
@@ -218,17 +188,81 @@ export default function BulkSupply() {
               left: "50%",
               top: "50%",
               transform: "translate(-50%, -50%)",
-              width: `${R * 1.5}px`,
-              height: `${R * 1.5}px`,
+              width: `${R * 1.6}px`,
+              height: `${R * 1.6}px`,
             }}
           >
             {/* Dashed circle border */}
             <div className="w-full h-full rounded-full border-2 border-dashed border-[#C49A2A]/40" />
 
             {/* Connectors */}
-            {connectors.map((connector, i) => (
-              <Connector key={i} {...connector} />
-            ))}
+            <svg
+  className="absolute"
+  style={{
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
+    width: `${R * 1.6}px`,
+    height: `${R * 1.6}px`,
+    zIndex: 2,
+    overflow: "visible"   // ← this lets lines extend beyond
+  }}
+  viewBox={`0 0 ${R * 1.6} ${R * 1.6}`}
+>
+              {DOT_ANGLES.map((deg, i) => {
+                const circleRadius = (R * 1.6) / 2;
+                const rad = (deg * Math.PI) / 180;
+
+                const dotX = circleRadius + Math.cos(rad) * circleRadius;
+                const dotY = circleRadius - Math.sin(rad) * circleRadius;
+
+                const endX =
+                  circleRadius +
+                  Math.cos(rad) * (circleRadius + CONNECTOR_LENGTHS[i]);
+                const endY =
+                  circleRadius -
+                  Math.sin(rad) * (circleRadius + CONNECTOR_LENGTHS[i]);
+
+                return (
+                  <>
+                  <line
+                    key={i}
+                    x1={dotX}
+                    y1={dotY}
+                    x2={endX}
+                    y2={endY}
+                    stroke="#C49A2A"
+                    strokeWidth="1.5"
+                    strokeDasharray="5,4"
+                    opacity="0.6"
+                  />
+                  <circle cx={endX} cy={endY} r="4" fill="#C49A2A" />
+                  </>
+                );
+              })}
+            </svg>
+            
+
+            {DOT_ANGLES.map((deg, i) => {
+              const circleRadius = (R * 1.6) / 2;
+
+              const rad = (deg * Math.PI) / 180;
+
+              const x = circleRadius + Math.cos(rad) * circleRadius ;
+
+              const y = circleRadius - Math.sin(rad) * circleRadius  ;
+
+              return (
+                <div
+                  key={i}
+                  className="absolute w-3 h-3 rounded-full bg-[#C49A2A]"
+                  style={{
+                    left: `${x-6}px`,
+                    top: `${y-6}px`,
+                  }}
+                />
+              );
+            })}
           </div>
 
           {/* ── CENTER ── */}
@@ -253,9 +287,9 @@ export default function BulkSupply() {
               Farm Foods
             </p>
             <img
-              src="/images/eggbox.png"
+              src="/products/eggbox.png"
               alt="GVR Egg Box"
-              className="w-[150px] lg:w-[190px] object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.15)]"
+              className="w-[150px] lg:w-[250px] object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.15)]"
               onError={(e) => {
                 e.target.style.display = "none";
               }}
@@ -265,8 +299,8 @@ export default function BulkSupply() {
           {/* ── LEFT ITEMS ── */}
           {/* Retailers — top left */}
           <div
-            className="absolute flex items-center gap-3"
-            style={{ top: "4%", left: "2%" }}
+            className="absolute flex items-center gap-3 bg-amber-"
+            style={{ top: "6%", left: "15%" }}
           >
             <div className="w-[80px] h-[80px] rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
               <img
@@ -298,7 +332,7 @@ export default function BulkSupply() {
           {/* Hotels — middle left */}
           <div
             className="absolute flex items-center gap-3"
-            style={{ top: "42%", left: "0%", transform: "translateY(-50%)" }}
+            style={{ top: "48%", left: "7%", transform: "translateY(-50%)" }}
           >
             <div className="w-[80px] h-[80px] rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
               <img
@@ -329,7 +363,7 @@ export default function BulkSupply() {
           {/* Cafes — bottom left */}
           <div
             className="absolute flex items-center gap-3"
-            style={{ bottom: "4%", left: "2%" }}
+            style={{ bottom: "10%", left: "15%" }}
           >
             <div className="w-[80px] h-[80px] rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
               <img
@@ -361,7 +395,7 @@ export default function BulkSupply() {
           {/* Restaurants — top right */}
           <div
             className="absolute flex items-center gap-3 flex-row-reverse"
-            style={{ top: "4%", right: "2%" }}
+            style={{ top: "6%", right: "15%" }}
           >
             <div className="w-[80px] h-[80px] rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
               <img
@@ -392,7 +426,7 @@ export default function BulkSupply() {
           {/* Bakeries — middle right */}
           <div
             className="absolute flex items-center gap-3 flex-row-reverse"
-            style={{ top: "42%", right: "0%", transform: "translateY(-50%)" }}
+            style={{ top: "48%", right: "7%", transform: "translateY(-50%)" }}
           >
             <div className="w-[80px] h-[80px] rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
               <img
@@ -423,7 +457,7 @@ export default function BulkSupply() {
           {/* Distributors — bottom right */}
           <div
             className="absolute flex items-center gap-3 flex-row-reverse"
-            style={{ bottom: "4%", right: "2%" }}
+            style={{ bottom: "10%", right: "15%" }}
           >
             <div className="w-[80px] h-[80px] rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
               <img
@@ -452,109 +486,48 @@ export default function BulkSupply() {
           </div>
         </div>
 
-        {/* ── STATS BAR ── */}
-        <div className="mt-6 bg-white border border-[#e8e0d4] rounded-2xl overflow-hidden">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-0">
-            {stats.map((s, i) => (
-              <div
-                key={i}
-                className={`flex items-center gap-4 px-6 py-6
-                  ${i !== stats.length - 1 ? "border-r border-[#e8e0d4]" : ""}
-                  ${i < 2 ? "border-b border-[#e8e0d4] lg:border-b-0" : ""}
-                `}
-              >
-                <div className="w-12 h-12 rounded-full bg-[#3f4a22] flex items-center justify-center flex-shrink-0">
-                  <img
-                    src={s.icon}
-                    alt=""
-                    className="w-6 h-6 object-contain brightness-0 invert opacity-80"
-                  />
-                </div>
-                <div>
-                  <p
-                    className={`${cormorant.className} text-[28px] lg:text-[32px] font-semibold text-[#241A12] leading-none`}
-                  >
-                    {s.num}
-                  </p>
-                  <p
-                    className={`${montserrat.className} text-[10px] uppercase tracking-[0.1em] text-[#241A12] mt-0.5`}
-                    style={{ fontWeight: 700 }}
-                  >
-                    {s.label}
-                  </p>
-                  <p
-                    className={`${montserrat.className} text-[10px] text-[#5f5146] mt-0.5`}
-                    style={{ fontWeight: 400 }}
-                  >
-                    {s.sub}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+       
 
         {/* ── BOTTOM CTA BAR ── */}
-        <div className="mt-6 bg-[#3f4a22] rounded-2xl px-6 lg:px-10 py-6 flex flex-col lg:flex-row items-center gap-6 lg:gap-0 justify-between">
-          <div className="flex items-center gap-4 flex-shrink-0">
-            <div className="w-12 h-12 rounded-full border border-[#c5db8e]/30 flex items-center justify-center">
-              <Phone size={18} className="text-[#c5db8e]" />
-            </div>
-            <div>
-              <p
-                className={`${montserrat.className} text-[10px] uppercase tracking-[0.2em] text-[#c5db8e] mb-1`}
-                style={{ fontWeight: 600 }}
-              >
-                Let's Grow Together
-              </p>
-              <p
-                className={`${montserrat.className} text-[12px] text-[#f5f0e7]/70 leading-[1.6]`}
-                style={{ fontWeight: 400 }}
-              >
-                For bulk orders and partnership inquiries,
-                <br />
-                our team is ready to assist you.
-              </p>
-            </div>
-          </div>
-          <div className="hidden lg:block w-px h-12 bg-[#f5f0e7]/10 mx-8" />
-          <a
-            href="mailto:info@gvrfarmfoods.com"
-            className="inline-flex items-stretch rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02]"
-          >
-            <span className="bg-[#8B6914] px-4 flex items-center justify-center">
-              <Mail size={16} className="text-[#f5f0e7]" />
-            </span>
-            <span
-              className={`${montserrat.className} bg-[#C49A2A] px-7 py-3.5 text-[11px] uppercase tracking-[0.15em] text-[#241A12]`}
-              style={{ fontWeight: 700 }}
-            >
-              Enquire Now
-            </span>
-          </a>
-          <div className="hidden lg:block w-px h-12 bg-[#f5f0e7]/10 mx-8" />
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <Phone size={14} className="text-[#c5db8e]" />
-              <a
-                href="tel:+919448453609"
-                className={`${montserrat.className} text-[13px] text-[#f5f0e7]/80 hover:text-[#c5db8e] transition-colors`}
-                style={{ fontWeight: 500 }}
-              >
-                +91 94484 53609
-              </a>
-            </div>
-            <div className="flex items-center gap-2">
-              <Globe size={14} className="text-[#c5db8e]" />
-              <span
-                className={`${montserrat.className} text-[13px] text-[#f5f0e7]/80`}
-                style={{ fontWeight: 500 }}
-              >
-                www.gvrfarmfoods.com
-              </span>
-            </div>
-          </div>
-        </div>
+       <div className="max-w-4xl mx-auto">
+  <div className="mt-6 bg-[#3f4a22] rounded-2xl px-10 py-4 flex flex-col lg:flex-row items-center justify-between gap-8">
+    
+    <div className="flex items-center gap-4 flex-shrink-0">
+      <div className="w-12 h-12 rounded-full border border-[#c5db8e]/30 flex items-center justify-center">
+        <Phone size={18} className="text-[#c5db8e]" />
+      </div>
+      <div>
+        <p className={`${montserrat.className} text-[10px] uppercase tracking-[0.2em] text-[#c5db8e] mb-1`} style={{ fontWeight: 600 }}>
+          Let's Grow Together
+        </p>
+        <p className={`${montserrat.className} text-[12px] text-[#f5f0e7]/70 leading-[1.6]`} style={{ fontWeight: 400 }}>
+          For bulk orders and partnership inquiries,<br />our team is ready to assist you.
+        </p>
+      </div>
+    </div>
+
+    <div className="hidden lg:block w-px h-12 bg-[#f5f0e7]/10" />
+
+    <a href="mailto:info@gvrfarmfoods.com" className="inline-flex items-stretch rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02]">
+      <span className="bg-[#8B6914] px-4 flex items-center justify-center">
+        <Mail size={16} className="text-[#f5f0e7]" />
+      </span>
+      <span className={`${montserrat.className} bg-[#C49A2A] px-7 py-3.5 text-[11px] uppercase tracking-[0.15em] text-[#241A12]`} style={{ fontWeight: 700 }}>
+        Enquire Now
+      </span>
+    </a>
+
+    <div className="hidden lg:block w-px h-12 bg-[#f5f0e7]/10" />
+
+    <div className="flex items-center gap-2">
+      <Phone size={14} className="text-[#c5db8e]" />
+      <a href="tel:+919448453609" className={`${montserrat.className} text-[13px] text-[#f5f0e7]/80 hover:text-[#c5db8e] transition-colors`} style={{ fontWeight: 500 }}>
+        +91 94484 53609
+      </a>
+    </div>
+
+  </div>
+</div>
       </div>
     </section>
   );
