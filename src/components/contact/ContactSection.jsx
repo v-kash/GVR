@@ -1,0 +1,223 @@
+"use client";
+
+import { Cormorant_Garamond, Montserrat } from "next/font/google";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock3,
+  MessageCircle,
+  ArrowRight,
+  ShieldCheck,
+  ChevronDown,
+} from "lucide-react";
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
+
+const inputStyle =
+  "h-[54px] w-full rounded-[5px] border border-[#e3d8c8] bg-transparent px-4 text-[14px] text-[#241A12] outline-none transition-all placeholder:text-[#9a8f81] focus:border-[#6E7E45]";
+
+export default function ContactSection() {
+  return (
+    <section className="bg-[#f5f0e7] py-10 lg:py-12">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="grid gap-5 lg:grid-cols-[0.95fr_1.05fr] lg:h-[680px]">
+          {/* LEFT */}
+          <div className="h-full rounded-[2px] border border-[#e8e0d4] bg-transparent p-6 lg:p-8 s">
+            <div className="h-full flex flex-col">
+              {/* Top Label */}
+              <div className="text-center">
+                <p
+                  className={`${montserrat.className} text-[11px] uppercase tracking-[0.22em] text-[#B08A3D]`}
+                >
+                  Get In Touch
+                </p>
+
+                <div className="mx-auto mt-3 h-[2px] w-12 bg-[#B08A3D]" />
+              </div>
+
+              {/* Heading */}
+              <h2
+                className={`${cormorant.className} mt-5 text-center text-[42px] lg:text-[56px] leading-[0.9] font-semibold text-[#241A12]`}
+              >
+                We'd Love to Hear From You
+              </h2>
+
+              {/* Divider */}
+              <div className="my-6 flex items-center justify-center gap-3">
+                <div className="h-px w-20 bg-[#d8d0c2]" />
+                <div className="w-2 h-2 rounded-full bg-[#6E7E45]" />
+                <div className="h-px w-20 bg-[#d8d0c2]" />
+              </div>
+
+              {/* Description */}
+              <p
+                className={`${montserrat.className} text-center text-[14px] leading-7 text-[#4f4337]`}
+              >
+                Have a question, need assistance, or want to place a bulk order?
+                Our team is here to help and will get back to you as soon as
+                possible.
+              </p>
+
+              {/* Contact Info */}
+              <div className="mt-6 space-y-1">
+                <ContactItem
+                  icon={<Phone size={20} />}
+                  value="+91 98765 43210"
+                  subtitle="Mon - Sat, 9 AM - 6 PM"
+                />
+
+                <ContactItem
+                  icon={<Mail size={20} />}
+                  value="info@gvreggs.com"
+                  subtitle="Response within 24 hours"
+                />
+
+                <ContactItem
+                  icon={<MapPin size={20} />}
+                  value="GVR Eggs Farm"
+                  subtitle="Tamil Nadu, India"
+                />
+
+                {/* <ContactItem
+                  icon={<Clock3 size={20} />}
+                  value="Monday - Saturday"
+                  subtitle="9:00 AM - 6:00 PM"
+                /> */}
+              </div>
+
+              {/* WhatsApp Box */}
+              <div className="mt-auto pt-5">
+                <div className="flex items-center justify-between rounded-2xl bg-[#ddd4bd] px-5 py-4">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#6E7E45]">
+                      <MessageCircle size={18} className="text-white" />
+                    </div>
+
+                    <div>
+                      <p
+                        className={`${montserrat.className} text-[13px] font-semibold text-[#241A12]`}
+                      >
+                        Faster Support
+                      </p>
+
+                      <p
+                        className={`${montserrat.className} text-[12px] text-[#6E7E45]`}
+                      >
+                        Chat on WhatsApp
+                      </p>
+                    </div>
+                  </div>
+
+                  <ArrowRight size={20} className="text-[#6E7E45]" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT */}
+          <div className="h-full rounded-[2px] border border-[#e8e0d4] bg-transparent p-6 lg:p-8 ">
+            <div className="h-full flex flex-col">
+              <div className="text-center mb-6">
+                <p
+                  className={`${montserrat.className} text-[11px] uppercase tracking-[0.22em] text-[#B08A3D]`}
+                >
+                  Send Us A Message
+                </p>
+
+                <div className="mx-auto mt-3 h-[2px] w-12 bg-[#B08A3D]" />
+              </div>
+
+              <form className="flex flex-col flex-1 space-y-4">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Field label="Full Name">
+                    <input className={inputStyle} placeholder="Your name" />
+                  </Field>
+
+                  <Field label="Phone">
+                    <input className={inputStyle} placeholder="Phone number" />
+                  </Field>
+                </div>
+
+                <Field label="Email Address">
+                  <input className={inputStyle} placeholder="Email address" />
+                </Field>
+
+                <Field label="Subject">
+                  <div className="relative">
+                    <select className={`${inputStyle} appearance-none`}>
+                      <option>Select subject</option>
+                      <option>Bulk Order</option>
+                      <option>Partnership</option>
+                      <option>General Inquiry</option>
+                    </select>
+
+                    <ChevronDown
+                      size={18}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9a8f81]"
+                    />
+                  </div>
+                </Field>
+
+                <Field label="Message">
+                  <textarea
+                    rows={4}
+                    placeholder="Write your message..."
+                    className="w-full rounded-[5px] border border-[#e3d8c8] bg-transparent p-4 text-[14px] text-[#241A12] outline-none placeholder:text-[#9a8f81] focus:border-[#6E7E45]"
+                  />
+                </Field>
+
+                <button
+                  type="submit"
+                  className={`${montserrat.className} mt-auto flex h-[54px] items-center justify-center gap-2 rounded-xl bg-[#6E7E45] text-[14px] font-semibold text-white transition hover:bg-[#5e6d3b]`}
+                >
+                  Send Message
+                </button>
+
+                
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ContactItem({ icon, title, value, subtitle }) {
+  return (
+    <div className="flex gap-3 border-b border-[#ebe4d8] py-3 last:border-none">
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#f3eee3] text-[#6E7E45]">
+        {icon}
+      </div>
+
+      <div>
+        <h4 className="text-[13px] font-semibold text-[#241A12]">{title}</h4>
+
+        <p className="text-[13px] font-medium text-[#6E7E45]">{value}</p>
+
+        <p className="text-[12px] text-[#5c5246]">{subtitle}</p>
+      </div>
+    </div>
+  );
+}
+
+function Field({ label, children }) {
+  return (
+    <div>
+      <label className="mb-2 block text-[13px] font-semibold text-[#241A12]">
+        {label}
+      </label>
+
+      {children}
+    </div>
+  );
+}

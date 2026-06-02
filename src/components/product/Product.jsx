@@ -217,15 +217,15 @@ export default function ProductCollection() {
             initial={{ opacity: 0, y: 40 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-            className="relative mb-12"
+            className="relative mb- px-24"
           >
             {/* shelf.png — static, full width, just sits here */}
             <Image
               src="/products/self.png"
               alt="wooden shelf"
-              width={1320}
+              width={1120}
               height={220}
-              className="w-full"
+              className="bg-amber-200 w-[1000px]"
               style={{ objectFit: "fill", display: "block" }}
               priority
             />

@@ -39,7 +39,7 @@ export default function Footer() {
         <img src="/leaf-decoration.png" alt="" className="w-full scale-x-[-1]" />
       </div>
       {/* Decorative leaf — top right */}
-      <div className="pointer-events-none absolute bottom-0 right-0 w-36 lg:w-48 opacity-10">
+      <div className="pointer-events-none absolute bottom-0 right-0 w-36 lg:w-56 opacity-10">
         <img src="/leaf-decoration.png" alt="" className="w-full" />
       </div>
 

@@ -139,7 +139,7 @@ export default function FAQSection() {
           {/* ── LEFT CARD ── */}
           <div className="bg-white border border-[#e8e0d4] rounded-2xl overflow-hidden flex flex-col">
             {/* Top content */}
-            <div className="px-8 pt-8 pb-6 flex flex-col items-center text-center flex-1">
+            <div className="px-8 pt-8 pb-4 flex flex-col items-center text-center flex-1">
               {/* Question mark circle */}
               <div className="w-16 h-16 rounded-full border-2 border-[#6E7E45]/25 bg-[#edf3de]/50 flex items-center justify-center mb-5">
                 <img

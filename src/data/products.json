@@ -1,0 +1,378 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "slug": "country-eggs",
+      "name": "Country Eggs",
+      "category": "Eggs",
+      "image": "/products/Country.png",
+      "shortDescription": "Farm fresh eggs from naturally raised hens.",
+      "description": "Country eggs are sourced from healthy hens raised in a natural environment. Known for their rich taste and wholesome nutrition, they are a preferred choice for families seeking authentic farm-fresh quality.",
+      "benefits": [
+        "Rich taste and superior quality",
+        "High-quality natural protein",
+        "Farm fresh and collected daily",
+        "No added hormones or antibiotics",
+        "Suitable for all age groups"
+      ],
+      "packaging": [
+        "30 Eggs Tray",
+        "60 Eggs Tray",
+        "Bulk Supply"
+      ],
+      "bestSuitedFor": [
+        "Households",
+        "Restaurants",
+        "Hotels",
+        "Retailers"
+      ],
+      "nutrition": [
+  {
+    "title": "Protein",
+    "value": "Rich Source"
+  },
+  {
+    "title": "Vitamin B12",
+    "value": "Essential"
+  },
+  {
+    "title": "Vitamin D",
+    "value": "Natural"
+  },
+  {
+    "title": "Minerals",
+    "value": "Iron & Zinc"
+  },
+  {
+    "title": "Healthy Fats",
+    "value": "Balanced"
+  },
+  {
+    "title": "100% Natural",
+    "value": "No Additives"
+  }
+]
+    },
+
+    {
+      "id": 2,
+      "slug": "brown-eggs",
+      "name": "Brown Eggs",
+      "category": "Eggs",
+      "image": "/products/Brown.png",
+      "shortDescription": "Naturally brown eggs with rich flavor and nutrition.",
+      "description": "Brown eggs are valued for their rich flavor, strong shell quality, and balanced nutritional profile. A reliable source of protein for daily consumption.",
+      "benefits": [
+        "Rich flavor",
+        "Excellent protein source",
+        "Strong shell quality",
+        "Farm fresh daily",
+        "Naturally nutritious"
+      ],
+      "packaging": [
+        "30 Eggs Tray",
+        "60 Eggs Tray",
+        "Bulk Supply"
+      ],
+      "bestSuitedFor": [
+        "Families",
+        "Restaurants",
+        "Hotels",
+        "Retailers"
+      ],
+      "nutrition": [
+  {
+    "title": "Protein",
+    "value": "Rich Source"
+  },
+  {
+    "title": "Vitamin B12",
+    "value": "Essential"
+  },
+  {
+    "title": "Vitamin D",
+    "value": "Natural"
+  },
+  {
+    "title": "Minerals",
+    "value": "Iron & Zinc"
+  },
+  {
+    "title": "Healthy Fats",
+    "value": "Balanced"
+  },
+  {
+    "title": "100% Natural",
+    "value": "No Additives"
+  }
+]
+    },
+
+    {
+      "id": 3,
+      "slug": "white-eggs",
+      "name": "White Eggs",
+      "category": "Eggs",
+      "image": "/products/Whiteegg.png",
+      "shortDescription": "Fresh, clean and versatile eggs for daily nutrition.",
+      "description": "White eggs provide a balanced source of protein and nutrients. Their mild flavor and versatility make them a staple choice for homes and businesses alike.",
+      "benefits": [
+        "Daily nutrition",
+        "High-quality protein",
+        "Fresh and hygienic",
+        "Versatile for cooking",
+        "Quality assured"
+      ],
+      "packaging": [
+        "30 Eggs Tray",
+        "60 Eggs Tray",
+        "Bulk Supply"
+      ],
+      "bestSuitedFor": [
+        "Households",
+        "Bakeries",
+        "Hotels",
+        "Food Service"
+      ],
+      "nutrition": [
+  {
+    "title": "Protein",
+    "value": "Rich Source"
+  },
+  {
+    "title": "Vitamin B12",
+    "value": "Essential"
+  },
+  {
+    "title": "Vitamin D",
+    "value": "Natural"
+  },
+  {
+    "title": "Minerals",
+    "value": "Iron & Zinc"
+  },
+  {
+    "title": "Healthy Fats",
+    "value": "Balanced"
+  },
+  {
+    "title": "100% Natural",
+    "value": "No Additives"
+  }
+]
+    },
+
+    {
+      "id": 4,
+      "slug": "duck-eggs",
+      "name": "Duck Eggs",
+      "category": "Eggs",
+      "image": "/products/Duck.png",
+      "shortDescription": "Larger eggs with rich flavor and creamy texture.",
+      "description": "Duck eggs are larger than regular chicken eggs and are known for their rich taste, creamy yolk, and excellent nutritional value. They are widely preferred for specialty cooking and baking." ,
+      "benefits": [
+        "Rich creamy yolk",
+        "Excellent protein source",
+        "Larger egg size",
+        "Rich flavor profile",
+        "Premium quality"
+      ],
+      "packaging": [
+        "30 Eggs Tray",
+        "Bulk Supply"
+      ],
+      "bestSuitedFor": [
+        "Restaurants",
+        "Hotels",
+        "Bakeries",
+        "Specialty Food Businesses"
+      ],
+      "nutrition": [
+  {
+    "title": "Protein",
+    "value": "Rich Source"
+  },
+  {
+    "title": "Vitamin B12",
+    "value": "Essential"
+  },
+  {
+    "title": "Vitamin D",
+    "value": "Natural"
+  },
+  {
+    "title": "Minerals",
+    "value": "Iron & Zinc"
+  },
+  {
+    "title": "Healthy Fats",
+    "value": "Balanced"
+  },
+  {
+    "title": "100% Natural",
+    "value": "No Additives"
+  }
+]
+    },
+
+    {
+      "id": 5,
+      "slug": "quail-eggs",
+      "name": "Quail Eggs",
+      "category": "Eggs",
+      "image": "/products/Quail.png",
+      "shortDescription": "Small in size, packed with nutrients.",
+      "description": "Quail eggs are nutrient-dense and known for their delicate flavor. They contain important vitamins and minerals and are a popular choice for health-conscious consumers." ,
+      "benefits": [
+        "Nutrient dense",
+        "Rich in vitamins and minerals",
+        "Supports immunity",
+        "Premium gourmet choice",
+        "Easy portion control"
+      ],
+      "packaging": [
+        "30 Eggs Pack",
+        "Bulk Supply"
+      ],
+      "bestSuitedFor": [
+        "Health-Conscious Consumers",
+        "Restaurants",
+        "Hotels",
+        "Retailers"
+      ],
+      "nutrition": [
+  {
+    "title": "Protein",
+    "value": "Rich Source"
+  },
+  {
+    "title": "Vitamin B12",
+    "value": "Essential"
+  },
+  {
+    "title": "Vitamin D",
+    "value": "Natural"
+  },
+  {
+    "title": "Minerals",
+    "value": "Iron & Zinc"
+  },
+  {
+    "title": "Healthy Fats",
+    "value": "Balanced"
+  },
+  {
+    "title": "100% Natural",
+    "value": "No Additives"
+  }
+]
+    },
+
+    {
+      "id": 6,
+      "slug": "kadaknath-eggs",
+      "name": "Kadaknath Eggs",
+      "category": "Eggs",
+      "image": "/products/Kadaknath.png",
+      "shortDescription": "Premium eggs from the famous Kadaknath breed.",
+      "description": "Kadaknath eggs come from India's renowned Kadaknath breed and are known for their premium nutritional profile, higher protein content, and unique value among specialty eggs.",
+      "benefits": [
+        "Premium specialty egg",
+        "Higher protein profile",
+        "Low fat characteristics",
+        "Rich nutritional value",
+        "Unique breed heritage"
+      ],
+      "packaging": [
+        "30 Eggs Tray",
+        "Bulk Supply"
+      ],
+      "bestSuitedFor": [
+        "Fitness Enthusiasts",
+        "Health-Conscious Consumers",
+        "Restaurants",
+        "Premium Retailers"
+      ],
+      "nutrition": [
+  {
+    "title": "Protein",
+    "value": "Rich Source"
+  },
+  {
+    "title": "Vitamin B12",
+    "value": "Essential"
+  },
+  {
+    "title": "Vitamin D",
+    "value": "Natural"
+  },
+  {
+    "title": "Minerals",
+    "value": "Iron & Zinc"
+  },
+  {
+    "title": "Healthy Fats",
+    "value": "Balanced"
+  },
+  {
+    "title": "100% Natural",
+    "value": "No Additives"
+  }
+]
+    },
+
+    {
+      "id": 7,
+      "slug": "premium-dry-fish",
+      "name": "Premium Dry Fish",
+      "category": "Dry Fish",
+      "image": "/products/fish.png",
+      "shortDescription": "Naturally dried fish with authentic flavor.",
+      "description": "Our premium dry fish is carefully selected and naturally dried to preserve taste, texture, and nutritional value while maintaining quality standards.",
+      "benefits": [
+        "Naturally preserved",
+        "Rich authentic flavor",
+        "High protein content",
+        "Long shelf life",
+        "Quality assured processing"
+      ],
+      "packaging": [
+        "500g Pack",
+        "1kg Pack",
+        "Bulk Supply"
+      ],
+      "bestSuitedFor": [
+        "Households",
+        "Restaurants",
+        "Hotels",
+        "Retailers"
+      ],
+      "nutrition": [
+  {
+    "title": "Protein",
+    "value": "Rich Source"
+  },
+  {
+    "title": "Vitamin B12",
+    "value": "Essential"
+  },
+  {
+    "title": "Vitamin D",
+    "value": "Natural"
+  },
+  {
+    "title": "Minerals",
+    "value": "Iron & Zinc"
+  },
+  {
+    "title": "Healthy Fats",
+    "value": "Balanced"
+  },
+  {
+    "title": "100% Natural",
+    "value": "No Additives"
+  }
+]
+    }
+  ]
+}
