@@ -185,14 +185,14 @@ export default function WhyChooseUs() {
           <div className="relative hidden lg:flex items-center justify-center w-[360px] xl:w-[600px] flex-shrink-0 bg-ambe">
             {/* Oval brushstroke — bigger, centered */}
             <img
-              src="/Whyusbg.png"
+              src="/images2/Whyusbg.webp"
               alt=""
               className="w-full h-auto object-contain scale-[1.5]"
             />
 
             {/* Egg basket — sits on bottom half of oval */}
             <img
-              src="/whyusmain.png"
+              src="/images2/whyusmain.webp"
               alt="Farm fresh eggs"
               className="absolute bottom-[-80px] left-1/2 -translate-x-1/2 w-[100%] scale-[1.2] object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.12)]"
             />

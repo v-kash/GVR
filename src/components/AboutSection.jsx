@@ -206,7 +206,7 @@ export default function AboutSection() {
             {/* MAIN IMAGE */}
             <div className="relative h-[320px] lg:h-[420px]   overflow-hidden">
               <img
-                src="/images/aboutmain2.png"
+                src="/images2/aboutmain2.webp"
                 alt="Farm fresh eggs"
                 className="w-full h-[320px] lg:h-[340px] object-cover rounded-[8px] "
               />
@@ -230,7 +230,7 @@ export default function AboutSection() {
   "
             >
               <img
-                src="/badge.png"
+                src="/images2/badge.webp"
                 alt="Farm Fresh Badge"
                 className="w-full h-auto object-contain"
               />
@@ -257,7 +257,7 @@ export default function AboutSection() {
             >
               <div className="overflow-hidden rounded-[3px]">
                 <img
-                  src="/images/Quality.png"
+                  src="/images2/Quality.webp"
                   alt="Fresh eggs"
                   className="w-full h-[150px] lg:h-[175px] object-cover"
                 />
@@ -290,7 +290,7 @@ export default function AboutSection() {
             >
               <div className="overflow-hidden rounded-[3px]">
                 <img
-                  src="/images/Delivary.png"
+                  src="/images2/Delivary.webp"
                   alt="Farm sunset"
                   className="w-full h-[150px] lg:h-[165px] object-cover"
                 />

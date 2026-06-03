@@ -79,7 +79,7 @@ export default function GallerySection() {
               style={{ top: 0, width: "50%", height: "300px" }}
             >
               <img
-                src="/gallery/g1.png"
+                src="/gallery/g1.webp"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04] "
               />
             </div>
@@ -90,7 +90,7 @@ export default function GallerySection() {
               style={{ top: 0, left: "51%", width: "24%", height: "110px" }}
             >
               <img
-                src="/gallery/g11.png"
+                src="/gallery/g11.webp"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
               />
             </div>
@@ -101,7 +101,7 @@ export default function GallerySection() {
               style={{ top: 0, left: "76%", width: "24%", height: "265px" }}
             >
               <img
-                src="/gallery/g3.png"
+                src="/gallery/g3.webp"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
               />
             </div>
@@ -117,7 +117,7 @@ export default function GallerySection() {
               }}
             >
               <img
-                src="/gallery/g4.png"
+                src="/gallery/g4.webp"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
               />
             </div>
@@ -133,7 +133,7 @@ export default function GallerySection() {
               }}
             >
               <img
-                src="/gallery/g5.png"
+                src="/gallery/g5.webp"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
               />
             </div>
@@ -144,7 +144,7 @@ export default function GallerySection() {
               style={{ top: "310px", left: 0, width: "24.5%", height: "230px" }}
             >
               <img
-                src="/gallery/g6.png"
+                src="/gallery/g6.webp"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
               />
             </div>
@@ -160,7 +160,7 @@ export default function GallerySection() {
               }}
             >
               <img
-                src="/gallery/g7.png"
+                src="/gallery/g7.webp"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
               />
             </div>
@@ -176,7 +176,7 @@ export default function GallerySection() {
               }}
             >
               <img
-                src="/gallery/g10.png"
+                src="/gallery/g10.webp"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
               />
             </div>

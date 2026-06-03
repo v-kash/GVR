@@ -16,7 +16,7 @@ const montserrat = Montserrat({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-const BG_IMAGE = "/images/finalhero2.png";
+const BG_IMAGE = "/images2/finalhero2.webp";
 const BG_IMAGE2 = "/images/heromobile.png";
 
 export default function HeroSection() {

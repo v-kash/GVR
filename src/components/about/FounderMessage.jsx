@@ -50,7 +50,15 @@ export default function FounderMessage() {
     <section className="relative bg-[#f5f0e7] overflow-hidden py-20 lg:py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-16">
         {/* ── TOP: Left text + Right image collage ── */}
-        
+         <div className="absolute bottom-6 left-0 right-0 h-[100%] pointer-events-none ">
+    <img
+      src="about/sketchfarm.png"
+      alt=""
+      className="w-full h-full object-cover object-bottom"
+      style={{ mixBlendMode: "multiply", opacity: 0.25 }}
+    />
+    {/* Fade top edge */}
+  </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           {/* ── LEFT — Text ── */}
@@ -142,27 +150,21 @@ export default function FounderMessage() {
           {/* ── RIGHT — Polaroid + farm sketch bg ── */}
 <div className="relative h-[500px] lg:h-[560px] ">
 
-  {/* Farm sketch — background, black disappears via multiply */}
-  <div className="absolute inset-0 pointer-events-none  ">
-    <img
-      src="/about/farmbg.png"
-      alt=""
-      className="w-full h-full object-contain object-bottom"
-      style={{ mixBlendMode: "multiply", opacity: 0.5 }}
-    />
-  </div>
+  
 
-  {/* Polaroid frame — sits on top of sketch */}
   <div
-    className="absolute top-1 left-16 right-0 bg-white p-3 pb-8 rounded-[8px] shadow-[0_20px_50px_rgba(0,0,0,0.12)] z-10 h-[320px] lg:w-[350px] lg:h-[350px]"
+    className="absolute backdrop-blur- top-20 left-16 right-0 bg-white/5  rounded-[8px] shadow-[0_20px_50px_rgba(0,0,0,0.12)] z-10 h-[320px] lg:w-[330px] lg:h-[350px]  "
     style={{ transform: "rotate(7deg)" }}
   >
-    <div className="overflow-hidden rounded-[4px] h-full w-full ">
+
+    
+    <div className="overflow-hidden rounded-[4px] h-full w-full  ">
       <img
-        src="/images/finalhero2.png"
-        alt="Founder"
-        className="w-full h-full object-cover "
-      />
+  src="/about/ceo.png"
+  alt="Founder"
+  className="w-full h-full object-cover"
+  style={{ objectPosition: "75% center" }}
+/>
     </div>
   </div>
 

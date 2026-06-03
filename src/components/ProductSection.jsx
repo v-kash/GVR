@@ -17,43 +17,43 @@ const montserrat = Montserrat({
 
 const eggVarieties = [
   {
-    image: "/images/Country.png",
+    image: "/images2/Country.webp",
     icon: "/icons/farm.png",
     name: "Country Eggs",
     desc: "Natural taste, rich nutrition.",
   },
   {
-    image: "/images/Brown.png",
+    image: "/images2/Brown.webp",
     icon: "/icons/eggnest.png",
     name: "Brown Eggs",
     desc: "Nutrient rich and wholesome.",
   },
   {
-    image: "/images/Whiteegg.png",
+    image: "/images2/Whiteegg.webp",
     icon: "/icons/eggnest.png",
     name: "White Eggs",
     desc: "Pure, fresh and protein packed.",
   },
   {
-    image: "/images/Duck.png",
+    image: "/images2/Duck.webp",
     icon: "/icons/eggnest.png",
     name: "Duck Eggs",
     desc: "Larger, richer and delicious.",
   },
   {
-    image: "/images/Jumbo.png",
+    image: "/images2/Jumbo.webp",
     icon: "/icons/sun.png",
     name: "Jumbo Eggs",
     desc: "Extra large size, extra goodness.",
   },
   {
-    image: "/images/Quail.png",
+    image: "/images2/Quail.webp",
     icon: "/icons/eggnest.png",
     name: "Quail Eggs",
     desc: "Tiny in size, big on nutrition.",
   },
   {
-    image: "/images/kadaknath2.png",
+    image: "/images2/kadaknath2.webp",
     icon: "/icons/eggnest.png",
     name: "Kadaknath Eggs",
     desc: "Premium quality, naturally unique.",
@@ -220,7 +220,7 @@ export default function ProductsSection() {
         <div className="relative rounded-md overflow-hidden min-h-[260px] lg:min-h-[200px]">
           {/* Background image */}
           <img
-            src="/images/produc-fish2.png"
+            src="/images2/produc-fish2.webp"
             alt="Premium Dry Fish"
             className="absolute inset-0 w-full h-full object-cover object-center"
           />
@@ -255,7 +255,7 @@ export default function ProductsSection() {
                 taste, nutrition and freshness.
               </p>
               <Link
-                href="/products#fish"
+                href="/products"
                 className={`${montserrat.className} inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-[#f5f0e7] border-b border-[#f5f0e7]/40 pb-0.5 hover:border-[#f5f0e7] transition-all duration-200`}
                 style={{ fontWeight: 600 }}
               >
@@ -267,7 +267,7 @@ export default function ProductsSection() {
             {/* Badge — right side */}
             <div className="absolute right-8 lg:right-14 bottom-8 lg:bottom-auto lg:top-3/4 rotate-[15deg] lg:-translate-y-1/2">
               <img
-                src="/images/dryfishbadge2.png"
+                src="/images2/dryfishbadge2.webp"
                 alt="Naturally Dried Premium Quality"
                 className="w-[100px] h-[100px] lg:w-[160px] lg:h-[160px] object-contain"
               />

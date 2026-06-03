@@ -19,10 +19,11 @@ export default function ContactHero() {
     <section className="relative overflow-hidden bg-[#f5f0e7] min-h-[55vh] flex items-center">
       {/* Background image — right side bleeds in */}
       <img
-        src="/products/h2.png"
-        alt="Farm fresh eggs"
-        className="absolute right-0 top-0 h-full w-[60%] object-cover object-left"
-      />
+  src="/products/contacthero.png"
+  alt="Farm fresh eggs"
+  className="absolute right-0 top-0 h-full w-[60%] object-cover"
+  style={{ objectPosition: "left -60px" }}
+/>
 
       {/* Gradient fade — left edge of image blends into cream */}
 

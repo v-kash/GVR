@@ -56,7 +56,7 @@ export default function CTASection() {
       <div className="relative overflow-hidden min-h-[420px] lg:min-h-[460px]">
         {/* Background image */}
         <img
-          src="/images/ctahome.png"
+          src="/images2/ctahome.webp"
           alt="GVR Fresh Foods"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
