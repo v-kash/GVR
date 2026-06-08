@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import Link from "next/link";
-import { ChevronRight, Phone, CheckCircle2 } from "lucide-react";
+import { ChevronRight, Phone, CheckCircle2, CheckCircle } from "lucide-react";
 import products from "@/data/products.json";
 
 const cormorant = Cormorant_Garamond({
@@ -144,10 +144,18 @@ export default async function ProductPage({ params }) {
             {/* Divider with leaf */}
             <div className="flex items-center gap-3 mb-2">
               <div className="h-px flex-1 bg-[#6E7E45]/15" />
-              <img
-                src="/icons/Untitle1.png"
-                alt=""
-                className="w-4 h-4 object-contain opacity-30"
+               <div
+                className="w-7 h-7 lg:w-8 lg:h-8 bg-[#6E7E45] opacity-50 "
+                style={{
+                  WebkitMaskImage: "url(/icons/HeadLeaf.svg)",
+                  maskImage: "url(/icons/HeadLeaf.svg)",
+                  WebkitMaskSize: "contain",
+                  maskSize: "contain",
+                  WebkitMaskRepeat: "no-repeat",
+                  maskRepeat: "no-repeat",
+                  WebkitMaskPosition: "center",
+                  maskPosition: "center",
+                }}
               />
               <div className="h-px flex-1 bg-[#6E7E45]/15" />
             </div>
@@ -195,10 +203,10 @@ export default async function ProductPage({ params }) {
                 <div className="space-y-3">
                   {product.bestSuitedFor.map((item, i) => (
                     <div key={i} className="flex items-center gap-3">
-                      <img
-                        src={suitedIcons[item] || "/icons/home.png"}
-                        alt=""
-                        className="w-5 h-5 object-contain opacity-75"
+                      <CheckCircle
+                        size={16}
+                        className="text-[#4D5B2A] mt-1 flex-shrink-0"
+                        strokeWidth={2}
                       />
 
                       <span

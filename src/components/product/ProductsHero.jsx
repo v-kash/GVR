@@ -21,10 +21,18 @@ export default function AboutHero() {
       <img
         src="/products/h2.png"
         alt="Farm fresh eggs"
-        className="absolute right-0 top-0 h-full w-[60%] object-cover object-left"
+        className="absolute right-0 top-0 h-full w-[100%] md:w-[80%] lg:w-[75%] xl:w-[60%] object-cover object-left"
       />
 
       {/* Gradient fade — left edge of image blends into cream */}
+      <div
+        className="absolute inset-y-0 left-0 z-10
+    w-[30%] md:w-[40%] lg:w-[45%] xl:w-[60%]"
+        style={{
+          background:
+            "linear-gradient(to right, #f5f0e7 70%, transparent 100%)",
+        }}
+      />
 
       {/* Content */}
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 lg:px-16 py-20">
@@ -49,7 +57,7 @@ export default function AboutHero() {
 
           {/* Headline */}
           <h1
-            className={`${cormorant.className} text-[72px] lg:text-[96px] font-semibold text-[#241A12] leading-[0.95]`}
+            className={`${cormorant.className} text-[48px] md:text-[58px] lg:text-[72px] xl:text-[96px] font-semibold text-[#241A12] leading-[0.95]`}
           >
             Our Products{" "}
           </h1>
@@ -59,7 +67,7 @@ export default function AboutHero() {
 
           {/* Subtext */}
           <p
-            className={`${montserrat.className} text-[14px] lg:text-[15px] text-[#5f5146] leading-[1.8]`}
+            className={`${montserrat.className} md:text-[13px] lg:text-[14px] xl:text-[15px] text-[#5f5146] leading-[1.8]`}
             style={{ fontWeight: 400 }}
           >
             Explore our collection of farm-fresh eggs <br/>

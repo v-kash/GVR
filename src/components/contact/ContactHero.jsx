@@ -21,10 +21,17 @@ export default function ContactHero() {
       <img
   src="/products/contacthero.png"
   alt="Farm fresh eggs"
-  className="absolute right-0 top-0 h-full w-[60%] object-cover"
+        className="absolute right-0 top-0 h-full w-[50%] md:w-[80%] lg:w-[75%] xl:w-[60%] object-cover object-left"
   style={{ objectPosition: "left -60px" }}
 />
-
+<div
+        className="absolute inset-y-0 left-0 z-10
+    w-[30%] md:w-[40%] lg:w-[45%] xl:w-[60%]"
+        style={{
+          background:
+            "linear-gradient(to right, #f5f0e7 70%, transparent 100%)",
+        }}
+      />
       {/* Gradient fade — left edge of image blends into cream */}
 
       {/* Content */}
@@ -50,7 +57,7 @@ export default function ContactHero() {
 
           {/* Headline */}
           <h1
-            className={`${cormorant.className} text-[72px] lg:text-[96px] font-semibold text-[#241A12] leading-[0.95]`}
+            className={`${cormorant.className} text-[48px] md:text-[58px] lg:text-[72px] xl:text-[96px] font-semibold text-[#241A12] leading-[0.95]`}
           >
             Contact Us{" "}
           </h1>

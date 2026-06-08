@@ -17,13 +17,13 @@ const montserrat = Montserrat({
 });
 
 const iconMap = {
-  "country-eggs": "/icons/hen.png",
-  "brown-eggs": "/icons/eggnest.png",
-  "white-eggs": "/icons/eggnest.png",
-  "duck-eggs": "/icons/eggnest.png",
-  "quail-eggs": "/icons/eggnest.png",
-  "kadaknath-eggs": "/icons/hen.png",
-  "premium-dry-fish": "/icons/sprout.png",
+  "country-eggs": "/icons/Farm.svg",
+  "brown-eggs": "/icons/Egg.svg",
+  "white-eggs": "/icons/Egg.svg",
+  "duck-eggs": "/icons/Duck.svg",
+  "quail-eggs": "/icons/Quails.svg",
+  "kadaknath-eggs": "/icons/Kadaknath.svg",
+  "premium-dry-fish": "/icons/Fish.svg",
 };
 
 const products = productsData.products.map((p) => ({
@@ -34,40 +34,17 @@ const products = productsData.products.map((p) => ({
   slug: p.slug,
 }));
 
-const features = [
-  {
-    icon: "/icons/farm.png",
-    title: "Farm Fresh",
-    desc: "Sourced directly from trusted farms for maximum freshness.",
-  },
-  {
-    icon: "/icons/Shield.png",
-    title: "Quality Assured",
-    desc: "Strict quality checks to ensure purity and safety.",
-  },
-  {
-    icon: "/icons/leaf.png",
-    title: "Natural & Nutritious",
-    desc: "Rich in essential nutrients for a healthy lifestyle.",
-  },
-  {
-    icon: "/icons/truck.png",
-    title: "Delivered with Care",
-    desc: "Packed with care and delivered to your doorstep.",
-  },
-];
-
 export default function ProductCollection() {
   const [current, setCurrent] = useState(0);
   const scrollRef = useRef(null);
-  const CARD_WIDTH = 256; // w-[240px] + gap-4 = ~256px
-  const VISIBLE = 5; // cards visible
+
+  // Card width matches w-[180px] + gap-4 (~20px) on mobile
+  const CARD_WIDTH = 200;
 
   // Infinite: clone first and last few cards
   const cloned = [...products.slice(-2), ...products, ...products.slice(0, 2)];
 
   useEffect(() => {
-    // Start at first real card (after 2 clones)
     if (scrollRef.current) {
       scrollRef.current.scrollLeft = CARD_WIDTH * 2;
     }
@@ -76,7 +53,6 @@ export default function ProductCollection() {
   const handleScroll = () => {
     if (!scrollRef.current) return;
     const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-    // Jump to real content when hitting cloned edges
     if (scrollLeft < CARD_WIDTH) {
       scrollRef.current.scrollLeft =
         CARD_WIDTH * (products.length + 2) - clientWidth / 2;
@@ -100,104 +76,135 @@ export default function ProductCollection() {
   };
 
   return (
-    <section className="relative bg-[#f5f0e7] overflow-hidden py-20 lg:py-24">
-      {/* Decorative leaf — top right */}
-      <div className="pointer-events-none absolute top-0 right-0 w-32 lg:w-44 opacity-20">
-        <img
-          src="/leaf-decoration.png"
-          alt=""
-          className="w-full scale-x-[-1]"
-        />
-      </div>
+    <section className="relative bg-[#f5f0e7] overflow-hidden py-8 sm:py-8 md:py-10 lg:py-12 xl:py-16">
 
       <div className="mx-auto max-w-7xl px-6 lg:px-16">
-        {/* ── HEADING ── */}
-        <div className="max-w-7xl mx-auto px-6 lg:px-16 mb-16">
-          <div className="flex items-start gap-8 relative">
-            {/* Left Eyebrow */}
-            <div className="flex items-center gap-3 flex-shrink-0 pt-2">
-              <div className="flex flex-col items-center">
-                <img
-                  src="/icons/Untitle1.png"
-                  alt=""
-                  className="w-8 h-8 object-contain opacity-70"
-                />
-                <div className="mb-2 border-t border-[#d8d2c4] w-10" />
-              </div>
 
+        {/* ── HEADING ──────────────────────────────────────────────────────
+            Mobile/tablet: stacked vertically
+            Desktop lg+  : original absolute centered layout               */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-0 mb-12 sm:mb-12 md:mb-14 lg:mb-16">
+
+          {/* Mobile + Tablet */}
+          <div className="flex flex-col items-center lg:hidden gap-3">
+            <div className="flex items-center gap-3">
+              <div className="flex flex-col items-center">
+                <div
+                  className="w-7 h-7 bg-[#6E7E45]"
+                  style={{
+                    WebkitMaskImage: "url(/icons/HeadLeaf.svg)",
+                    maskImage: "url(/icons/HeadLeaf.svg)",
+                    WebkitMaskSize: "contain",
+                    maskSize: "contain",
+                    WebkitMaskRepeat: "no-repeat",
+                    maskRepeat: "no-repeat",
+                    WebkitMaskPosition: "center",
+                    maskPosition: "center",
+                  }}
+                />
+              </div>
               <div className="flex flex-col">
                 <p
-                  className={`${montserrat.className} text-[10px] uppercase tracking-[0.2em] text-[#C49A2A]`}
+                  className={`${montserrat.className} text-[10px] uppercase tracking-[0.2em] text-[#6E7E45]`}
                   style={{ fontWeight: 500 }}
                 >
                   Our Collection
                 </p>
-
                 <div className="mt-2 h-[0.5px] w-[115px] bg-[#d8d2c4]" />
               </div>
             </div>
+            <h2 className={`${cormorant.className} leading-[1.0] text-[#241A12] text-center`}>
+              <span className="text-[32px] sm:text-[36px] md:text-[44px] font-semibold">Premium </span>
+              <span className="text-[32px] sm:text-[36px] md:text-[44px] italic font-medium text-[#6E7E45]">Collection</span>
+            </h2>
+          </div>
 
-            {/* Main Heading */}
+          {/* Desktop — original absolute layout untouched */}
+          <div className="hidden lg:flex items-start gap-8 relative">
+            <div className="flex items-center gap-3 flex-shrink-0 pt-2">
+              <div className="flex flex-col items-center">
+                <div
+                  className="w-7 h-7 bg-[#6E7E45]"
+                  style={{
+                    WebkitMaskImage: "url(/icons/HeadLeaf.svg)",
+                    maskImage: "url(/icons/HeadLeaf.svg)",
+                    WebkitMaskSize: "contain",
+                    maskSize: "contain",
+                    WebkitMaskRepeat: "no-repeat",
+                    maskRepeat: "no-repeat",
+                    WebkitMaskPosition: "center",
+                    maskPosition: "center",
+                  }}
+                />
+              </div>
+              <div className="flex flex-col">
+                <p
+                  className={`${montserrat.className} text-[10px] uppercase tracking-[0.2em] text-[#6E7E45]`}
+                  style={{ fontWeight: 500 }}
+                >
+                  Our Collection
+                </p>
+                <div className="mt-2 h-[0.5px] w-[115px] bg-[#d8d2c4]" />
+              </div>
+            </div>
             <h2
               className={`${cormorant.className} leading-[1.0] text-[#241A12] flex-1 text-center absolute left-0 right-0`}
             >
-              <span className="text-[48px] lg:text-[60px] font-semibold">
-                Premium
-              </span>{" "}
-              <span className="text-[48px] lg:text-[60px] italic font-medium text-[#C49A2A]">
-                Collection
-              </span>
+              <span className="text-[48px] lg:text-[54px] xl:text-[60px] font-semibold">Premium </span>
+              <span className="text-[48px] lg:text-[54px] xl:text-[60px] italic font-medium text-[#6E7E45]">Collection</span>
             </h2>
           </div>
 
           {/* Subtext */}
           <p
-            className={`${montserrat.className} text-[14px] lg:text-[15px] text-[#5f5146] leading-7 pt-8 text-center max-w-lg mx-auto`}
+            className={`${montserrat.className} text-[13px] sm:text-[13px] md:text-[14px] lg:text-[14px] xl:text-[15px] text-[#5f5146] leading-7 pt-6 sm:pt-6 md:pt-6 lg:pt-8 text-center max-w-lg mx-auto`}
           >
             Farm-fresh eggs and carefully selected products, delivered with
             quality, nutrition, and trust.
           </p>
         </div>
 
-        {/* ── CAROUSEL ── */}
-        <div className="relative mt-10">
+        {/* ── CAROUSEL ─────────────────────────────────────────────────── */}
+        <div className="relative mt-6 sm:mt-8 md:mt-10">
+
           {/* Left arrow */}
           <button
             onClick={prev}
-            className="absolute left-4 lg:left-8 top-[45%] -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white border border-[#e8e0d4] shadow-[0_4px_16px_rgba(0,0,0,0.08)] flex items-center justify-center hover:bg-[#f5f0e7] transition-colors"
+            className="absolute left-2 sm:left-3 lg:left-8 top-[45%] -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-full bg-white border border-[#e8e0d4] shadow-[0_4px_16px_rgba(0,0,0,0.08)] flex items-center justify-center hover:bg-[#f5f0e7] transition-colors"
           >
-            <ChevronLeft size={18} className="text-[#5f5146]" />
+            <ChevronLeft size={16} className="text-[#5f5146]" />
           </button>
 
           {/* Right arrow */}
           <button
             onClick={next}
-            className="absolute right-4 lg:right-8 top-[45%] -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white border border-[#e8e0d4] shadow-[0_4px_16px_rgba(0,0,0,0.08)] flex items-center justify-center hover:bg-[#f5f0e7] transition-colors"
+            className="absolute right-2 sm:right-3 lg:right-8 top-[45%] -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-full bg-white border border-[#e8e0d4] shadow-[0_4px_16px_rgba(0,0,0,0.08)] flex items-center justify-center hover:bg-[#f5f0e7] transition-colors"
           >
-            <ChevronRight size={18} className="text-[#5f5146]" />
+            <ChevronRight size={16} className="text-[#5f5146]" />
           </button>
 
-          {/* Scroll container — full width with side fades */}
+          {/* Scroll container */}
           <div className="relative">
             {/* Left fade */}
-            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#f5f0e7] to-transparent z-10 pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-20 lg:w-24 bg-gradient-to-r from-[#f5f0e7] to-transparent z-10 pointer-events-none" />
             {/* Right fade */}
-            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#f5f0e7] to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-20 lg:w-24 bg-gradient-to-l from-[#f5f0e7] to-transparent z-10 pointer-events-none" />
 
             <div
               ref={scrollRef}
               onScroll={handleScroll}
-              className="flex gap-4 overflow-x-auto pt-8 pb-6 px-[18%]"
+              className="flex gap-4 overflow-x-auto    pb-6  px-[28%] sm:px-[32%] md:px-[42%] lg:px-[24%] xl:px-[18%]"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
               {cloned.map((p, i) => (
                 <Link
                   key={i}
                   href={`/products/${p.slug}`}
-                  className="flex-shrink-0 w-[220px] lg:w-[240px] bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] border border-[#e8e0d4] relative hover:border-[#6E7E45]/40 hover:shadow-[0_4px_20px_rgba(110,126,69,0.10)] transition-all duration-200 cursor-pointer"
+                  className="flex-shrink-0 w-[180px] sm:w-[200px] md:w-[220px] lg:w-[240px] xl:w-[240px] bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] border border-[#e8e0d4] relative hover:border-[#6E7E45]/40 hover:shadow-[0_4px_20px_rgba(110,126,69,0.10)] transition-all duration-200 cursor-pointer"
                 >
-                  {/* Image */}
-                  <div className="h-[200px] lg:h-[220px] rounded-t-2xl overflow-hidden bg-[#fdf8f0]">
+                  {/* Image
+                      sm: 160px  md: 180px  lg: 200px  xl: 220px         */}
+                  <div className="h-[160px] sm:h-[180px] md:h-[200px] lg:h-[200px] xl:h-[220px] rounded-t-2xl overflow-hidden bg-[#fdf8f0]">
                     <img
                       src={p.image}
                       alt={p.name}
@@ -205,31 +212,40 @@ export default function ProductCollection() {
                     />
                   </div>
 
-                  {/* Icon circle */}
+                  {/* Icon circle — top matches image height
+                      sm: top-[136px]  md: top-[156px]  lg/xl: top-[196px] */}
                   <div
-                    className="absolute left-1/2 -translate-x-1/2 z-10"
-                    style={{ top: "196px" }}
+                    className="absolute left-1/2 -translate-x-1/2 z-10
+                      top-[136px] sm:top-[156px] md:top-[176px] lg:top-[176px] xl:top-[196px]"
                   >
-                    <div className="w-12 h-12 rounded-full bg-white border-2 border-[#f5f0e7] shadow-[0_2px_8px_rgba(0,0,0,0.08)] flex items-center justify-center">
-                      <img
-                        src={p.icon}
-                        alt=""
-                        className="w-6 h-6 object-contain opacity-70"
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-full bg-white border-2 border-[#f5f0e7] shadow-[0_2px_8px_rgba(0,0,0,0.08)] flex items-center justify-center">
+                      <div
+                        className="w-9 h-9 sm:w-9 sm:h-9  md:w-10 sm:h-10 lg:w-12 lg:h-12 xl:w-12 xl:h-12 bg-[#717f3d]"
+                        style={{
+                          WebkitMaskImage: `url(${p.icon})`,
+                          maskImage: `url(${p.icon})`,
+                          WebkitMaskSize: "contain",
+                          maskSize: "contain",
+                          WebkitMaskRepeat: "no-repeat",
+                          maskRepeat: "no-repeat",
+                          WebkitMaskPosition: "center",
+                          maskPosition: "center",
+                        }}
                       />
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div className="pt-8 pb-6 px-5 text-center">
+                  <div className="pt-7 sm:pt-7 md:pt-8 lg:pt-8 pb-5 sm:pb-5 md:pb-6 lg:pb-6 px-4 sm:px-4 md:px-5 lg:px-5 text-center">
                     <p
-                      className={`${montserrat.className} text-[12px] uppercase tracking-[0.12em] text-[#241A12]`}
+                      className={`${montserrat.className} text-[11px] sm:text-[11px] md:text-[12px] lg:text-[12px] uppercase tracking-[0.12em] text-[#241A12]`}
                       style={{ fontWeight: 700 }}
                     >
                       {p.name}
                     </p>
-                    <div className="mx-auto mt-2 mb-3 h-px w-10 bg-[#C49A2A]/60" />
+                    <div className="mx-auto mt-2 mb-2 sm:mb-3 h-px w-8 sm:w-10 bg-[#C49A2A]/60" />
                     <p
-                      className={`${montserrat.className} text-[11px] text-[#5f5146] leading-[1.7]`}
+                      className={`${montserrat.className} text-[10px] sm:text-[10px] md:text-[11px] lg:text-[11px] text-[#5f5146] leading-[1.7]`}
                       style={{ fontWeight: 400 }}
                     >
                       {p.desc}
@@ -241,7 +257,7 @@ export default function ProductCollection() {
           </div>
         </div>
 
-        {/* Dots */}
+        {/* Dots — original untouched */}
         <div className="flex items-center justify-center gap-2 mt-4">
           {products.map((_, i) => (
             <button
@@ -254,6 +270,7 @@ export default function ProductCollection() {
             />
           ))}
         </div>
+
       </div>
     </section>
   );

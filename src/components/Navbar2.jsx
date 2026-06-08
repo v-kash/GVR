@@ -57,26 +57,13 @@ export default function Navbar() {
       <div className="mx-auto max-w-7xl px-6 lg:px-16">
         <div className="flex h-20 items-center justify-between gap-4">
           {/* ── Logo ─────────────────────────── */}
-          <a href="#home" className="flex items-center gap-2 flex-shrink-0">
+          <a href="#home" className="flex items-center gap-2 flex-shrink-0 ">
             <img
-              src="/logo5.png"
+              src="/GVRLogo.png"
               alt="GVR Fresh Foods"
-              className="h-10 w-auto object-contain"
+              className="h-12 w-auto object-contain"
             />
-            <div className="leading-none ">
-              <p
-                className={`${montserrat.className} text-[13px] text-[#735033]`}
-                style={{ fontWeight: 700 }}
-              >
-                GVR Fresh Foods
-              </p>
-              <p
-                className={`${montserrat.className} mt-1 text-[9px] uppercase tracking-[0.15em] text-[#6E7E45]`}
-                style={{ fontWeight: 500 }}
-              >
-                Farm Fresh Eggs & Dry Fish
-              </p>
-            </div>
+           
           </a>
 
           {/* ── Desktop Nav ──────────────────── */}

@@ -39,28 +39,21 @@ export default function Footer() {
         <img src="/leaf-decoration.png" alt="" className="w-full scale-x-[-1]" />
       </div>
       {/* Decorative leaf — top right */}
-      <div className="pointer-events-none absolute bottom-0 right-0 w-36 lg:w-56 opacity-10">
+      <div className="pointer-events-none absolute bottom-0 right-0 w-40 lg:w-56 opacity-10">
         <img src="/leaf-decoration.png" alt="" className="w-full" />
       </div>
 
       {/* ── MAIN FOOTER CONTENT ──────────────────────────── */}
       <div className="mx-auto max-w-7xl px-6 lg:px-16 pt-16 pb-8">
-        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr_1.5fr] gap-12 lg:gap-8">
+        <div className="grid grid-cols-1 md: grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1.5fr] gap-12 lg:gap-8">
 
           {/* ── COL 1: Brand ── */}
           <div>
             {/* Logo + name */}
             <div className="flex items-center gap-3 mb-6">
-              <img src="/logo5.png" alt="GVR Fresh Foods" className="h-12 w-auto object-contain" />
+              <img src="/GVRLogo.png" alt="GVR Fresh Foods" className="h-12 w-auto object-contain" />
               <div className="leading-none">
-                <p className={`${montserrat.className} text-[14px] text-[#f5f0e7]`}
-                  style={{ fontWeight: 700 }}>
-                  GVR Fresh Foods
-                </p>
-                <p className={`${montserrat.className} mt-1 text-[9px] uppercase tracking-[0.15em] text-[#6E7E45]`}
-                  style={{ fontWeight: 500 }}>
-                  Farm Fresh Eggs & Dry Fish
-                </p>
+                
               </div>
             </div>
 
@@ -203,26 +196,9 @@ export default function Footer() {
             © {new Date().getFullYear()} GVR Fresh Foods Pvt. Ltd. All rights reserved.
           </p>
 
-          {/* Center — tagline */}
-          <p className={`${cormorant.className} text-[14px] italic text-[#6E7E45]/60`}
-            style={{ fontWeight: 400 }}>
-            Quality you can see. Care you can trust.
-          </p>
+         
 
-          {/* Right — policy links */}
-          <div className="flex items-center gap-5">
-            <a href="/privacy"
-              className={`${montserrat.className} text-[11px] text-[#f5f0e7]/30 hover:text-[#f5f0e7]/60 transition-colors`}
-              style={{ fontWeight: 400 }}>
-              Privacy Policy
-            </a>
-            <div className="w-px h-3 bg-[#f5f0e7]/15" />
-            <a href="/terms"
-              className={`${montserrat.className} text-[11px] text-[#f5f0e7]/30 hover:text-[#f5f0e7]/60 transition-colors`}
-              style={{ fontWeight: 400 }}>
-              Terms of Use
-            </a>
-          </div>
+          
 
         </div>
       </div>
