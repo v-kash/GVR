@@ -76,7 +76,7 @@ export default function ProductCollection() {
   };
 
   return (
-    <section className="relative bg-[#f5f0e7] overflow-hidden py-8 sm:py-8 md:py-10 lg:py-12 xl:py-16">
+    <section id="eggs" className="relative bg-[#f5f0e7] overflow-hidden py-8 sm:py-8 md:py-10 lg:py-12 xl:py-16">
 
       <div className="mx-auto max-w-7xl px-6 lg:px-16">
 

@@ -531,7 +531,7 @@ export default function CTASection() {
 
               {/* Call */}
               <a
-                href="tel:+919448453609"
+                href="/contact"
                 className="inline-flex  items-stretch rounded-[10px] md:rounded-full overflow-hidden transition-all duration-300 hover:scale-[1.02]"
               >
                 <span className="bg-[#C49A2A] px-4 md:px-5 lg:px-5 xl:px-5 flex items-center justify-center">

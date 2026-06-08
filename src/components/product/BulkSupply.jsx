@@ -540,7 +540,7 @@ export default function BulkSupply() {
         {/* Mobile CTA */}
         <div className="md:hidden max-w-sm mx-auto mt-6">
           <a
-            href="mailto:info@gvrfarmfoods.com"
+            href="mailto:gvrfreshfoodsprivatelimited@gmail.com"
             className="group flex items-center justify-center rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:scale-[1.02]"
           >
             <span className="bg-[#8B6914] px-5 py-4 flex items-center justify-center">
@@ -585,7 +585,7 @@ export default function BulkSupply() {
             </div>
             <div className="hidden md:block w-px h-12 bg-[#f5f0e7]/10" />
             <a
-              href="mailto:info@gvrfarmfoods.com"
+              href="mailto:gvrfreshfoodsprivatelimited@gmail.com"
               className="inline-flex items-stretch rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02]"
             >
               <span className="bg-[#8B6914] px-4 flex items-center justify-center">

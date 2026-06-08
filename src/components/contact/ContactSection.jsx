@@ -65,25 +65,47 @@ export default function ContactSection() {
 
               {/* Contact Info */}
               <div className="mt-5 sm:mt-6 space-y-1">
-                <ContactItem icon={<Phone size={18} />} value="+91 98765 43210" subtitle="Mon - Sat, 9 AM - 6 PM" />
-                <ContactItem icon={<Mail size={18} />} value="info@gvreggs.com" subtitle="Response within 24 hours" />
+                <ContactItem icon={<Phone size={18} />} value="+91 94484 53609" subtitle="Mon - Sat, 9 AM - 6 PM" />
+                <ContactItem icon={<Mail size={18} />} value="gvrfreshfoodsprivatelimited@gmail.com" subtitle="Response within 24 hours" />
                 <ContactItem icon={<MapPin size={18} />} value="GVR Eggs Farm" subtitle="Tamil Nadu, India" />
               </div>
 
               {/* WhatsApp Box */}
               <div className="mt-auto pt-4 sm:pt-5">
-                <div className="flex items-center justify-between rounded-2xl bg-[#ddd4bd] px-4 sm:px-5 py-3 sm:py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-[#6E7E45]">
-                      <MessageCircle size={16} className="text-white" />
-                    </div>
-                    <div>
-                      <p className={`${montserrat.className} text-[12px] sm:text-[13px] font-semibold text-[#241A12]`}>Faster Support</p>
-                      <p className={`${montserrat.className} text-[11px] sm:text-[12px] text-[#6E7E45]`}>Chat on WhatsApp</p>
-                    </div>
-                  </div>
-                  <ArrowRight size={18} className="text-[#6E7E45]" />
-                </div>
+                <a
+  href="https://wa.me/919448453609"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block transition-transform duration-300 hover:scale-[1.02]"
+>
+  <div className="flex items-center justify-between rounded-2xl bg-[#ddd4bd] px-4 sm:px-5 py-3 sm:py-4">
+    <div className="flex items-center gap-3">
+      <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-[#6E7E45]">
+        <MessageCircle size={16} className="text-white" />
+      </div>
+
+      <div>
+        <p
+          className={`${montserrat.className} text-[12px] sm:text-[13px] text-[#241A12]`}
+          style={{ fontWeight: 600 }}
+        >
+          Faster Support
+        </p>
+
+        <p
+          className={`${montserrat.className} text-[11px] sm:text-[12px] text-[#6E7E45]`}
+        >
+          Chat on WhatsApp
+        </p>
+      </div>
+    </div>
+
+    <ArrowRight
+      size={18}
+      className="text-[#6E7E45] transition-transform duration-300 group-hover:translate-x-1"
+    />
+  </div>
+</a>
               </div>
             </div>
           </div>

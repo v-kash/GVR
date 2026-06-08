@@ -208,10 +208,10 @@ export default function FAQSection() {
                   </div>
                   <a
                     href="mailto:support@gvrfarmfoods.com"
-                    className={`${montserrat.className} text-[11px] sm:text-[12px] text-[#5f5146] hover:text-[#4D5B2A] transition-colors`}
+                    className={`${montserrat.className} text-[11px] sm:text-[12px] text-[#5f5146] hover:text-[#4D5B2A] transition-colors break-all`}
                     style={{ fontWeight: 500 }}
                   >
-                    support@gvrfarmfoods.com
+                    gvrfreshfoodsprivatelimited@gmail.com
                   </a>
                 </div>
                 <div className="flex items-center gap-3">

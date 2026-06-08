@@ -174,9 +174,8 @@ export default function WhoWeServe() {
             All lg: values untouched                                       */}
         <div className="flex flex-col mt-6 sm:mt-8">
           {segments.map((s, i) => (
-            <Link
+            <div
               key={i}
-              href={s.href}
               className="group flex flex-col sm:flex-row items-stretch border-b border-[#6E7E45]/10 hover:bg-[#edf3de]/30 transition-all duration-200 cursor-pointer"
             >
               {/* Left block — accent bar + label + sub
@@ -239,14 +238,14 @@ export default function WhoWeServe() {
                 </p>
 
                 {/* Arrow — inline on mobile for better tap target */}
-                <div className="flex items-center sm:px-4 md:px-5 lg:px-6 flex-shrink-0">
-                  <ArrowRight
-                    size={16}
-                    className="text-[#C49A2A] group-hover:translate-x-1 transition-transform duration-200"
-                  />
-                </div>
+                  {/* <div className="flex items-center sm:px-4 md:px-5 lg:px-6 flex-shrink-0">
+                    <ArrowRight
+                      size={16}
+                      className="text-[#C49A2A] group-hover:translate-x-1 transition-transform duration-200"
+                    />
+                  </div> */}
               </div>
-            </Link>
+            </div>
           ))}
         </div>
 

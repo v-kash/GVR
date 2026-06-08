@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import { Phone } from "lucide-react";
 import { IconRowV4 } from "@/components/IconRow";
+import Link from "next/link";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -62,7 +63,7 @@ export default function HeroSection() {
             {/* Eyebrow */}
             <div className="mb-3 flex items-center gap-3">
               <div className="h-px w-8 bg-[#6E7E45]" />
-              <p className={`${montserrat.className} text-[7.5px] uppercase tracking-[2px] text-[#323c18] whitespace-nowrap`}>
+              <p className={`${montserrat.className} text-[9px] uppercase tracking-[2px] text-[#323c18] whitespace-nowrap`}>
                 Farm Fresh • Protein Rich • Delivered Daily
               </p>
             </div>
@@ -101,16 +102,23 @@ export default function HeroSection() {
 
             {/* Button
                 mt steps down for smaller screens                         */}
-            <div className="mt-6 sm:mt-7 md:mt-8 lg:mt-9 flex flex-wrap items-center gap-4">
-              <button className="inline-flex items-stretch rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02]">
-                <span className="bg-[#3f4a22] px-3 md:px-4 flex items-center justify-center">
-                  <Phone size={15} className="text-[#f5f0e7] md:w-[17px] md:h-[17px]" />
-                </span>
-                <span className={`${montserrat.className} bg-[#4D5B2A] px-5 md:px-6 py-3 md:py-3.5 text-[10px] md:text-[11px] font-medium uppercase tracking-[0.15em] text-[#f5f0e7]`}>
-                  Contact Us
-                </span>
-              </button>
-            </div>
+            <Link
+  href="/contact"
+  className="mt-6 sm:mt-7 md:mt-8 lg:mt-9 inline-flex items-stretch rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02]"
+>
+  <span className="bg-[#3f4a22] px-3 md:px-4 flex items-center justify-center">
+    <Phone
+      size={15}
+      className="text-[#f5f0e7] md:w-[17px] md:h-[17px]"
+    />
+  </span>
+
+  <span
+    className={`${montserrat.className} bg-[#4D5B2A] px-5 md:px-6 py-3 md:py-3.5 text-[10px] md:text-[11px] font-medium uppercase tracking-[0.15em] text-[#f5f0e7]`}
+  >
+    Contact Us
+  </span>
+</Link>
 
           </div>
         </div>
