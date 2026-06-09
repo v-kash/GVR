@@ -1,7 +1,15 @@
 "use client";
 
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
-import { MessageCircle, Phone, MapPin, Mail, ArrowRight } from "lucide-react";
+import { Phone, MapPin, Mail, ArrowRight } from "lucide-react";
+import { useRef } from "react";
+
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -30,10 +38,135 @@ const products = [
 ];
 
 export default function Footer() {
+  const footerRef = useRef(null);
+  const hoverIn = (e) => {
+    gsap.to(e.currentTarget, {
+      x: 4,
+      duration: 0.25,
+      ease: "power2.out",
+    });
+  };
+
+  const hoverOut = (e) => {
+    gsap.to(e.currentTarget, {
+      x: 0,
+      duration: 0.25,
+      ease: "power2.out",
+    });
+  };
+
+  useGSAP(
+    () => {
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      if (prefersReducedMotion) return;
+
+      const ctx = gsap.context(() => {
+        gsap.to("[data-float-leaf-left]", {
+          y: -16,
+          duration: 3.8,
+          ease: "sine.inOut",
+          repeat: -1,
+          yoyo: true,
+        });
+
+        gsap.to("[data-float-leaf-right]", {
+          y: -18,
+          duration: 4.4,
+          ease: "sine.inOut",
+          repeat: -1,
+          yoyo: true,
+        });
+
+        gsap.from("[data-footer-brand]", {
+          opacity: 0,
+          y: 24,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: "top 80%",
+            once: true,
+          },
+        });
+
+        gsap.from("[data-footer-link]", {
+          opacity: 0,
+          y: 20,
+          stagger: 0.08,
+          duration: 0.7,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: "top 80%",
+            once: true,
+          },
+        });
+
+        gsap.from("[data-footer-product]", {
+          opacity: 0,
+          y: 20,
+          stagger: 0.08,
+          duration: 0.7,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: "top 80%",
+            once: true,
+          },
+        });
+
+        gsap.from("[data-contact-item]", {
+          opacity: 0,
+          y: 20,
+          stagger: 0.12,
+          duration: 0.7,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: "top 80%",
+            once: true,
+          },
+        });
+
+        gsap.from("[data-footer-divider]", {
+          scaleX: 0,
+          transformOrigin: "left center",
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: "top 80%",
+            once: true,
+          },
+        });
+
+        gsap.from("[data-footer-bottom]", {
+          opacity: 0,
+          y: 20,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: "top 80%",
+            once: true,
+          },
+        });
+      }, footerRef);
+
+      return () => ctx.revert();
+    },
+    { scope: footerRef },
+  );
   return (
-    <footer className="relative bg-[#1e2912] overflow-hidden">
+    <footer ref={footerRef} className="relative bg-[#1e2912] overflow-hidden">
       {/* Decorative leaf — bottom left */}
-      <div className="pointer-events-none absolute bottom-0 left-0 w-40 lg:w-56 opacity-10">
+      <div
+        data-float-leaf-left
+        className="pointer-events-none absolute bottom-0 left-0 w-40 lg:w-56 opacity-10"
+      >
         <img
           src="/leaf-decoration.png"
           alt=""
@@ -41,7 +174,10 @@ export default function Footer() {
         />
       </div>
       {/* Decorative leaf — top right */}
-      <div className="pointer-events-none absolute bottom-0 right-0 w-40 lg:w-56 opacity-10">
+      <div
+        data-float-leaf-right
+        className="pointer-events-none absolute bottom-0 right-0 w-40 lg:w-56 opacity-10"
+      >
         <img src="/leaf-decoration.png" alt="" className="w-full" />
       </div>
 
@@ -49,7 +185,7 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 lg:px-16 pt-16 pb-8">
         <div className="grid grid-cols-1 md: grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1.5fr] gap-12 lg:gap-8">
           {/* ── COL 1: Brand ── */}
-          <div>
+          <div data-footer-brand>
             {/* Logo + name */}
             <div className="flex items-center gap-3 mb-6">
               <img
@@ -80,7 +216,7 @@ export default function Footer() {
           </div>
 
           {/* ── COL 2: Quick Links ── */}
-          <div>
+          <div data-footer-links>
             <p
               className={`${montserrat.className} text-[10px] uppercase tracking-[0.2em] text-[#6E7E45] mb-5`}
               style={{ fontWeight: 600 }}
@@ -90,7 +226,7 @@ export default function Footer() {
             <div className="h-px bg-[#6E7E45]/20 mb-5" />
             <ul className="flex flex-col gap-3">
               {navLinks.map((link, i) => (
-                <li key={i}>
+                <li data-footer-link key={i}>
                   <a
                     href={link.href}
                     className={`${montserrat.className} text-[12px] text-[#f5f0e7]/60 hover:text-[#c5db8e] transition-colors duration-200 flex items-center gap-2 group`}
@@ -108,7 +244,7 @@ export default function Footer() {
           </div>
 
           {/* ── COL 3: Products ── */}
-          <div>
+          <div data-footer-products>
             <p
               className={`${montserrat.className} text-[10px] uppercase tracking-[0.2em] text-[#6E7E45] mb-5`}
               style={{ fontWeight: 600 }}
@@ -118,7 +254,7 @@ export default function Footer() {
             <div className="h-px bg-[#6E7E45]/20 mb-5" />
             <ul className="flex flex-col gap-3">
               {products.map((p, i) => (
-                <li key={i}>
+                <li data-footer-product key={i}>
                   <a
                     href={p.href}
                     className={`${montserrat.className} text-[12px] text-[#f5f0e7]/60 hover:text-[#c5db8e] transition-colors duration-200 flex items-center gap-2 group`}
@@ -136,7 +272,7 @@ export default function Footer() {
           </div>
 
           {/* ── COL 4: Contact ── */}
-          <div>
+          <div data-footer-contact>
             <p
               className={`${montserrat.className} text-[10px] uppercase tracking-[0.2em] text-[#6E7E45] mb-5`}
               style={{ fontWeight: 600 }}
@@ -147,7 +283,7 @@ export default function Footer() {
 
             <div className="flex flex-col gap-4">
               {/* Phone */}
-              <div className="flex items-start gap-3">
+              <div data-contact-item className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full bg-[#4D5B2A]/40 border border-[#6E7E45]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <Phone size={13} className="text-[#c5db8e]" />
                 </div>
@@ -169,7 +305,7 @@ export default function Footer() {
               </div>
 
               {/* Email */}
-              <div className="flex items-start gap-3">
+              <div data-contact-item className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full bg-[#4D5B2A]/40 border border-[#6E7E45]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <Mail size={13} className="text-[#c5db8e]" />
                 </div>
@@ -191,7 +327,7 @@ export default function Footer() {
               </div>
 
               {/* Location */}
-              <div className="flex items-start gap-3">
+              <div   data-contact-item className=" flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full bg-[#4D5B2A]/40 border border-[#6E7E45]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <MapPin size={13} className="text-[#c5db8e]" />
                 </div>
@@ -215,12 +351,13 @@ export default function Footer() {
         </div>
 
         {/* ── DIVIDER ──────────────────────────────────────── */}
-        <div className="mt-12 h-px bg-[#6E7E45]/15" />
+        <div data-footer-divider className=" mt-12 h-px bg-[#6E7E45]/15" />
 
         {/* ── BOTTOM BAR ───────────────────────────────────── */}
         <div className="mt-7 flex flex-col lg:flex-row items-center justify-between gap-4">
           {/* Copyright */}
           <p
+            data-footer-bottom
             className={`${montserrat.className} text-[11px] text-[#f5f0e7]/30`}
             style={{ fontWeight: 400 }}
           >

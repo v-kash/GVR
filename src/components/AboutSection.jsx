@@ -2,6 +2,11 @@
 
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import { Caveat } from "next/font/google";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const caveat = Caveat({
   subsets: ["latin"],
@@ -25,24 +30,32 @@ const stats = [
     top: "Trusted by",
     num: "1000+",
     bottom: "Customers",
+    rawNum: 1000,
+    suffix: "+",
   },
   {
     icon: "/icons/Egg.svg",
     top: "Delivering",
     num: "10M+",
     bottom: "Eggs Monthly",
+    rawNum: 10,
+    suffix: "M+",
   },
   {
     icon: "/icons/Location.svg",
     top: "Serving",
     num: "100+",
     bottom: "Cities",
+    rawNum: 100,
+    suffix: "+",
   },
   {
     icon: "/icons/Person.svg",
     top: "More than",
     num: "50+",
     bottom: "Business Partners",
+    rawNum: 50,
+    suffix: "+",
   },
 ];
 
@@ -70,13 +83,347 @@ const features = [
 ];
 
 export default function AboutSection() {
+  // ── Refs ──────────────────────────────────────────────
+  const sectionRef = useRef(null);
+  const decorLeafRef = useRef(null);
+
+  // Left text block
+  const eyebrowRef = useRef(null);
+  const headlineRef = useRef(null);
+  const taglineRef = useRef(null);
+  const bodyTextRef = useRef(null);
+
+  // Stats
+  const statsRowRef = useRef(null);
+  const statNumRefs = useRef([]);
+
+  // Image collage
+  const mainImgRef = useRef(null);
+  const badgeRef = useRef(null);
+  const leftPolaroidRef = useRef(null);
+  const rightPolaroidRef = useRef(null);
+  const collageLeafRef = useRef(null);
+
+  // Features row
+  const featuresRowRef = useRef(null);
+
+  // Bottom banner
+  const bannerRef = useRef(null);
+
+  // ── Animation setup ───────────────────────────────────
+  useEffect(() => {
+    // Respect prefers-reduced-motion
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+      // ── Decorative leaf — gentle float loop ─────────────
+      if (decorLeafRef.current) {
+        gsap.to(decorLeafRef.current, {
+          y: -18,
+          duration: 3.5,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+        });
+      }
+
+      // ── Eyebrow ──────────────────────────────────────────
+      if (eyebrowRef.current) {
+        gsap.fromTo(
+          eyebrowRef.current,
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: eyebrowRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // ── Headline lines — staggered ───────────────────────
+      if (headlineRef.current) {
+        const lines = headlineRef.current.querySelectorAll("span");
+        gsap.fromTo(
+          lines,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.15,
+            scrollTrigger: {
+              trigger: headlineRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // ── Sub-tagline ──────────────────────────────────────
+      if (taglineRef.current) {
+        gsap.fromTo(
+          taglineRef.current,
+          { opacity: 0, y: 16 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: taglineRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // ── Body text ────────────────────────────────────────
+      if (bodyTextRef.current) {
+        gsap.fromTo(
+          bodyTextRef.current,
+          { opacity: 0, y: 16 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: bodyTextRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // ── Stats row — stagger + animated counters ──────────
+      if (statsRowRef.current) {
+        const statItems = statsRowRef.current.querySelectorAll(
+          "[data-stat-item]"
+        );
+
+        gsap.fromTo(
+          statItems,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power3.out",
+            stagger: 0.12,
+            scrollTrigger: {
+              trigger: statsRowRef.current,
+              start: "top 80%",
+              once: true,
+              onEnter: () => {
+                // Animate each counter
+                statNumRefs.current.forEach((el, i) => {
+                  if (!el) return;
+                  const stat = stats[i];
+                  const obj = { val: 0 };
+                  gsap.to(obj, {
+                    val: stat.rawNum,
+                    duration: 1.4,
+                    ease: "power2.out",
+                    delay: i * 0.12,
+                    onUpdate: () => {
+                      const display =
+                        stat.rawNum >= 100
+                          ? Math.round(obj.val)
+                          : Math.round(obj.val * 10) / 10;
+                      el.textContent = display + stat.suffix;
+                    },
+                  });
+                });
+              },
+            },
+          }
+        );
+      }
+
+      // ── Main image — scale-in ────────────────────────────
+      if (mainImgRef.current) {
+        gsap.fromTo(
+          mainImgRef.current,
+          { opacity: 0, scale: 1.06 },
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: mainImgRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // ── Badge ────────────────────────────────────────────
+      if (badgeRef.current) {
+        gsap.fromTo(
+          badgeRef.current,
+          { opacity: 0, scale: 0.88, y: 12 },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power3.out",
+            delay: 0.2,
+            scrollTrigger: {
+              trigger: badgeRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // ── Left polaroid ────────────────────────────────────
+      if (leftPolaroidRef.current) {
+        gsap.fromTo(
+          leftPolaroidRef.current,
+          { opacity: 0, y: 24, x: -12 },
+          {
+            opacity: 1,
+            y: 0,
+            x: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            delay: 0.15,
+            scrollTrigger: {
+              trigger: leftPolaroidRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // ── Right polaroid ───────────────────────────────────
+      if (rightPolaroidRef.current) {
+        gsap.fromTo(
+          rightPolaroidRef.current,
+          { opacity: 0, y: 24, x: 12 },
+          {
+            opacity: 1,
+            y: 0,
+            x: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            delay: 0.25,
+            scrollTrigger: {
+              trigger: rightPolaroidRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // ── Collage leaf — subtle float ──────────────────────
+      if (collageLeafRef.current) {
+        gsap.to(collageLeafRef.current, {
+          y: -14,
+          rotation: 4,
+          duration: 4,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+        });
+      }
+
+      // ── Main image parallax scrub ────────────────────────
+      // if (mainImgRef.current) {
+      //   gsap.to(mainImgRef.current, {
+      //     yPercent: -8,
+      //     ease: "none",
+      //     scrollTrigger: {
+      //       trigger: mainImgRef.current,
+      //       start: "top bottom",
+      //       end: "bottom top",
+      //       scrub: true,
+      //     },
+      //   });
+      // }
+
+      // ── Features row — staggered fade-up ─────────────────
+      if (featuresRowRef.current) {
+        const featureItems = featuresRowRef.current.querySelectorAll(
+          "[data-feature-item]"
+        );
+        gsap.fromTo(
+          featureItems,
+          { opacity: 0, y: 28 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power3.out",
+            stagger: 0.12,
+            scrollTrigger: {
+              trigger: featuresRowRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // ── Bottom banner ─────────────────────────────────────
+      if (bannerRef.current) {
+        gsap.fromTo(
+          bannerRef.current,
+          { opacity: 0, y: 22 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: bannerRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // ── CTA hover util (applied inline via onMouseEnter/Leave) ──
+  const hoverIn = (e) =>
+    gsap.to(e.currentTarget, { scale: 1.03, duration: 0.25, ease: "power2.out" });
+  const hoverOut = (e) =>
+    gsap.to(e.currentTarget, { scale: 1, duration: 0.25, ease: "power2.out" });
+
   return (
     <section
       id="about"
+      ref={sectionRef}
       className="relative overflow-hidden bg-[#f5f0e7] py-12 lg:py-16"
     >
       {/* Decorative leaf — bottom left */}
-      <div className="hidden sm:block pointer-events-none absolute bottom-0 left-[-100px] w-60 opacity-10">
+      <div
+        ref={decorLeafRef}
+        className="hidden sm:block pointer-events-none absolute bottom-0 left-[-100px] w-60 opacity-10"
+      >
         <img src="/leaf-decoration.png" alt="" className="w-full" />
       </div>
 
@@ -86,7 +433,7 @@ export default function AboutSection() {
           {/* LEFT — Text */}
           <div>
             {/* Eyebrow */}
-            <div className="mb-5 flex items-center gap-3">
+            <div ref={eyebrowRef} className="mb-5 flex items-center gap-3">
               <div className="flex flex-col items-center">
                 <div
                   className="w-7 h-7 lg:w-8 lg:h-8 bg-[#6E7E45] "
@@ -101,7 +448,6 @@ export default function AboutSection() {
                     maskPosition: "center",
                   }}
                 />
-                {/* underline under leaf */}
               </div>
 
               <div className="flex flex-col">
@@ -111,14 +457,13 @@ export default function AboutSection() {
                 >
                   Our Story
                 </p>
-
-                {/* underline under text */}
                 <div className="mt-2 h-[0.5px] w-[76px] bg-[#d8d2c4]" />
               </div>
             </div>
 
             {/* Headline */}
             <h2
+              ref={headlineRef}
               className={`${cormorant.className} leading-[1.0] text-[#241A12]`}
             >
               <span className="block text-[48px] lg:text-[64px] font-semibold">
@@ -130,7 +475,7 @@ export default function AboutSection() {
             </h2>
 
             {/* Sub tagline */}
-            <div className=" flex items-center gap-3">
+            <div ref={taglineRef} className=" flex items-center gap-3">
               <p
                 className={`${montserrat.className} text-[10px] uppercase  pt-1 md:pt-0 md:tracking-[0.2em] text-[#735033]`}
                 style={{ fontWeight: 600 }}
@@ -155,6 +500,7 @@ export default function AboutSection() {
 
             {/* Body text */}
             <div
+              ref={bodyTextRef}
               className={`${montserrat.className} mt-6 space-y-4 text-[13px] lg:text-[14px] leading-7 text-[#5f5146]`}
               style={{ fontWeight: 400 }}
             >
@@ -164,21 +510,12 @@ export default function AboutSection() {
                 eggs every day. What started as a small step has grown into a
                 trusted supply network serving thousands of happy customers.
               </p>
-              {/* <p>
-                We work closely with trusted farms, follow strict hygiene and
-                quality standards, and ensure every egg reaches you fresh, on
-                time, and with care.
-              </p>
-              <p>
-                Whether it's your home, your business, or your customers — we
-                are proud to be the partner you can rely on.
-              </p> */}
             </div>
 
             {/* Stats row */}
-            <div className="grid grid-cols-4 gap-0 ">
+            <div ref={statsRowRef} className="grid grid-cols-4 gap-0 ">
               {stats.map((s, i) => (
-                <div key={i} className="flex items-center ">
+                <div key={i} data-stat-item className="flex items-center ">
                   {/* Stat item */}
                   <div className="flex-1 flex flex-col items-center gap-1.5 py-3 md:py-5 px-4">
                     <div className="w-14 h-14 rounded-full bg-transparent border border-[#6E7E45]/20 flex items-center justify-center">
@@ -203,6 +540,7 @@ export default function AboutSection() {
                       {s.top}
                     </p>
                     <p
+                      ref={(el) => (statNumRefs.current[i] = el)}
                       className={`${montserrat.className} text-[20px] font-semibold text-[#4D5B2A] leading-none`}
                     >
                       {s.num}
@@ -226,20 +564,19 @@ export default function AboutSection() {
 
           {/* RIGHT — Image collage */}
           <div className="relative w-full max-w-[480px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[580px] xl:max-w-[620px] mx-auto pb-28 sm:pb-28 md:pb-28 lg:pb-32 xl:pb-36">
-            {/* MAIN IMAGE — w-full so it scales fluidly with container */}
+            {/* MAIN IMAGE */}
             <div className="relative h-[260px] sm:h-[260px] md:h-[340px] lg:h-[340px] xl:h-[380px] overflow-hidden">
               <img
+                ref={mainImgRef}
                 src="/images2/aboutmain2.webp"
                 alt="Farm fresh eggs"
                 className="w-full h-[260px] sm:h-[260px] md:h-[290px] lg:h-[340px] xl:h-[380px] object-cover rounded-[8px]"
               />
             </div>
 
-            {/* PAPER BADGE
-      left: fixed small negative (safe, no % weirdness with negatives)
-      top: fixed px — vertical doesn't need to scale horizontally
-      w: % based → scales with container fluidly                        */}
+            {/* PAPER BADGE */}
             <div
+              ref={badgeRef}
               className="
       absolute
       left-[-16px] sm:left-[-16px] md:left-[-50px] lg:left-[-40px] xl:left-[-40px]
@@ -261,11 +598,9 @@ export default function AboutSection() {
               />
             </div>
 
-            {/* LEFT POLAROID
-      left: small fixed negative — % negatives don't work well in Tailwind
-      bottom: fixed px — vertical axis fine as fixed
-      w: % based → 300/620 = 48% of container                           */}
+            {/* LEFT POLAROID */}
             <div
+              ref={leftPolaroidRef}
               className="
       absolute
       left-[100px] sm:left-[-10px] md:left-[-14px] lg:left-[-18px] xl:left-[-18px]
@@ -284,8 +619,6 @@ export default function AboutSection() {
     "
             >
               <div className="overflow-hidden rounded-[3px]">
-                {/* Image height stays fixed px — height scaling with % width is handled
-          by object-cover; aspect feel stays consistent                    */}
                 <img
                   src="/images2/Quality.webp"
                   alt="Fresh eggs"
@@ -299,11 +632,9 @@ export default function AboutSection() {
               </p>
             </div>
 
-            {/* RIGHT POLAROID
-      left: % based → 240/620 = 38% — moves with container fluidly
-      w: % based → 280/620 = 45% — shrinks with container fluidly
-      bottom: fixed px — vertical axis fine                               */}
+            {/* RIGHT POLAROID */}
             <div
+              ref={rightPolaroidRef}
               className="
     hidden sm:block
       absolute
@@ -332,8 +663,9 @@ export default function AboutSection() {
               </p>
             </div>
 
-            {/* LEAF DECORATION — right/bottom fixed px, width % based */}
+            {/* LEAF DECORATION */}
             <img
+              ref={collageLeafRef}
               src="/leaf-decoration.png"
               alt=""
               className="
@@ -349,9 +681,18 @@ export default function AboutSection() {
         </div>
 
         {/* ── FEATURES ROW ─────────────────────────────────── */}
-        <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4 p-4 rounded-md bg-[#f5f0e7]/90">
+        <div
+          ref={featuresRowRef}
+          className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4 p-4 rounded-md bg-[#f5f0e7]/90"
+        >
           {features.map((f, i) => (
-            <div key={i} className="flex items-start gap-4 ">
+            <div
+              key={i}
+              data-feature-item
+              className="flex items-start gap-4 "
+              onMouseEnter={hoverIn}
+              onMouseLeave={hoverOut}
+            >
               <div className="w-12 h-12 rounded-full bg-transparent border border-[#6E7E45]/20 flex items-center justify-center flex-shrink-0">
                 <div
                   className="w-10 h-10 lg:w-10 lg:h-10 bg-[#717f3d] "
@@ -386,7 +727,12 @@ export default function AboutSection() {
         </div>
 
         {/* ── BOTTOM BANNER ────────────────────────────────── */}
-        <div className="mt-10 rounded-xl bg-[#505c31] px-4 py-3 flex items-center justify-center gap-4">
+        <div
+          ref={bannerRef}
+          className="mt-10 rounded-xl bg-[#505c31] px-4 py-3 flex items-center justify-center gap-4"
+          onMouseEnter={hoverIn}
+          onMouseLeave={hoverOut}
+        >
           <img
             src="/icons/heart.png"
             alt=""

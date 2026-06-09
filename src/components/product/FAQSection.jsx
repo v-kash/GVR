@@ -1,8 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import { ChevronUp, ChevronDown, Phone, Mail, Clock } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -55,15 +59,115 @@ const faqs = [
 export default function FAQSection() {
   const [open, setOpen] = useState(0);
 
+  // ── Refs ──────────────────────────────────────────────
+  const sectionRef        = useRef(null);
+  const headingMobileRef  = useRef(null);
+  const headingDesktopRef = useRef(null);
+  const subtaglineRef     = useRef(null);
+  const leftCardRef       = useRef(null);
+  const faqListRef        = useRef(null);
+
+  // ── Animations ────────────────────────────────────────
+  useEffect(() => {
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+
+      // ── Mobile heading ─────────────────────────────────
+      if (headingMobileRef.current) {
+        gsap.fromTo(
+          headingMobileRef.current,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+            scrollTrigger: { trigger: headingMobileRef.current, start: "top 80%", once: true },
+          }
+        );
+      }
+
+      // ── Desktop heading ────────────────────────────────
+      if (headingDesktopRef.current) {
+        const eyebrow = headingDesktopRef.current.querySelector("[data-eyebrow]");
+        const spans   = headingDesktopRef.current.querySelectorAll("[data-headline] span");
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: headingDesktopRef.current, start: "top 80%", once: true },
+        });
+        if (eyebrow) tl.fromTo(eyebrow, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" });
+        if (spans.length) tl.fromTo(spans, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.13 }, "-=0.4");
+      }
+
+      // ── Sub-tagline ────────────────────────────────────
+      if (subtaglineRef.current) {
+        gsap.fromTo(
+          subtaglineRef.current,
+          { opacity: 0, y: 16 },
+          {
+            opacity: 1, y: 0, duration: 0.7, ease: "power3.out",
+            scrollTrigger: { trigger: subtaglineRef.current, start: "top 80%", once: true },
+          }
+        );
+      }
+
+      // ── Left card — slide in from left ────────────────
+      // The card is a self-contained panel; treating it as one unit
+      // feels more premium than staggering its internals.
+      if (leftCardRef.current) {
+        gsap.fromTo(
+          leftCardRef.current,
+          { opacity: 0, x: -32 },
+          {
+            opacity: 1, x: 0, duration: 0.85, ease: "power3.out",
+            scrollTrigger: { trigger: leftCardRef.current, start: "top 80%", once: true },
+          }
+        );
+      }
+
+      // ── FAQ rows — staggered fade-up ──────────────────
+      // Each accordion row enters individually with a short stagger.
+      // The CSS max-h transition still handles open/close — GSAP only
+      // handles the entrance reveal; it never touches max-height.
+      if (faqListRef.current) {
+        const rows = faqListRef.current.querySelectorAll("[data-faq-row]");
+        gsap.fromTo(
+          rows,
+          { opacity: 0, y: 20, x: 16 },
+          {
+            opacity: 1, y: 0, x: 0,
+            duration: 0.65,
+            ease: "power3.out",
+            stagger: 0.08,
+            scrollTrigger: {
+              trigger: faqListRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
+      }
+
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="relative bg-[#f5f0e7] overflow-hidden py-16 sm:py-18 md:py-20 lg:py-20 xl:py-24">
+    <section
+      ref={sectionRef}
+      className="relative bg-[#f5f0e7] overflow-hidden py-16 sm:py-18 md:py-20 lg:py-20 xl:py-24"
+    >
       <div className="mx-auto max-w-7xl px-6 lg:px-16">
-        {/* ── HEADING ──────────────────────────────────────────────────────
-            Mobile/tablet: stacked
-            Desktop lg+  : original absolute layout                        */}
+
+        {/* ── HEADING ──────────────────────────────────────── */}
         <div className="mb-10 sm:mb-10 md:mb-12 lg:mb-12">
+
           {/* Mobile + Tablet */}
-          <div className="flex flex-col items-center lg:hidden gap-3">
+          <div
+            ref={headingMobileRef}
+            className="flex flex-col items-center lg:hidden gap-3"
+          >
             <div className="flex items-center gap-3">
               <div className="flex flex-col items-center">
                 <div
@@ -90,21 +194,18 @@ export default function FAQSection() {
                 <div className="mt-2 h-[0.5px] w-[30px] bg-[#d8d2c4]" />
               </div>
             </div>
-            <h2
-              className={`${cormorant.className} leading-[1.0] text-[#241A12] text-center`}
-            >
-              <span className="text-[32px] sm:text-[34px] md:text-[46px] font-semibold">
-                Frequently{" "}
-              </span>
-              <span className="text-[32px] sm:text-[34px] md:text-[46px] italic font-medium text-[#6E7E45]">
-                Asked Questions.
-              </span>
+            <h2 className={`${cormorant.className} leading-[1.0] text-[#241A12] text-center`}>
+              <span className="text-[32px] sm:text-[34px] md:text-[46px] font-semibold">Frequently </span>
+              <span className="text-[32px] sm:text-[34px] md:text-[46px] italic font-medium text-[#6E7E45]">Asked Questions.</span>
             </h2>
           </div>
 
-          {/* Desktop — original untouched */}
-          <div className="hidden lg:flex items-start gap-8 relative">
-            <div className="flex items-center gap-3 flex-shrink-0 pt-2">
+          {/* Desktop */}
+          <div
+            ref={headingDesktopRef}
+            className="hidden lg:flex items-start gap-8 relative"
+          >
+            <div data-eyebrow className="flex items-center gap-3 flex-shrink-0 pt-2">
               <div className="flex flex-col items-center">
                 <div
                   className="w-7 h-7 bg-[#6E7E45]"
@@ -118,7 +219,7 @@ export default function FAQSection() {
                     WebkitMaskPosition: "center",
                     maskPosition: "center",
                   }}
-                />{" "}
+                />
               </div>
               <div className="flex flex-col">
                 <p
@@ -131,19 +232,17 @@ export default function FAQSection() {
               </div>
             </div>
             <h2
+              data-headline
               className={`${cormorant.className} leading-[1.0] text-[#241A12] absolute left-0 right-0 text-center`}
             >
-              <span className="text-[36px] lg:text-[52px] xl:text-[64px] font-semibold">
-                Frequently{" "}
-              </span>
-              <span className="text-[36px] lg:text-[52px] xl:text-[64px] italic font-medium text-[#6E7E45]">
-                Asked Questions.
-              </span>
+              <span className="text-[36px] lg:text-[52px] xl:text-[64px] font-semibold">Frequently </span>
+              <span className="text-[36px] lg:text-[52px] xl:text-[64px] italic font-medium text-[#6E7E45]">Asked Questions.</span>
             </h2>
           </div>
 
           {/* Subtext */}
           <p
+            ref={subtaglineRef}
             className={`${montserrat.className} text-[13px] lg:text-[14px] text-[#5f5146] leading-[1.8] pt-6 sm:pt-8 lg:pt-12 text-center max-w-lg mx-auto`}
             style={{ fontWeight: 400 }}
           >
@@ -151,16 +250,16 @@ export default function FAQSection() {
           </p>
         </div>
 
-        {/* ── MAIN GRID ────────────────────────────────────────────────────
-            sm : 1-col stacked — left card on top, faqs below
-            md : 2-col — left card fixed 280px, faqs take rest
-            lg : left card 300px
-            xl : left card 320px (original)                               */}
+        {/* ── MAIN GRID ────────────────────────────────────── */}
         <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] lg:grid-cols-[300px_1fr] xl:grid-cols-[320px_1fr] gap-5 md:gap-6 items-start">
-          {/* ── LEFT CARD — original design, sizes adjusted per breakpoint ── */}
-          <div className="bg-white border border-[#e8e0d4] rounded-2xl overflow-hidden flex flex-col">
+
+          {/* LEFT CARD */}
+          <div
+            ref={leftCardRef}
+            className="bg-white border border-[#e8e0d4] rounded-2xl overflow-hidden flex flex-col"
+          >
             <div className="px-6 sm:px-8 pt-6 sm:pt-8 pb-4 flex flex-col items-center text-center flex-1">
-              {/* Question mark circle */}
+              {/* Icon circle */}
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-[#6E7E45]/25 bg-[#edf3de]/50 flex items-center justify-center mb-4 sm:mb-5">
                 <img
                   src="/products/qicon.png"
@@ -169,10 +268,7 @@ export default function FAQSection() {
                 />
               </div>
 
-              {/* Text */}
-              <h3
-                className={`${cormorant.className} text-[22px] sm:text-[24px] md:text-[22px] lg:text-[26px] xl:text-[28px] font-semibold text-[#241A12] leading-tight mb-3`}
-              >
+              <h3 className={`${cormorant.className} text-[22px] sm:text-[24px] md:text-[22px] lg:text-[26px] xl:text-[28px] font-semibold text-[#241A12] leading-tight mb-3`}>
                 Have a Question?
                 <br />
                 We're Here to Help.
@@ -238,19 +334,19 @@ export default function FAQSection() {
             </div>
           </div>
 
-          {/* ── RIGHT: FAQ accordion — original design, breakpoint text sizes ── */}
-          <div className="flex flex-col gap-2 sm:gap-3">
+          {/* RIGHT: FAQ accordion */}
+          <div ref={faqListRef} className="flex flex-col gap-2 sm:gap-3">
             {faqs.map((faq, i) => (
               <div
                 key={i}
-                className={`bg-white border rounded-xl overflow-hidden transition-all duration-200 cursor-pointer
+                data-faq-row
+                className={`bg-white border rounded-xl overflow-hidden transition-colors duration-200 cursor-pointer
                   ${open === i ? "border-[#6E7E45]/30 shadow-[0_4px_16px_rgba(110,126,69,0.08)]" : "border-[#e8e0d4]"}
                 `}
                 onClick={() => setOpen(open === i ? -1 : i)}
               >
                 {/* Question row */}
                 <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-3 sm:py-4">
-                  {/* Number badge */}
                   <div
                     className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${open === i ? "bg-[#4D5B2A]" : "bg-[#edf3de]"}`}
                   >
@@ -261,29 +357,16 @@ export default function FAQSection() {
                       {faq.num}
                     </span>
                   </div>
-
-                  {/* Question text
-                      sm: 15px  md: 16px  lg: 18px  xl: 20px (original)  */}
-                  <p
-                    className={`${cormorant.className} text-[15px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[20px] font-semibold text-[#241A12] flex-1 leading-tight`}
-                  >
+                  <p className={`${cormorant.className} text-[15px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[20px] font-semibold text-[#241A12] flex-1 leading-tight`}>
                     {faq.q}
                   </p>
-
                   <div className="flex-shrink-0 text-[#6E7E45]">
-                    {open === i ? (
-                      <ChevronUp size={16} />
-                    ) : (
-                      <ChevronDown size={16} />
-                    )}
+                    {open === i ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                   </div>
                 </div>
 
-                {/* Answer
-                    FIXED: pl-[72px] → responsive pl                      */}
-                <div
-                  className={`transition-all duration-300 overflow-hidden ${open === i ? "max-h-40" : "max-h-0"}`}
-                >
+                {/* Answer */}
+                <div className={`transition-all duration-300 overflow-hidden ${open === i ? "max-h-40" : "max-h-0"}`}>
                   <p
                     className={`${montserrat.className} text-[12px] lg:text-[13px] text-[#5f5146] leading-[1.8] px-4 sm:px-6 pb-4 sm:pb-5 pl-[52px] sm:pl-[60px] md:pl-[60px] lg:pl-[72px] xl:pl-[72px]`}
                     style={{ fontWeight: 400 }}

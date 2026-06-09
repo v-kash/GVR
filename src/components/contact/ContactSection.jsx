@@ -1,9 +1,14 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import {
-  Phone, Mail, MapPin, MessageCircle, ArrowRight, ShieldCheck, ChevronDown,
+  Phone, Mail, MapPin, MessageCircle, ArrowRight, ChevronDown,
 } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -15,21 +20,72 @@ const montserrat = Montserrat({
 });
 
 const inputStyle =
-  "h-[48px] sm:h-[54px] w-full rounded-[5px] border border-[#e3d8c8] bg-transparent px-4 text-[13px] sm:text-[14px] text-[#241A12] outline-none transition-all placeholder:text-[#9a8f81] focus:border-[#6E7E45]";
+  "h-[48px] sm:h-[54px] w-full rounded-[5px] border border-[#e3d8c8] bg-transparent px-4 text-[13px] sm:text-[14px] text-[#241A12] outline-none transition-colors placeholder:text-[#9a8f81] focus:border-[#6E7E45]";
 
 export default function ContactSection() {
-  return (
-    <section className="bg-[#f5f0e7] py-8 sm:py-10 md:py-8 lg:py-12 xl:py-12">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+  // ── Refs ──────────────────────────────────────────────
+  const sectionRef  = useRef(null);
+  const leftRef     = useRef(null);
+  const rightRef    = useRef(null);
 
-        {/* ── GRID ─────────────────────────────────────────────────────────
-            sm : 1-col stacked — left card on top, form below
-            md : 2-col side by side, no fixed height
-            lg : 2-col with fixed height (original)                       */}
+  // ── Animations ────────────────────────────────────────
+  useEffect(() => {
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+
+      // ── Left panel — slide from left ──────────────────
+      // The left panel is a single cohesive info card.
+      // One directional entrance keeps it clean.
+      if (leftRef.current) {
+        gsap.fromTo(
+          leftRef.current,
+          { opacity: 0, x: -36 },
+          {
+            opacity: 1, x: 0, duration: 0.85, ease: "power3.out",
+            scrollTrigger: { trigger: leftRef.current, start: "top 80%", once: true },
+          }
+        );
+      }
+
+      // ── Right panel — slide from right ────────────────
+      // Symmetric reveal: both panels open toward the center.
+      if (rightRef.current) {
+        gsap.fromTo(
+          rightRef.current,
+          { opacity: 0, x: 36 },
+          {
+            opacity: 1, x: 0, duration: 0.85, ease: "power3.out",
+            scrollTrigger: { trigger: rightRef.current, start: "top 80%", once: true },
+          }
+        );
+      }
+
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // ── CTA hover ─────────────────────────────────────────
+  const hoverIn  = (e) => gsap.to(e.currentTarget, { scale: 1.03, duration: 0.25, ease: "power2.out" });
+  const hoverOut = (e) => gsap.to(e.currentTarget, { scale: 1,    duration: 0.25, ease: "power2.out" });
+
+  return (
+    <section
+      ref={sectionRef}
+      className="bg-[#f5f0e7] py-8 sm:py-10 md:py-8 lg:py-12 xl:py-12"
+    >
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-[0.95fr_1.05fr] lg:h-[680px]">
 
-          {/* ── LEFT ─────────────────────────────────────────────────────── */}
-          <div className="h-full rounded-[2px] border border-[#e8e0d4] bg-transparent p-5 sm:p-6 md:p-6 lg:p-8">
+          {/* ── LEFT ─────────────────────────────────────── */}
+          <div
+            ref={leftRef}
+            className="h-full rounded-[2px] border border-[#e8e0d4] bg-transparent p-5 sm:p-6 md:p-6 lg:p-8"
+          >
             <div className="h-full flex flex-col">
 
               {/* Top Label */}
@@ -40,8 +96,7 @@ export default function ContactSection() {
                 <div className="mx-auto mt-3 h-[2px] w-12 bg-[#B08A3D]" />
               </div>
 
-              {/* Heading
-                  sm: 32px  md: 38px  lg: 48px  xl: 56px (original)     */}
+              {/* Heading */}
               <h2
                 className={`${cormorant.className} mt-4 sm:mt-5 text-center leading-[0.9] font-semibold text-[#241A12]
                   text-[32px] sm:text-[32px] md:text-[36px] lg:text-[48px] xl:text-[56px]`}
@@ -56,8 +111,7 @@ export default function ContactSection() {
                 <div className="h-px w-16 sm:w-20 bg-[#d8d0c2]" />
               </div>
 
-              {/* Description
-                  sm: 13px  md/lg/xl: 14px (original)                   */}
+              {/* Description */}
               <p className={`${montserrat.className} text-center text-[13px] sm:text-[13px] md:text-[13px] lg:text-[14px] xl:text-[14px] leading-7 text-[#4f4337]`}>
                 Have a question, need assistance, or want to place a bulk order?
                 Our team is here to help and will get back to you as soon as possible.
@@ -73,45 +127,39 @@ export default function ContactSection() {
               {/* WhatsApp Box */}
               <div className="mt-auto pt-4 sm:pt-5">
                 <a
-  href="https://wa.me/919448453609"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="block transition-transform duration-300 hover:scale-[1.02]"
->
-  <div className="flex items-center justify-between rounded-2xl bg-[#ddd4bd] px-4 sm:px-5 py-3 sm:py-4">
-    <div className="flex items-center gap-3">
-      <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-[#6E7E45]">
-        <MessageCircle size={16} className="text-white" />
-      </div>
-
-      <div>
-        <p
-          className={`${montserrat.className} text-[12px] sm:text-[13px] text-[#241A12]`}
-          style={{ fontWeight: 600 }}
-        >
-          Faster Support
-        </p>
-
-        <p
-          className={`${montserrat.className} text-[11px] sm:text-[12px] text-[#6E7E45]`}
-        >
-          Chat on WhatsApp
-        </p>
-      </div>
-    </div>
-
-    <ArrowRight
-      size={18}
-      className="text-[#6E7E45] transition-transform duration-300 group-hover:translate-x-1"
-    />
-  </div>
-</a>
+                  href="https://wa.me/919448453609"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                  onMouseEnter={hoverIn}
+                  onMouseLeave={hoverOut}
+                >
+                  <div className="flex items-center justify-between rounded-2xl bg-[#ddd4bd] px-4 sm:px-5 py-3 sm:py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-[#6E7E45]">
+                        <MessageCircle size={16} className="text-white" />
+                      </div>
+                      <div>
+                        <p className={`${montserrat.className} text-[12px] sm:text-[13px] text-[#241A12]`} style={{ fontWeight: 600 }}>
+                          Faster Support
+                        </p>
+                        <p className={`${montserrat.className} text-[11px] sm:text-[12px] text-[#6E7E45]`}>
+                          Chat on WhatsApp
+                        </p>
+                      </div>
+                    </div>
+                    <ArrowRight size={18} className="text-[#6E7E45]" />
+                  </div>
+                </a>
               </div>
             </div>
           </div>
 
-          {/* ── RIGHT ────────────────────────────────────────────────────── */}
-          <div className="h-full rounded-[2px] border border-[#e8e0d4] bg-transparent p-5 sm:p-6 md:p-6 lg:p-8">
+          {/* ── RIGHT ────────────────────────────────────── */}
+          <div
+            ref={rightRef}
+            className="h-full rounded-[2px] border border-[#e8e0d4] bg-transparent p-5 sm:p-6 md:p-6 lg:p-8"
+          >
             <div className="h-full flex flex-col">
 
               <div className="text-center mb-5 sm:mb-6">
@@ -122,8 +170,6 @@ export default function ContactSection() {
               </div>
 
               <form className="flex flex-col flex-1 space-y-3 sm:space-y-4">
-
-                {/* Name + Phone — stacked on mobile, 2-col on sm+ */}
                 <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
                   <Field label="Full Name">
                     <input className={inputStyle} placeholder="Your name" />
@@ -153,13 +199,15 @@ export default function ContactSection() {
                   <textarea
                     rows={3}
                     placeholder="Write your message..."
-                    className="w-full rounded-[5px] border border-[#e3d8c8] bg-transparent p-3 sm:p-4 text-[13px] sm:text-[14px] text-[#241A12] outline-none placeholder:text-[#9a8f81] focus:border-[#6E7E45]"
+                    className="w-full rounded-[5px] border border-[#e3d8c8] bg-transparent p-3 sm:p-4 text-[13px] sm:text-[14px] text-[#241A12] outline-none placeholder:text-[#9a8f81] focus:border-[#6E7E45] transition-colors"
                   />
                 </Field>
 
                 <button
                   type="submit"
-                  className={`${montserrat.className} mt-auto flex h-[48px] sm:h-[54px] items-center justify-center gap-2 rounded-xl bg-[#6E7E45] text-[13px] sm:text-[14px] font-semibold text-white transition hover:bg-[#5e6d3b]`}
+                  className={`${montserrat.className} mt-auto flex h-[48px] sm:h-[54px] items-center justify-center gap-2 rounded-xl bg-[#6E7E45] text-[13px] sm:text-[14px] font-semibold text-white transition-colors hover:bg-[#5e6d3b]`}
+                  onMouseEnter={hoverIn}
+                  onMouseLeave={hoverOut}
                 >
                   Send Message
                 </button>

@@ -1,8 +1,13 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import { ArrowRight, Phone } from "lucide-react";
 import Link from "next/link";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -82,20 +87,117 @@ const segments = [
 ];
 
 export default function WhoWeServe() {
+  // ── Refs ──────────────────────────────────────────────
+  const sectionRef    = useRef(null);
+  const headingMobileRef  = useRef(null);
+  const headingDesktopRef = useRef(null);
+  const subtaglineRef = useRef(null);
+  const segmentsRef   = useRef(null);
+  const partnerBarRef = useRef(null);
+
+  // ── Animations ────────────────────────────────────────
+  useEffect(() => {
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+
+      // ── Mobile heading ─────────────────────────────────
+      if (headingMobileRef.current) {
+        gsap.fromTo(
+          headingMobileRef.current,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+            scrollTrigger: { trigger: headingMobileRef.current, start: "top 80%", once: true },
+          }
+        );
+      }
+
+      // ── Desktop heading — eyebrow + staggered headline spans ──
+      if (headingDesktopRef.current) {
+        const eyebrow = headingDesktopRef.current.querySelector("[data-eyebrow]");
+        const spans   = headingDesktopRef.current.querySelectorAll("[data-headline] span");
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: headingDesktopRef.current, start: "top 80%", once: true },
+        });
+        if (eyebrow) tl.fromTo(eyebrow, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" });
+        if (spans.length) tl.fromTo(spans, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.13 }, "-=0.4");
+      }
+
+      // ── Sub-tagline ────────────────────────────────────
+      if (subtaglineRef.current) {
+        gsap.fromTo(
+          subtaglineRef.current,
+          { opacity: 0, y: 16 },
+          {
+            opacity: 1, y: 0, duration: 0.7, ease: "power3.out",
+            scrollTrigger: { trigger: subtaglineRef.current, start: "top 80%", once: true },
+          }
+        );
+      }
+
+      // ── Segment rows — staggered fade-up + slight x slide ─────
+      // Each row slides up AND in slightly from the left, staggered
+      // so they "deal" onto the screen one by one like cards.
+      if (segmentsRef.current) {
+        const rows = segmentsRef.current.querySelectorAll("[data-segment]");
+        gsap.fromTo(
+          rows,
+          { opacity: 0, y: 20, x: -16 },
+          {
+            opacity: 1, y: 0, x: 0,
+            duration: 0.65,
+            ease: "power3.out",
+            stagger: 0.1,
+            scrollTrigger: {
+              trigger: segmentsRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // ── Partner bar — fade-up ──────────────────────────
+      if (partnerBarRef.current) {
+        gsap.fromTo(
+          partnerBarRef.current,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+            scrollTrigger: { trigger: partnerBarRef.current, start: "top 80%", once: true },
+          }
+        );
+      }
+
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // ── CTA hover ─────────────────────────────────────────
+  const hoverIn  = (e) => gsap.to(e.currentTarget, { scale: 1.03, duration: 0.25, ease: "power2.out" });
+  const hoverOut = (e) => gsap.to(e.currentTarget, { scale: 1,    duration: 0.25, ease: "power2.out" });
+
   return (
     <section
       id="who-we-serve"
+      ref={sectionRef}
       className="relative overflow-hidden bg-[#f5f0e7] py-12 lg:py-16"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-16">
 
-        {/* ── HEADING ──────────────────────────────────────────────────────
-            Mobile/tablet: stacked vertically
-            Desktop lg+  : original absolute centered layout               */}
+        {/* ── HEADING ──────────────────────────────────────── */}
         <div className="mb-10 lg:mb-12">
 
           {/* Mobile + Tablet */}
-          <div className="flex flex-col items-center lg:hidden gap-3">
+          <div
+            ref={headingMobileRef}
+            className="flex flex-col items-center lg:hidden gap-3"
+          >
             <div className="flex items-center gap-3">
               <div className="flex flex-col items-center">
                 <div
@@ -111,7 +213,7 @@ export default function WhoWeServe() {
                     maskPosition: "center",
                   }}
                 />
-                <div className="mb-2  w-10" />
+                <div className="mb-2 w-10" />
               </div>
               <div className="flex flex-col">
                 <p className={`${montserrat.className} text-[10px] uppercase tracking-[0.2em] text-[#6E7E45]`} style={{ fontWeight: 500 }}>
@@ -126,9 +228,12 @@ export default function WhoWeServe() {
             </h2>
           </div>
 
-          {/* Desktop — original untouched */}
-          <div className="hidden lg:flex items-start gap-8 relative">
-            <div className="flex items-center gap-3 flex-shrink-0 pt-2">
+          {/* Desktop */}
+          <div
+            ref={headingDesktopRef}
+            className="hidden lg:flex items-start gap-8 relative"
+          >
+            <div data-eyebrow className="flex items-center gap-3 flex-shrink-0 pt-2">
               <div className="flex flex-col items-center">
                 <div
                   className="w-7 h-7 lg:w-8 lg:h-8 bg-[#6E7E45]"
@@ -143,7 +248,7 @@ export default function WhoWeServe() {
                     maskPosition: "center",
                   }}
                 />
-                <div className="mb-2  w-10" />
+                <div className="mb-2 w-10" />
               </div>
               <div className="flex flex-col">
                 <p className={`${montserrat.className} text-[10px] uppercase tracking-[0.2em] text-[#6E7E45]`} style={{ fontWeight: 500 }}>
@@ -152,7 +257,10 @@ export default function WhoWeServe() {
                 <div className="mt-2 h-[0.5px] w-[100px] bg-[#d8d2c4]" />
               </div>
             </div>
-            <h2 className={`${cormorant.className} leading-[1.0] text-[#241A12] absolute left-0 right-0 text-center`}>
+            <h2
+              data-headline
+              className={`${cormorant.className} leading-[1.0] text-[#241A12] absolute left-0 right-0 text-center`}
+            >
               <span className="text-[44px] lg:text-[58px] xl:text-[72px] font-semibold">We Deliver to </span>
               <span className="text-[44px] lg:text-[58px] xl:text-[72px] italic font-medium text-[#4D5B2A]">Everyone</span>
             </h2>
@@ -160,6 +268,7 @@ export default function WhoWeServe() {
 
           {/* Subtext */}
           <p
+            ref={subtaglineRef}
             className={`${montserrat.className} text-[14px] lg:text-[16px] pt-6 sm:pt-8 md:pt-10 lg:pt-12 text-[#5f5146] leading-7 text-center max-w-2xl mx-auto`}
             style={{ fontWeight: 400 }}
           >
@@ -168,31 +277,20 @@ export default function WhoWeServe() {
           </p>
         </div>
 
-        {/* ── SEGMENT ROWS ─────────────────────────────────────────────────
-            Mobile (< sm) : stacked card layout — label on top, desc below
-            sm+           : original horizontal row layout
-            All lg: values untouched                                       */}
-        <div className="flex flex-col mt-6 sm:mt-8">
+        {/* ── SEGMENT ROWS ─────────────────────────────────── */}
+        <div ref={segmentsRef} className="flex flex-col mt-6 sm:mt-8">
           {segments.map((s, i) => (
             <div
               key={i}
-              className="group flex flex-col sm:flex-row items-stretch border-b border-[#6E7E45]/10 hover:bg-[#edf3de]/30 transition-all duration-200 cursor-pointer"
+              data-segment
+              className="group flex flex-col sm:flex-row items-stretch border-b border-[#6E7E45]/10 hover:bg-[#edf3de]/30 transition-colors duration-200 cursor-pointer"
             >
-              {/* Left block — accent bar + label + sub
-                  Mobile: full width, horizontal row with accent bar on left
-                  sm+   : fixed width column as original                   */}
+              {/* Left block */}
               <div className="flex items-center gap-0 w-full sm:w-[260px] md:w-[300px] lg:w-[340px] flex-shrink-0 py-0.5">
-                {/* Colored accent bar */}
-                {/* <div
-                  className="w-[4px] h-full rounded-l-full flex-shrink-0"
-                  style={{ backgroundColor: s.accent }}
-                /> */}
-
                 <div
-  className="w-[4px] self-stretch rounded-l-full flex-shrink-0"
-  style={{ backgroundColor: s.accent }}
-/>
-                {/* Label block */}
+                  className="w-[4px] self-stretch rounded-l-full flex-shrink-0"
+                  style={{ backgroundColor: s.accent }}
+                />
                 <div
                   className="flex flex-col justify-center px-4 sm:px-5 py-3 sm:py-4 rounded-r-2xl flex-1"
                   style={{
@@ -206,7 +304,6 @@ export default function WhoWeServe() {
                   >
                     {s.label}
                   </p>
-                  {/* Sub text hidden on mobile to keep rows compact */}
                   <p
                     className={`${montserrat.className} mt-1 text-[10px] sm:text-[11px] lg:text-[12px] text-[#5f5146] hidden sm:block`}
                     style={{
@@ -227,34 +324,24 @@ export default function WhoWeServe() {
               {/* Vertical divider — hidden on mobile */}
               <div className="hidden sm:block w-px bg-[#6E7E45]/15 flex-shrink-0 mx-4 md:mx-5 lg:mx-6 my-4" />
 
-              {/* Right block — description + arrow
-                  Mobile: description shown below the label block          */}
-{/* Right block — hidden on mobile, shown sm+ */}
-<div className="hidden sm:flex flex-1 items-center justify-between py-3 sm:py-6 px-4 sm:px-0 gap-4">                <p
+              {/* Right block */}
+              <div className="hidden sm:flex flex-1 items-center justify-between py-3 sm:py-6 px-4 sm:px-0 gap-4">
+                <p
                   className={`${montserrat.className} text-[12px] sm:text-[13px] lg:text-[14px] text-[#5f5146] leading-[1.7]`}
                   style={{ fontWeight: 400 }}
                 >
                   {s.desc}
                 </p>
-
-                {/* Arrow — inline on mobile for better tap target */}
-                  {/* <div className="flex items-center sm:px-4 md:px-5 lg:px-6 flex-shrink-0">
-                    <ArrowRight
-                      size={16}
-                      className="text-[#C49A2A] group-hover:translate-x-1 transition-transform duration-200"
-                    />
-                  </div> */}
               </div>
             </div>
           ))}
         </div>
 
-        {/* ── PARTNER BAR ──────────────────────────────────────────────────
-            Mobile: stacked (original already had flex-col on mobile ✅)
-            sm/md : tightened gaps and padding
-            lg+   : original horizontal layout untouched                  */}
-        <div className="mt-8 sm:mt-10 bg-[#f0ece2] border border-[#6E7E45]/15 rounded-2xl px-6 sm:px-8 py-5 sm:py-6 flex flex-col lg:flex-row items-center gap-5 sm:gap-6 lg:gap-0 justify-between">
-
+        {/* ── PARTNER BAR ──────────────────────────────────── */}
+        <div
+          ref={partnerBarRef}
+          className="mt-8 sm:mt-10 bg-[#f0ece2] border border-[#6E7E45]/15 rounded-2xl px-6 sm:px-8 py-5 sm:py-6 flex flex-col lg:flex-row items-center gap-5 sm:gap-6 lg:gap-0 justify-between"
+        >
           {/* Left — Partner text */}
           <div className="lg:flex-1 text-center lg:text-left">
             <p className={`${montserrat.className} text-[15px] sm:text-[16px] text-[#241A12]`} style={{ fontWeight: 700 }}>
@@ -290,7 +377,9 @@ export default function WhoWeServe() {
           <div className="lg:flex-1 flex justify-center lg:justify-end">
             <Link
               href="/contact"
-              className="inline-flex items-stretch rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02]"
+              className="inline-flex items-stretch rounded-lg overflow-hidden"
+              onMouseEnter={hoverIn}
+              onMouseLeave={hoverOut}
             >
               <span className="bg-[#3f4a22] px-4 flex items-center justify-center">
                 <ArrowRight size={16} className="text-[#f5f0e7]" />

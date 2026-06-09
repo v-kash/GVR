@@ -18,52 +18,48 @@ const navLinks = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    // Always start at top on refresh
-    if ("scrollRestoration" in history) {
-      history.scrollRestoration = "manual";
-    }
-
-    window.scrollTo(0, 0);
+    setMounted(true);
+    setScrolled(window.scrollY > 5);
 
     let ticking = false;
-
     const onScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           setScrolled(window.scrollY > 5);
           ticking = false;
         });
-
         ticking = true;
       }
     };
 
-    window.addEventListener("scroll", onScroll);
-
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const isScrolled = mounted && scrolled;
 
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-200 ${
-        scrolled
-          ? "bg-[#f5f0e7]/90 backdrop-blur-2xl  shadow-[0_4px_24px_rgba(110,126,69,0.08)]"
+        isScrolled
+          ? "bg-[#f5f0e7]/90 backdrop-blur-2xl shadow-[0_4px_24px_rgba(110,126,69,0.08)]"
           : "bg-transparent"
       }`}
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-16">
         <div className="flex h-20 items-center justify-between gap-4">
+
           {/* ── Logo ─────────────────────────── */}
-          <a href="#home" className="flex items-center gap-2 flex-shrink-0 ">
+          <a href="/" className="flex items-center gap-2 flex-shrink-0">
             <img
               src="/GVRLogo.png"
               alt="GVR Fresh Foods"
               className="h-12 w-auto object-contain"
             />
-           
           </a>
 
           {/* ── Desktop Nav ──────────────────── */}
@@ -73,7 +69,7 @@ export default function Navbar() {
                 key={link.label}
                 href={link.href}
                 className={`${montserrat.className} text-[11px] uppercase tracking-[0.12em] transition-all duration-300 ${
-                  scrolled
+                  isScrolled
                     ? "text-[#5f5146] hover:text-[#4D5B2A]"
                     : "text-[#241A12]/80 hover:text-[#95af55]"
                 }`}
@@ -91,7 +87,7 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               className={`${montserrat.className} inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 text-[10px] uppercase tracking-[0.12em] transition-all duration-300 ${
-                scrolled
+                isScrolled
                   ? "border-[#6E7E45]/30 text-[#4D5B2A] hover:bg-[#6E7E45]/10"
                   : "border-[#241A12]/20 text-[#241A12]/70 hover:border-[#6E7E45]/40 hover:text-[#4D5B2A]"
               }`}
@@ -101,11 +97,8 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* ── Mobile right side: ORDER NOW + hamburger ── */}
+          {/* ── Mobile: hamburger ────────────── */}
           <div className="lg:hidden flex items-center gap-3 flex-shrink-0">
-            {/* ORDER NOW split button — mobile only */}
-
-            {/* Hamburger */}
             <button
               className="flex flex-col gap-[5px] p-1"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -128,6 +121,7 @@ export default function Navbar() {
               />
             </button>
           </div>
+
         </div>
       </div>
 
@@ -151,7 +145,7 @@ export default function Navbar() {
               </a>
             ))}
 
-            {/* Mobile menu bottom CTAs */}
+            {/* Mobile CTAs */}
             <div className="flex gap-3 pt-2 border-t border-[#6E7E45]/10">
               <a
                 href="tel:+919448453609"

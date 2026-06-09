@@ -5,6 +5,10 @@ import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import productsData from "@/data/products.json";
 import Link from "next/link";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -38,16 +42,95 @@ export default function ProductCollection() {
   const [current, setCurrent] = useState(0);
   const scrollRef = useRef(null);
 
-  // Card width matches w-[180px] + gap-4 (~20px) on mobile
-  const CARD_WIDTH = 200;
+  // ── Animation refs ────────────────────────────────────
+  const sectionRef   = useRef(null);
+  const headingRef   = useRef(null);
+  const subtextRef   = useRef(null);
+  const carouselRef  = useRef(null);
+  const dotsRef      = useRef(null);
 
-  // Infinite: clone first and last few cards
+  const CARD_WIDTH = 200;
   const cloned = [...products.slice(-2), ...products, ...products.slice(0, 2)];
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollLeft = CARD_WIDTH * 2;
     }
+  }, []);
+
+  // ── Animations ────────────────────────────────────────
+  useEffect(() => {
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReduced) {
+      [headingRef, subtextRef, carouselRef, dotsRef].forEach((r) => {
+        if (r.current) gsap.set(r.current, { opacity: 1, y: 0 });
+      });
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      // ── Initial hidden states ──────────────────────────
+      gsap.set(
+        [
+          headingRef.current,
+          subtextRef.current,
+          carouselRef.current,
+          dotsRef.current,
+        ].filter(Boolean),
+        { opacity: 0 }
+      );
+
+      // ── Scroll-triggered timeline ──────────────────────
+      // start: "top 95%" — fires almost as soon as the section
+      // peeks in, since it's just below a short 55vh hero
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 95%",
+          once: true,
+        },
+      });
+
+      if (headingRef.current) {
+        tl.fromTo(
+          headingRef.current,
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }
+        );
+      }
+
+      if (subtextRef.current) {
+        tl.fromTo(
+          subtextRef.current,
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+          "-=0.35"
+        );
+      }
+
+      if (carouselRef.current) {
+        tl.fromTo(
+          carouselRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" },
+          "-=0.25"
+        );
+      }
+
+      if (dotsRef.current) {
+        tl.fromTo(
+          dotsRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.5, ease: "power3.out" },
+          "-=0.3"
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   const handleScroll = () => {
@@ -64,27 +147,27 @@ export default function ProductCollection() {
   };
 
   const prev = () => {
-    if (scrollRef.current) {
+    if (scrollRef.current)
       scrollRef.current.scrollBy({ left: -CARD_WIDTH, behavior: "smooth" });
-    }
   };
-
   const next = () => {
-    if (scrollRef.current) {
+    if (scrollRef.current)
       scrollRef.current.scrollBy({ left: CARD_WIDTH, behavior: "smooth" });
-    }
   };
 
   return (
-    <section id="eggs" className="relative bg-[#f5f0e7] overflow-hidden py-8 sm:py-8 md:py-10 lg:py-12 xl:py-16">
-
+    <section
+      ref={sectionRef}
+      id="eggs"
+      className="relative bg-[#f5f0e7] overflow-hidden py-8 sm:py-8 md:py-10 lg:py-12 xl:py-16"
+    >
       <div className="mx-auto max-w-7xl px-6 lg:px-16">
 
-        {/* ── HEADING ──────────────────────────────────────────────────────
-            Mobile/tablet: stacked vertically
-            Desktop lg+  : original absolute centered layout               */}
-        <div className="max-w-7xl mx-auto px-6 lg:px-0 mb-12 sm:mb-12 md:mb-14 lg:mb-16">
-
+        {/* ── HEADING ───────────────────────────────────────── */}
+        <div
+          ref={headingRef}
+          className="max-w-7xl mx-auto px-6 lg:px-0 mb-12 sm:mb-12 md:mb-14 lg:mb-16 opacity-0"
+        >
           {/* Mobile + Tablet */}
           <div className="flex flex-col items-center lg:hidden gap-3">
             <div className="flex items-center gap-3">
@@ -119,7 +202,7 @@ export default function ProductCollection() {
             </h2>
           </div>
 
-          {/* Desktop — original absolute layout untouched */}
+          {/* Desktop */}
           <div className="hidden lg:flex items-start gap-8 relative">
             <div className="flex items-center gap-3 flex-shrink-0 pt-2">
               <div className="flex flex-col items-center">
@@ -155,17 +238,19 @@ export default function ProductCollection() {
             </h2>
           </div>
 
-          {/* Subtext */}
+          {/* Subtext — inside heading wrapper intentionally,
+              gets its own ref for staggered timing             */}
           <p
-            className={`${montserrat.className} text-[13px] sm:text-[13px] md:text-[14px] lg:text-[14px] xl:text-[15px] text-[#5f5146] leading-7 pt-6 sm:pt-6 md:pt-6 lg:pt-8 text-center max-w-lg mx-auto`}
+            ref={subtextRef}
+            className={`${montserrat.className} text-[13px] sm:text-[13px] md:text-[14px] lg:text-[14px] xl:text-[15px] text-[#5f5146] leading-7 pt-6 sm:pt-6 md:pt-6 lg:pt-8 text-center max-w-lg mx-auto opacity-0`}
           >
             Farm-fresh eggs and carefully selected products, delivered with
             quality, nutrition, and trust.
           </p>
         </div>
 
-        {/* ── CAROUSEL ─────────────────────────────────────────────────── */}
-        <div className="relative mt-6 sm:mt-8 md:mt-10">
+        {/* ── CAROUSEL ──────────────────────────────────────── */}
+        <div ref={carouselRef} className="relative mt-6 sm:mt-8 md:mt-10 opacity-0">
 
           {/* Left arrow */}
           <button
@@ -185,15 +270,13 @@ export default function ProductCollection() {
 
           {/* Scroll container */}
           <div className="relative">
-            {/* Left fade */}
             <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-20 lg:w-24 bg-gradient-to-r from-[#f5f0e7] to-transparent z-10 pointer-events-none" />
-            {/* Right fade */}
             <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-20 lg:w-24 bg-gradient-to-l from-[#f5f0e7] to-transparent z-10 pointer-events-none" />
 
             <div
               ref={scrollRef}
               onScroll={handleScroll}
-              className="flex gap-4 overflow-x-auto    pb-6  px-[28%] sm:px-[32%] md:px-[42%] lg:px-[24%] xl:px-[18%]"
+              className="flex gap-4 overflow-x-auto pb-6 px-[28%] sm:px-[32%] md:px-[42%] lg:px-[24%] xl:px-[18%]"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
               {cloned.map((p, i) => (
@@ -202,8 +285,6 @@ export default function ProductCollection() {
                   href={`/products/${p.slug}`}
                   className="flex-shrink-0 w-[180px] sm:w-[200px] md:w-[220px] lg:w-[240px] xl:w-[240px] bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] border border-[#e8e0d4] relative hover:border-[#6E7E45]/40 hover:shadow-[0_4px_20px_rgba(110,126,69,0.10)] transition-all duration-200 cursor-pointer"
                 >
-                  {/* Image
-                      sm: 160px  md: 180px  lg: 200px  xl: 220px         */}
                   <div className="h-[160px] sm:h-[180px] md:h-[200px] lg:h-[200px] xl:h-[220px] rounded-t-2xl overflow-hidden bg-[#fdf8f0]">
                     <img
                       src={p.image}
@@ -212,15 +293,13 @@ export default function ProductCollection() {
                     />
                   </div>
 
-                  {/* Icon circle — top matches image height
-                      sm: top-[136px]  md: top-[156px]  lg/xl: top-[196px] */}
                   <div
                     className="absolute left-1/2 -translate-x-1/2 z-10
                       top-[136px] sm:top-[156px] md:top-[176px] lg:top-[176px] xl:top-[196px]"
                   >
                     <div className="w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-full bg-white border-2 border-[#f5f0e7] shadow-[0_2px_8px_rgba(0,0,0,0.08)] flex items-center justify-center">
                       <div
-                        className="w-9 h-9 sm:w-9 sm:h-9  md:w-10 sm:h-10 lg:w-12 lg:h-12 xl:w-12 xl:h-12 bg-[#717f3d]"
+                        className="w-9 h-9 sm:w-9 sm:h-9 md:w-10 sm:h-10 lg:w-12 lg:h-12 xl:w-12 xl:h-12 bg-[#717f3d]"
                         style={{
                           WebkitMaskImage: `url(${p.icon})`,
                           maskImage: `url(${p.icon})`,
@@ -235,7 +314,6 @@ export default function ProductCollection() {
                     </div>
                   </div>
 
-                  {/* Content */}
                   <div className="pt-7 sm:pt-7 md:pt-8 lg:pt-8 pb-5 sm:pb-5 md:pb-6 lg:pb-6 px-4 sm:px-4 md:px-5 lg:px-5 text-center">
                     <p
                       className={`${montserrat.className} text-[11px] sm:text-[11px] md:text-[12px] lg:text-[12px] uppercase tracking-[0.12em] text-[#241A12]`}
@@ -257,8 +335,8 @@ export default function ProductCollection() {
           </div>
         </div>
 
-        {/* Dots — original untouched */}
-        <div className="flex items-center justify-center gap-2 mt-4">
+        {/* ── DOTS ──────────────────────────────────────────── */}
+        <div ref={dotsRef} className="flex items-center justify-center gap-2 mt-4 opacity-0">
           {products.map((_, i) => (
             <button
               key={i}

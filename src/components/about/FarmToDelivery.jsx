@@ -1,6 +1,11 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -31,7 +36,6 @@ const steps = [
     desc: "Eggs are carefully cleaned (if required) and packed hygienically to keep them safe and fresh.",
     icon: "/icons/PackageBox.svg",
   },
-  
   {
     number: "04",
     title: "Safe & Timely Delivery",
@@ -46,21 +50,190 @@ const steps = [
   },
 ];
 
-const topRow = steps.slice(0, 3);
+const topRow    = steps.slice(0, 3);
 const bottomRow = [steps[4], steps[3]];
 
 export default function FarmToDelivery() {
+  // ── Refs ──────────────────────────────────────────────
+  const sectionRef        = useRef(null);
+  const headingMobileRef  = useRef(null);
+  const headingDesktopRef = useRef(null);
+  const subtaglineRef     = useRef(null);
+
+  // Mobile single-col
+  const mobileColRef = useRef(null);
+  // Tablet 2-col grid
+  const tabletGridRef = useRef(null);
+
+  // Desktop SVG + cards
+  const svgPathRef    = useRef(null);   // the <svg> element
+  const topRowRef     = useRef(null);
+  const bottomRowRef  = useRef(null);
+
+  // ── Animations ────────────────────────────────────────
+  useEffect(() => {
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+
+      // ── Mobile heading ─────────────────────────────────
+      if (headingMobileRef.current) {
+        gsap.fromTo(
+          headingMobileRef.current,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+            scrollTrigger: { trigger: headingMobileRef.current, start: "top 80%", once: true },
+          }
+        );
+      }
+
+      // ── Desktop heading ────────────────────────────────
+      if (headingDesktopRef.current) {
+        const eyebrow = headingDesktopRef.current.querySelector("[data-eyebrow]");
+        const spans   = headingDesktopRef.current.querySelectorAll("[data-headline] span");
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: headingDesktopRef.current, start: "top 80%", once: true },
+        });
+        if (eyebrow) tl.fromTo(eyebrow, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" });
+        if (spans.length) tl.fromTo(spans, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.13 }, "-=0.4");
+      }
+
+      // ── Sub-tagline ────────────────────────────────────
+      if (subtaglineRef.current) {
+        gsap.fromTo(
+          subtaglineRef.current,
+          { opacity: 0, y: 16 },
+          {
+            opacity: 1, y: 0, duration: 0.7, ease: "power3.out",
+            scrollTrigger: { trigger: subtaglineRef.current, start: "top 80%", once: true },
+          }
+        );
+      }
+
+      // ── MOBILE: step cards + connector lines ───────────
+      // Cards stagger fade-up; connector lines grow downward after card enters.
+      if (mobileColRef.current) {
+        const cards     = mobileColRef.current.querySelectorAll("[data-step-card]");
+        const connectors = mobileColRef.current.querySelectorAll("[data-connector]");
+
+        // Initial state — hide all connectors (scaleY 0 from top)
+        gsap.set(connectors, { scaleY: 0, transformOrigin: "top center" });
+
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 24, x: -12 },
+          {
+            opacity: 1, y: 0, x: 0,
+            duration: 0.65,
+            ease: "power3.out",
+            stagger: 0.15,
+            scrollTrigger: {
+              trigger: mobileColRef.current,
+              start: "top 80%",
+              once: true,
+              onEnter: () => {
+                // Connector lines grow down after each card with a matching delay
+                gsap.to(connectors, {
+                  scaleY: 1,
+                  duration: 0.4,
+                  ease: "power2.out",
+                  stagger: 0.15,
+                  delay: 0.2,
+                });
+              },
+            },
+          }
+        );
+      }
+
+      // ── TABLET: 2-col grid cards — stagger fade-up ─────
+      if (tabletGridRef.current) {
+        const cards = tabletGridRef.current.querySelectorAll("[data-step-card]");
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 28, scale: 0.97 },
+          {
+            opacity: 1, y: 0, scale: 1,
+            duration: 0.7,
+            ease: "power3.out",
+            stagger: 0.1,
+            scrollTrigger: { trigger: tabletGridRef.current, start: "top 80%", once: true },
+          }
+        );
+      }
+
+      // ── DESKTOP: SVG path draw → then stagger cards ────
+      // Measure total path length, set dasharray/offset, then tween offset to 0.
+      // Step cards fade in sequentially timed to when the line "arrives" at each.
+      if (svgPathRef.current) {
+        // Collect all drawn path segments (lines + curves, not the arrowhead polygon)
+        const pathEls = svgPathRef.current.querySelectorAll("line, path");
+
+        pathEls.forEach((el) => {
+          const len = el.getTotalLength ? el.getTotalLength() : 500;
+          gsap.set(el, {
+            strokeDasharray: len,
+            strokeDashoffset: len,
+          });
+        });
+
+        const svgTl = gsap.timeline({
+          scrollTrigger: { trigger: svgPathRef.current, start: "top 80%", once: true },
+        });
+
+        // Draw the full connector path over 1.6s
+        svgTl.to(pathEls, {
+          strokeDashoffset: 0,
+          duration: 1.6,
+          ease: "power2.inOut",
+          stagger: 0,  // all segments draw simultaneously for a single continuous feel
+        });
+
+        // Top row cards — stagger in while path is drawing
+        if (topRowRef.current) {
+          const topCards = topRowRef.current.querySelectorAll("[data-step-card]");
+          svgTl.fromTo(
+            topCards,
+            { opacity: 0, y: 24 },
+            { opacity: 1, y: 0, duration: 0.65, ease: "power3.out", stagger: 0.18 },
+            "-=1.3"  // overlap with path draw — cards appear as line passes them
+          );
+        }
+
+        // Bottom row cards — stagger in as path curves down and back
+        if (bottomRowRef.current) {
+          const bottomCards = bottomRowRef.current.querySelectorAll("[data-step-card]");
+          svgTl.fromTo(
+            bottomCards,
+            { opacity: 0, y: 24 },
+            { opacity: 1, y: 0, duration: 0.65, ease: "power3.out", stagger: 0.18 },
+            "-=0.5"
+          );
+        }
+      }
+
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       className={`${montserrat.className} relative bg-[#f5efe3] py-16 lg:py-20 overflow-hidden`}
     >
-      {/* ── HEADING ──────────────────────────────────────────────────────
-          Mobile/tablet: stacked vertically
-          Desktop lg+  : original absolute centered layout                */}
+      {/* ── HEADING ──────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-6 lg:px-16 mb-[72px]">
 
         {/* Mobile + Tablet */}
-        <div className="flex flex-col items-center lg:hidden gap-3">
+        <div
+          ref={headingMobileRef}
+          className="flex flex-col items-center lg:hidden gap-3"
+        >
           <div className="flex items-center gap-3">
             <div className="flex flex-col items-center">
               <div
@@ -93,9 +266,12 @@ export default function FarmToDelivery() {
           </h2>
         </div>
 
-        {/* Desktop — original untouched */}
-        <div className="hidden lg:flex items-start gap-8 relative">
-          <div className="flex items-center gap-3 flex-shrink-0 pt-2">
+        {/* Desktop */}
+        <div
+          ref={headingDesktopRef}
+          className="hidden lg:flex items-start gap-8 relative"
+        >
+          <div data-eyebrow className="flex items-center gap-3 flex-shrink-0 pt-2">
             <div className="flex flex-col items-center">
               <div
                 className="w-7 h-7 lg:w-9 lg:h-9 bg-[#6E7E45]"
@@ -122,6 +298,7 @@ export default function FarmToDelivery() {
             </div>
           </div>
           <h2
+            data-headline
             className={`${cormorant.className} leading-[1.0] text-[#241A12] flex-1 text-center absolute left-0 right-0`}
           >
             <span className="text-[48px] lg:text-[52px] xl:text-[60px] font-semibold">Farm to Delivery </span>
@@ -131,6 +308,7 @@ export default function FarmToDelivery() {
 
         {/* Subtext */}
         <p
+          ref={subtaglineRef}
           className={`${montserrat.className} text-[13px] sm:text-[13px] md:text-[14px] lg:text-[14px] xl:text-[15px] text-[#5f5146] leading-7 pt-6 sm:pt-6 md:pt-8 lg:pt-8 text-center max-w-lg mx-auto`}
           style={{ fontWeight: 400 }}
         >
@@ -138,17 +316,14 @@ export default function FarmToDelivery() {
         </p>
       </div>
 
-      {/* ── PROCESS STEPS — MOBILE & TABLET (< lg) ───────────────────────
-          FIXED: max-w-sm → max-w-xl for tablet breathing room
-          FIXED: icon now uses mask div instead of raw string render
-          md: 2-col grid so tablet shows steps side by side               */}
+      {/* ── MOBILE & TABLET (< lg) ────────────────────────── */}
       <div className="lg:hidden max-w-xl md:max-w-3xl mx-auto px-6">
 
-        {/* Mobile (< md): single column stacked */}
-        <div className="flex flex-col gap-6 md:hidden">
+        {/* Mobile (< md): single column */}
+        <div ref={mobileColRef} className="flex flex-col gap-6 md:hidden">
           {steps.map((step, i) => (
-            <div key={step.number} className="flex gap-4 items-start">
-              {/* Number + vertical line */}
+            <div key={step.number} data-step-card className="flex gap-4 items-start">
+              {/* Number + vertical connector */}
               <div className="flex flex-col items-center gap-1 flex-shrink-0">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#1a2e14] flex items-center justify-center">
                   <span className="text-[10px] sm:text-[11px] text-white tracking-widest" style={{ fontWeight: 600 }}>
@@ -156,12 +331,14 @@ export default function FarmToDelivery() {
                   </span>
                 </div>
                 {i < steps.length - 1 && (
-                  <div className="w-px flex-1 min-h-[60px] bg-[#c8a84b]" />
+                  <div
+                    data-connector
+                    className="w-px flex-1 min-h-[60px] bg-[#c8a84b]"
+                  />
                 )}
               </div>
-              {/* Card */}
+              {/* Card content */}
               <div className="flex flex-col gap-2">
-                {/* Icon circle — FIXED: was rendering path string directly */}
                 <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#ede8d8] flex items-center justify-center">
                   <div
                     className="w-13 h-13 sm:w-13 sm:h-13 bg-[#717f3d]"
@@ -191,19 +368,16 @@ export default function FarmToDelivery() {
           ))}
         </div>
 
-        {/* Tablet (md): 2-col grid — more visual, less vertical scroll */}
-        <div className="hidden md:grid grid-cols-2 gap-6">
-          {steps.map((step, i) => (
-            <div key={step.number} className="flex gap-4 items-start p-4 rounded-xl bg-[#ede8d8]/40">
-              {/* Number bubble */}
+        {/* Tablet (md): 2-col grid */}
+        <div ref={tabletGridRef} className="hidden md:grid grid-cols-2 gap-6">
+          {steps.map((step) => (
+            <div key={step.number} data-step-card className="flex gap-4 items-start p-4 rounded-xl bg-[#ede8d8]/40">
               <div className="w-10 h-10 rounded-full bg-[#1a2e14] flex items-center justify-center flex-shrink-0">
                 <span className="text-[11px] text-white tracking-widest" style={{ fontWeight: 600 }}>
                   {step.number}
                 </span>
               </div>
-              {/* Content */}
               <div>
-                {/* Icon */}
                 <div className="w-12 h-12 rounded-full bg-[#ede8d8] flex items-center justify-center mb-3">
                   <div
                     className="w-12 h-12 bg-[#717f3d]"
@@ -232,9 +406,12 @@ export default function FarmToDelivery() {
         </div>
       </div>
 
-      {/* ── PROCESS STEPS — DESKTOP (lg+) — original untouched ────────── */}
+      {/* ── DESKTOP (lg+) — SVG path draw + step cards ───── */}
       <div className="hidden lg:block max-w-6xl mx-auto px-6 lg:px-16 relative">
+
+        {/* SVG connector — ref for path-draw animation */}
         <svg
+          ref={svgPathRef}
           className="absolute top-[28px] left-0 w-full pointer-events-none"
           height="500"
           viewBox="0 0 980 500"
@@ -255,7 +432,7 @@ export default function FarmToDelivery() {
         </svg>
 
         {/* Top row */}
-        <div className="relative flex items-start justify-between mb-2">
+        <div ref={topRowRef} className="relative flex items-start justify-between mb-2">
           {topRow.map((step) => (
             <StepCard key={step.number} step={step} align="top" />
           ))}
@@ -264,7 +441,7 @@ export default function FarmToDelivery() {
         <div className="h-12" />
 
         {/* Bottom row */}
-        <div className="relative flex items-center justify-center ml-1">
+        <div ref={bottomRowRef} className="relative flex items-center justify-center ml-1">
           <div className="flex justify-between w-[66.66%]">
             {bottomRow.map((step) => (
               <StepCard key={step.number} step={step} align="bottom" />
@@ -279,7 +456,7 @@ export default function FarmToDelivery() {
 /* ── Step Card — desktop only ── */
 function StepCard({ step }) {
   return (
-    <div className="flex flex-col items-center w-[300px] flex-shrink-0 pt-[12px]">
+    <div data-step-card className="flex flex-col items-center w-[300px] flex-shrink-0 pt-[12px]">
       <div className="w-10 h-10 rounded-full bg-[#1a2e14] flex items-center justify-center z-10 relative mb-4">
         <span
           className={`${montserrat.className} text-[16px] text-white tracking-[0.15em]`}
