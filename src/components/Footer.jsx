@@ -64,21 +64,21 @@ export default function Footer() {
       if (prefersReducedMotion) return;
 
       const ctx = gsap.context(() => {
-        gsap.to("[data-float-leaf-left]", {
-          y: -16,
-          duration: 3.8,
-          ease: "sine.inOut",
-          repeat: -1,
-          yoyo: true,
-        });
+        // gsap.to("[data-float-leaf-left]", {
+        //   y: -16,
+        //   duration: 3.8,
+        //   ease: "sine.inOut",
+        //   repeat: -1,
+        //   yoyo: true,
+        // });
 
-        gsap.to("[data-float-leaf-right]", {
-          y: -18,
-          duration: 4.4,
-          ease: "sine.inOut",
-          repeat: -1,
-          yoyo: true,
-        });
+        // gsap.to("[data-float-leaf-right]", {
+        //   y: -18,
+        //   duration: 4.4,
+        //   ease: "sine.inOut",
+        //   repeat: -1,
+        //   yoyo: true,
+        // });
 
         gsap.from("[data-footer-brand]", {
           opacity: 0,
