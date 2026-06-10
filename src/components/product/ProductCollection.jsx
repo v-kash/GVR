@@ -21,12 +21,12 @@ const montserrat = Montserrat({
 });
 
 const iconMap = {
-  "country-eggs": "/icons/Farm.svg",
-  "brown-eggs": "/icons/Egg.svg",
-  "white-eggs": "/icons/Egg.svg",
-  "duck-eggs": "/icons/Duck.svg",
-  "quail-eggs": "/icons/Quails.svg",
-  "kadaknath-eggs": "/icons/Kadaknath.svg",
+  "country-eggs":     "/icons/Farm.svg",
+  "brown-eggs":       "/icons/Egg.svg",
+  "white-eggs":       "/icons/Egg.svg",
+  "duck-eggs":        "/icons/Duck.svg",
+  "quail-eggs":       "/icons/Quails.svg",
+  "kadaknath-eggs":   "/icons/Kadaknath.svg",
   "premium-dry-fish": "/icons/Fish.svg",
 };
 
@@ -38,20 +38,23 @@ const products = productsData.products.map((p) => ({
   slug: p.slug,
 }));
 
+// Inline style — opacity:0 baked into SSR HTML so element is
+// invisible from the very first browser paint, before JS loads.
+const HIDDEN = { opacity: 0 };
+
 export default function ProductCollection() {
   const [current, setCurrent] = useState(0);
-  const scrollRef = useRef(null);
-
-  // ── Animation refs ────────────────────────────────────
-  const sectionRef   = useRef(null);
-  const headingRef   = useRef(null);
-  const subtextRef   = useRef(null);
-  const carouselRef  = useRef(null);
-  const dotsRef      = useRef(null);
+  const scrollRef   = useRef(null);
+  const sectionRef  = useRef(null);
+  const headingRef  = useRef(null);
+  const subtextRef  = useRef(null);
+  const carouselRef = useRef(null);
+  const dotsRef     = useRef(null);
 
   const CARD_WIDTH = 200;
   const cloned = [...products.slice(-2), ...products, ...products.slice(0, 2)];
 
+  // ── Carousel scroll init ──────────────────────────────
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollLeft = CARD_WIDTH * 2;
@@ -71,28 +74,10 @@ export default function ProductCollection() {
       return;
     }
 
-    const ctx = gsap.context(() => {
-      // ── Initial hidden states ──────────────────────────
-      gsap.set(
-        [
-          headingRef.current,
-          subtextRef.current,
-          carouselRef.current,
-          dotsRef.current,
-        ].filter(Boolean),
-        { opacity: 0 }
-      );
-
-      // ── Scroll-triggered timeline ──────────────────────
-      // start: "top 95%" — fires almost as soon as the section
-      // peeks in, since it's just below a short 55vh hero
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 95%",
-          once: true,
-        },
-      });
+    // The animation timeline — reused whether triggered by
+    // ScrollTrigger or played immediately on load.
+    const playEntrance = () => {
+      const tl = gsap.timeline();
 
       if (headingRef.current) {
         tl.fromTo(
@@ -101,7 +86,6 @@ export default function ProductCollection() {
           { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }
         );
       }
-
       if (subtextRef.current) {
         tl.fromTo(
           subtextRef.current,
@@ -110,7 +94,6 @@ export default function ProductCollection() {
           "-=0.35"
         );
       }
-
       if (carouselRef.current) {
         tl.fromTo(
           carouselRef.current,
@@ -119,7 +102,6 @@ export default function ProductCollection() {
           "-=0.25"
         );
       }
-
       if (dotsRef.current) {
         tl.fromTo(
           dotsRef.current,
@@ -128,9 +110,44 @@ export default function ProductCollection() {
           "-=0.3"
         );
       }
-    }, sectionRef);
+    };
 
-    return () => ctx.revert();
+    // Wait two animation frames:
+    // Frame 1 — React finishes painting, inline style="opacity:0" is live
+    // Frame 2 — GSAP ScrollTrigger has measured all positions
+    // After both frames, check if section is already in viewport.
+    // If yes → play immediately (handles the reload-while-in-view case).
+    // If no  → set up ScrollTrigger to play when it enters.
+    let st;
+    const raf1 = requestAnimationFrame(() => {
+      const raf2 = requestAnimationFrame(() => {
+
+        if (!sectionRef.current) return;
+
+        const rect = sectionRef.current.getBoundingClientRect();
+        const alreadyInView = rect.top < window.innerHeight && rect.bottom > 0;
+
+        if (alreadyInView) {
+          // Section is visible right now (reload while scrolled here).
+          // Play the entrance immediately — no ScrollTrigger needed.
+          playEntrance();
+        } else {
+          // Section is off-screen. Set up ScrollTrigger to fire when
+          // the user scrolls to it.
+          st = ScrollTrigger.create({
+            trigger: sectionRef.current,
+            start: "top 95%",
+            once: true,
+            onEnter: playEntrance,
+          });
+        }
+      });
+    });
+
+    return () => {
+      cancelAnimationFrame(raf1);
+      if (st) st.kill();
+    };
   }, []);
 
   const handleScroll = () => {
@@ -163,10 +180,11 @@ export default function ProductCollection() {
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-16">
 
-        {/* ── HEADING ───────────────────────────────────────── */}
+        {/* ── HEADING ──────────────────────────────────────── */}
         <div
           ref={headingRef}
-          className="max-w-7xl mx-auto px-6 lg:px-0 mb-12 sm:mb-12 md:mb-14 lg:mb-16 opacity-0"
+          style={HIDDEN}
+          className="max-w-7xl mx-auto px-6 lg:px-0 mb-12 sm:mb-12 md:mb-14 lg:mb-16"
         >
           {/* Mobile + Tablet */}
           <div className="flex flex-col items-center lg:hidden gap-3">
@@ -238,29 +256,28 @@ export default function ProductCollection() {
             </h2>
           </div>
 
-          {/* Subtext — inside heading wrapper intentionally,
-              gets its own ref for staggered timing             */}
           <p
             ref={subtextRef}
-            className={`${montserrat.className} text-[13px] sm:text-[13px] md:text-[14px] lg:text-[14px] xl:text-[15px] text-[#5f5146] leading-7 pt-6 sm:pt-6 md:pt-6 lg:pt-8 text-center max-w-lg mx-auto opacity-0`}
+            style={HIDDEN}
+            className={`${montserrat.className} text-[13px] sm:text-[13px] md:text-[14px] lg:text-[14px] xl:text-[15px] text-[#5f5146] leading-7 pt-6 sm:pt-6 md:pt-6 lg:pt-8 text-center max-w-lg mx-auto`}
           >
             Farm-fresh eggs and carefully selected products, delivered with
             quality, nutrition, and trust.
           </p>
         </div>
 
-        {/* ── CAROUSEL ──────────────────────────────────────── */}
-        <div ref={carouselRef} className="relative mt-6 sm:mt-8 md:mt-10 opacity-0">
-
-          {/* Left arrow */}
+        {/* ── CAROUSEL ─────────────────────────────────────── */}
+        <div
+          ref={carouselRef}
+          style={HIDDEN}
+          className="relative mt-6 sm:mt-8 md:mt-10"
+        >
           <button
             onClick={prev}
             className="absolute left-2 sm:left-3 lg:left-8 top-[45%] -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-full bg-white border border-[#e8e0d4] shadow-[0_4px_16px_rgba(0,0,0,0.08)] flex items-center justify-center hover:bg-[#f5f0e7] transition-colors"
           >
             <ChevronLeft size={16} className="text-[#5f5146]" />
           </button>
-
-          {/* Right arrow */}
           <button
             onClick={next}
             className="absolute right-2 sm:right-3 lg:right-8 top-[45%] -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-full bg-white border border-[#e8e0d4] shadow-[0_4px_16px_rgba(0,0,0,0.08)] flex items-center justify-center hover:bg-[#f5f0e7] transition-colors"
@@ -268,7 +285,6 @@ export default function ProductCollection() {
             <ChevronRight size={16} className="text-[#5f5146]" />
           </button>
 
-          {/* Scroll container */}
           <div className="relative">
             <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-20 lg:w-24 bg-gradient-to-r from-[#f5f0e7] to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-20 lg:w-24 bg-gradient-to-l from-[#f5f0e7] to-transparent z-10 pointer-events-none" />
@@ -292,11 +308,7 @@ export default function ProductCollection() {
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.04]"
                     />
                   </div>
-
-                  <div
-                    className="absolute left-1/2 -translate-x-1/2 z-10
-                      top-[136px] sm:top-[156px] md:top-[176px] lg:top-[176px] xl:top-[196px]"
-                  >
+                  <div className="absolute left-1/2 -translate-x-1/2 z-10 top-[136px] sm:top-[156px] md:top-[176px] lg:top-[176px] xl:top-[196px]">
                     <div className="w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-full bg-white border-2 border-[#f5f0e7] shadow-[0_2px_8px_rgba(0,0,0,0.08)] flex items-center justify-center">
                       <div
                         className="w-9 h-9 sm:w-9 sm:h-9 md:w-10 sm:h-10 lg:w-12 lg:h-12 xl:w-12 xl:h-12 bg-[#717f3d]"
@@ -313,7 +325,6 @@ export default function ProductCollection() {
                       />
                     </div>
                   </div>
-
                   <div className="pt-7 sm:pt-7 md:pt-8 lg:pt-8 pb-5 sm:pb-5 md:pb-6 lg:pb-6 px-4 sm:px-4 md:px-5 lg:px-5 text-center">
                     <p
                       className={`${montserrat.className} text-[11px] sm:text-[11px] md:text-[12px] lg:text-[12px] uppercase tracking-[0.12em] text-[#241A12]`}
@@ -335,8 +346,12 @@ export default function ProductCollection() {
           </div>
         </div>
 
-        {/* ── DOTS ──────────────────────────────────────────── */}
-        <div ref={dotsRef} className="flex items-center justify-center gap-2 mt-4 opacity-0">
+        {/* ── DOTS ─────────────────────────────────────────── */}
+        <div
+          ref={dotsRef}
+          style={HIDDEN}
+          className="flex items-center justify-center gap-2 mt-4"
+        >
           {products.map((_, i) => (
             <button
               key={i}

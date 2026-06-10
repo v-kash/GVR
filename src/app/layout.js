@@ -1,7 +1,6 @@
 import "./globals.css";
 import { Libre_Baskerville } from "next/font/google";
-import ScrollToTop from "@/components/ScrollToTop";
-
+import ScrollReset from "@/components/ScrollReset";
 const libre = Libre_Baskerville({
   variable: "--font-main",
   subsets: ["latin"],
@@ -16,12 +15,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${libre.variable} h-full antialiased`}
-    >
-       {/* <ScrollToTop />  */}
+    <html lang="en" className={`${libre.variable} h-full antialiased`}>
       <body className="min-h-full bg-[#f8f4ee] text-[#3e2f26] font-[family-name:var(--font-main)]">
+        <ScrollReset />
         {children}
       </body>
     </html>
