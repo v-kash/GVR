@@ -242,7 +242,7 @@ useGSAP(
         <div className="absolute right-0 top-0  hidden md:block sm:w-[75%]   md:w-[80%]   lg:w-[75%] xl:w-[75%]    ">
           <img
           data-parallax-image
-            src="/about/philosophybg2.png"
+            src="/about/philosophybg2.webp"
             alt="Farm fresh eggs in nest"
             className="w-full h-full object-cover object-center"
           />

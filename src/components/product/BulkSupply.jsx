@@ -331,11 +331,11 @@ export default function BulkSupply() {
         <div ref={mobileGridRef} className="md:hidden grid grid-cols-2 gap-4 mb-8">
           {[
             { photo: "/products/c6.png", title: "Retailers",    desc: "Consistent supply of fresh eggs to keep your shelves always stocked." },
-            { photo: "/products/c5.png", title: "Hotels",       desc: "Reliable bulk supply to deliver great experiences every day." },
-            { photo: "/products/c1.png", title: "Cafes",        desc: "From breakfast to brunch, we keep your kitchen running." },
-            { photo: "/products/c2.png", title: "Restaurants",  desc: "Premium quality eggs for delicious dishes your customers love." },
-            { photo: "/products/c3.png", title: "Bakeries",     desc: "Fresh, high-quality eggs that bring perfection to every bake." },
-            { photo: "/products/c4.png", title: "Distributors", desc: "Partner with us for a steady supply you can count on." },
+            { photo: "/products/c1.png", title: "Hotels",       desc: "Reliable bulk supply to deliver great experiences every day." },
+            { photo: "/products/c2.png", title: "Cafes",        desc: "From breakfast to brunch, we keep your kitchen running." },
+            { photo: "/products/c5.png", title: "Restaurants",  desc: "Premium quality eggs for delicious dishes your customers love." },
+            { photo: "/products/c4.png", title: "Bakeries",     desc: "Fresh, high-quality eggs that bring perfection to every bake." },
+            { photo: "/products/c3.png", title: "Distributors", desc: "Partner with us for a steady supply you can count on." },
           ].map((item, i) => (
             <div
               key={i}
@@ -437,10 +437,10 @@ export default function BulkSupply() {
               GVR
             </p>
             <p className={`${montserrat.className} uppercase tracking-[0.22em] text-[#6E7E45] mb-3`} style={{ fontWeight: 600, fontSize: `${9 * scale}px` }}>
-              Farm Foods
+              Fresh Foods
             </p>
             <img
-              src="/products/eggbox.png"
+              src="/products/eggbox2.webp"
               alt="GVR Egg Box"
               style={{ width: `${250 * scale}px` }}
               className="object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.15)]"
@@ -466,7 +466,7 @@ export default function BulkSupply() {
             {/* Hotels — middle left */}
             <div data-orbit-item className="absolute flex items-center gap-3" style={{ top: "48%", left: `${7 * scale}%`, transform: "translateY(-50%)" }}>
               <div style={{ width: `${80 * scale}px`, height: `${80 * scale}px` }} className="rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
-                <img src="/products/c5.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
+                <img src="/products/c1.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
               </div>
               <div>
                 <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Hotels</p>
@@ -479,7 +479,7 @@ export default function BulkSupply() {
             {/* Cafes — bottom left */}
             <div data-orbit-item className="absolute flex items-center gap-3" style={{ bottom: "10%", left: `${15 * scale}%` }}>
               <div style={{ width: `${80 * scale}px`, height: `${80 * scale}px` }} className="rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
-                <img src="/products/c1.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
+                <img src="/products/c2.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
               </div>
               <div>
                 <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Cafes</p>
@@ -495,7 +495,7 @@ export default function BulkSupply() {
             {/* Restaurants — top right */}
             <div data-orbit-item className="absolute flex items-center gap-3 flex-row-reverse" style={{ top: "6%", right: `${15 * scale}%` }}>
               <div style={{ width: `${80 * scale}px`, height: `${80 * scale}px` }} className="rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
-                <img src="/products/c2.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
+                <img src="/products/c5.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
               </div>
               <div className="text-right">
                 <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Restaurants</p>
@@ -508,7 +508,7 @@ export default function BulkSupply() {
             {/* Bakeries — middle right */}
             <div data-orbit-item className="absolute flex items-center gap-3 flex-row-reverse" style={{ top: "48%", right: `${7 * scale}%`, transform: "translateY(-50%)" }}>
               <div style={{ width: `${80 * scale}px`, height: `${80 * scale}px` }} className="rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
-                <img src="/products/c3.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
+                <img src="/products/c4.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
               </div>
               <div className="text-right">
                 <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Bakeries</p>
@@ -521,7 +521,7 @@ export default function BulkSupply() {
             {/* Distributors — bottom right */}
             <div data-orbit-item className="absolute flex items-center gap-3 flex-row-reverse" style={{ bottom: "10%", right: `${15 * scale}%` }}>
               <div style={{ width: `${80 * scale}px`, height: `${80 * scale}px` }} className="rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
-                <img src="/products/c4.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
+                <img src="/products/c3.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
               </div>
               <div className="text-right">
                 <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Distributors</p>

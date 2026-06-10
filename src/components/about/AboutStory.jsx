@@ -268,7 +268,7 @@ useGSAP(
   ">
   <img
   data-parallax-img
-    src="/about/framefarm2.png"
+    src="/about/framefarm2.webp"
     alt="Our farm"
     className="w-full md:w-full lg:w-[480px] xl:w-[560px]
   h-[210px] sm:h-[210px] md:h-[380px] lg:h-[320px] xl:h-[375px] object-contain
@@ -312,7 +312,7 @@ useGSAP(
               <div className="relative">
                 {/* Sticky note image */}
                 <img
-                  src="/about/stickynote.png"
+                  src="/about/stickynote.webp"
                   alt=""
                   className="w-full h-auto object-contain"
                 />

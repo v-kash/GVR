@@ -1,9 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import {
-  Phone, Mail, MapPin, MessageCircle, ArrowRight, ChevronDown,
+  Phone,
+  Mail,
+  MapPin,
+  MessageCircle,
+  ArrowRight,
+  ChevronDown,
 } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -24,19 +29,34 @@ const inputStyle =
 
 export default function ContactSection() {
   // ── Refs ──────────────────────────────────────────────
-  const sectionRef  = useRef(null);
-  const leftRef     = useRef(null);
-  const rightRef    = useRef(null);
+  const sectionRef = useRef(null);
+  const leftRef = useRef(null);
+  const rightRef = useRef(null);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    subject: "Select subject",
+    message: "",
+  });
+
+  const [errors, setErrors] = useState({});
+  const [status, setStatus] = useState({
+    type: "",
+    message: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // ── Animations ────────────────────────────────────────
   useEffect(() => {
     const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
+      "(prefers-reduced-motion: reduce)",
     ).matches;
     if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
-
       // ── Left panel — slide from left ──────────────────
       // The left panel is a single cohesive info card.
       // One directional entrance keeps it clean.
@@ -45,9 +65,16 @@ export default function ContactSection() {
           leftRef.current,
           { opacity: 0, x: -36 },
           {
-            opacity: 1, x: 0, duration: 0.85, ease: "power3.out",
-            scrollTrigger: { trigger: leftRef.current, start: "top 80%", once: true },
-          }
+            opacity: 1,
+            x: 0,
+            duration: 0.85,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: leftRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          },
         );
       }
 
@@ -58,20 +85,103 @@ export default function ContactSection() {
           rightRef.current,
           { opacity: 0, x: 36 },
           {
-            opacity: 1, x: 0, duration: 0.85, ease: "power3.out",
-            scrollTrigger: { trigger: rightRef.current, start: "top 80%", once: true },
-          }
+            opacity: 1,
+            x: 0,
+            duration: 0.85,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: rightRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          },
         );
       }
-
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
   // ── CTA hover ─────────────────────────────────────────
-  const hoverIn  = (e) => gsap.to(e.currentTarget, { scale: 1.03, duration: 0.25, ease: "power2.out" });
-  const hoverOut = (e) => gsap.to(e.currentTarget, { scale: 1,    duration: 0.25, ease: "power2.out" });
+  const hoverIn = (e) =>
+    gsap.to(e.currentTarget, {
+      scale: 1.03,
+      duration: 0.25,
+      ease: "power2.out",
+    });
+  const hoverOut = (e) =>
+    gsap.to(e.currentTarget, { scale: 1, duration: 0.25, ease: "power2.out" });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    if (errors[name]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setIsSubmitting(true);
+    setErrors({});
+    setStatus({
+      type: "",
+      message: "",
+    });
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus({
+          type: "success",
+          message:
+            "Thank you! Your enquiry has been sent successfully. We'll contact you soon.",
+        });
+
+        setFormData({
+          name: "",
+          phone: "",
+          email: "",
+          subject: "Select subject",
+          message: "",
+        });
+      } else if (data.errors) {
+        setErrors(data.errors);
+
+        setStatus({
+          type: "error",
+          message: "Please correct the highlighted fields.",
+        });
+      } else {
+        throw new Error();
+      }
+    } catch {
+      setStatus({
+        type: "error",
+        message: "Something went wrong. Please try again later.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section
@@ -80,17 +190,17 @@ export default function ContactSection() {
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-[0.95fr_1.05fr] lg:h-[680px]">
-
           {/* ── LEFT ─────────────────────────────────────── */}
           <div
             ref={leftRef}
             className="h-full rounded-[2px] border border-[#e8e0d4] bg-transparent p-5 sm:p-6 md:p-6 lg:p-8"
           >
             <div className="h-full flex flex-col">
-
               {/* Top Label */}
               <div className="text-center">
-                <p className={`${montserrat.className} text-[11px] uppercase tracking-[0.22em] text-[#B08A3D]`}>
+                <p
+                  className={`${montserrat.className} text-[11px] uppercase tracking-[0.22em] text-[#B08A3D]`}
+                >
                   Get In Touch
                 </p>
                 <div className="mx-auto mt-3 h-[2px] w-12 bg-[#B08A3D]" />
@@ -112,16 +222,31 @@ export default function ContactSection() {
               </div>
 
               {/* Description */}
-              <p className={`${montserrat.className} text-center text-[13px] sm:text-[13px] md:text-[13px] lg:text-[14px] xl:text-[14px] leading-7 text-[#4f4337]`}>
+              <p
+                className={`${montserrat.className} text-center text-[13px] sm:text-[13px] md:text-[13px] lg:text-[14px] xl:text-[14px] leading-7 text-[#4f4337]`}
+              >
                 Have a question, need assistance, or want to place a bulk order?
-                Our team is here to help and will get back to you as soon as possible.
+                Our team is here to help and will get back to you as soon as
+                possible.
               </p>
 
               {/* Contact Info */}
               <div className="mt-5 sm:mt-6 space-y-1">
-                <ContactItem icon={<Phone size={18} />} value="+91 94484 53609" subtitle="Mon - Sat, 9 AM - 6 PM" />
-                <ContactItem icon={<Mail size={18} />} value="gvrfreshfoodsprivatelimited@gmail.com" subtitle="Response within 24 hours" />
-                <ContactItem icon={<MapPin size={18} />} value="GVR Eggs Farm" subtitle="Tamil Nadu, India" />
+                <ContactItem
+                  icon={<Phone size={18} />}
+                  value="+91 94484 53609"
+                  subtitle="Mon - Sat, 9 AM - 6 PM"
+                />
+                <ContactItem
+                  icon={<Mail size={18} />}
+                  value="gvrfreshfoodsprivatelimited@gmail.com"
+                  subtitle="Response within 24 hours"
+                />
+                <ContactItem
+                  icon={<MapPin size={18} />}
+                  value="GVR Eggs Farm"
+                  subtitle="Tamil Nadu, India"
+                />
               </div>
 
               {/* WhatsApp Box */}
@@ -140,10 +265,15 @@ export default function ContactSection() {
                         <MessageCircle size={16} className="text-white" />
                       </div>
                       <div>
-                        <p className={`${montserrat.className} text-[12px] sm:text-[13px] text-[#241A12]`} style={{ fontWeight: 600 }}>
+                        <p
+                          className={`${montserrat.className} text-[12px] sm:text-[13px] text-[#241A12]`}
+                          style={{ fontWeight: 600 }}
+                        >
                           Faster Support
                         </p>
-                        <p className={`${montserrat.className} text-[11px] sm:text-[12px] text-[#6E7E45]`}>
+                        <p
+                          className={`${montserrat.className} text-[11px] sm:text-[12px] text-[#6E7E45]`}
+                        >
                           Chat on WhatsApp
                         </p>
                       </div>
@@ -161,60 +291,160 @@ export default function ContactSection() {
             className="h-full rounded-[2px] border border-[#e8e0d4] bg-transparent p-5 sm:p-6 md:p-6 lg:p-8"
           >
             <div className="h-full flex flex-col">
-
               <div className="text-center mb-5 sm:mb-6">
-                <p className={`${montserrat.className} text-[11px] uppercase tracking-[0.22em] text-[#B08A3D]`}>
+                <p
+                  className={`${montserrat.className} text-[11px] uppercase tracking-[0.22em] text-[#B08A3D]`}
+                >
                   Send Us A Message
                 </p>
                 <div className="mx-auto mt-3 h-[2px] w-12 bg-[#B08A3D]" />
               </div>
 
-              <form className="flex flex-col flex-1 space-y-3 sm:space-y-4">
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col flex-1 space-y-3 sm:space-y-4"
+              >
+                {" "}
                 <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
                   <Field label="Full Name">
-                    <input className={inputStyle} placeholder="Your name" />
+                    <>
+                      <input
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className={`${inputStyle} ${
+                          errors.name ? "border-red-400" : ""
+                        }`}
+                        placeholder="Your name"
+                      />
+
+                      <div className="h-4 mt-1">
+                        {errors.name && (
+                          <p className="text-xs text-red-600">{errors.name}</p>
+                        )}
+                      </div>
+                    </>{" "}
                   </Field>
                   <Field label="Phone">
-                    <input className={inputStyle} placeholder="Phone number" />
+                    <>
+                      <input
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className={`${inputStyle} ${
+                          errors.phone ? "border-red-400" : ""
+                        }`}
+                        placeholder="Phone number"
+                      />
+
+                      <div className="h-4 mt-1">
+                        {errors.phone && (
+                          <p className="text-xs text-red-600">{errors.phone}</p>
+                        )}
+                      </div>
+                    </>{" "}
                   </Field>
                 </div>
-
                 <Field label="Email Address">
-                  <input className={inputStyle} placeholder="Email address" />
-                </Field>
+                  <>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className={`${inputStyle} ${
+                        errors.email ? "border-red-400" : ""
+                      }`}
+                      placeholder="Email address"
+                    />
 
+                    <div className="h-4 mt-1">
+                      {errors.email && (
+                        <p className="text-xs text-red-600">{errors.email}</p>
+                      )}
+                    </div>
+                  </>{" "}
+                </Field>
                 <Field label="Subject">
                   <div className="relative">
-                    <select className={`${inputStyle} appearance-none`}>
+                    <select
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      className={`${inputStyle} appearance-none ${
+                        errors.subject ? "border-red-400" : ""
+                      }`}
+                    >
                       <option>Select subject</option>
                       <option>Bulk Order</option>
                       <option>Partnership</option>
                       <option>General Inquiry</option>
                     </select>
-                    <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9a8f81]" />
+
+                    <ChevronDown
+                      size={18}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9a8f81]"
+                    />
+                  </div>
+
+                  {/* Validation message */}
+                  <div className="h-4 mt-1">
+                    {errors.subject && (
+                      <p className="text-xs text-red-600">{errors.subject}</p>
+                    )}
                   </div>
                 </Field>
-
                 <Field label="Message">
                   <textarea
+                    name="message"
                     rows={3}
+                    value={formData.message}
+                    onChange={handleChange}
                     placeholder="Write your message..."
-                    className="w-full rounded-[5px] border border-[#e3d8c8] bg-transparent p-3 sm:p-4 text-[13px] sm:text-[14px] text-[#241A12] outline-none placeholder:text-[#9a8f81] focus:border-[#6E7E45] transition-colors"
+                    className={`w-full rounded-[5px] border bg-transparent p-3 sm:p-4 text-[13px] sm:text-[14px] text-[#241A12] outline-none placeholder:text-[#9a8f81] focus:border-[#6E7E45] transition-colors ${
+                      errors.message ? "border-red-400" : "border-[#e3d8c8]"
+                    }`}
                   />
-                </Field>
 
+                  <div className="h-4 mt-1">
+                    {errors.message && (
+                      <p className="text-xs text-red-600">{errors.message}</p>
+                    )}
+                  </div>
+                </Field>
+                {status.message && (
+                  <div
+                    className={`rounded-xl px-4 py-3 text-sm ${
+                      status.type === "success"
+                        ? "bg-[#edf4df] border border-[#6E7E45] text-[#4D5B2A]"
+                        : "bg-red-50 border border-red-200 text-red-700"
+                    }`}
+                  >
+                    {status.message}
+                  </div>
+                )}
                 <button
                   type="submit"
-                  className={`${montserrat.className} mt-auto flex h-[48px] sm:h-[54px] items-center justify-center gap-2 rounded-xl bg-[#6E7E45] text-[13px] sm:text-[14px] font-semibold text-white transition-colors hover:bg-[#5e6d3b]`}
+                  className={`${montserrat.className}
+  mt-auto flex h-[48px] sm:h-[54px]
+  items-center justify-center gap-2
+  rounded-xl bg-[#6E7E45]
+  text-[13px] sm:text-[14px]
+  font-semibold text-white
+  transition-colors
+  hover:bg-[#5e6d3b]
+  disabled:opacity-70
+  disabled:cursor-not-allowed
+`}
                   onMouseEnter={hoverIn}
                   onMouseLeave={hoverOut}
+                  disabled={isSubmitting}
                 >
-                  Send Message
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </button>
               </form>
             </div>
           </div>
-
         </div>
       </div>
     </section>
@@ -228,7 +458,9 @@ function ContactItem({ icon, value, subtitle }) {
         {icon}
       </div>
       <div>
-        <p className="text-[12px] sm:text-[13px] font-medium text-[#6E7E45]">{value}</p>
+        <p className="text-[12px] sm:text-[13px] font-medium text-[#6E7E45]">
+          {value}
+        </p>
         <p className="text-[11px] sm:text-[12px] text-[#5c5246]">{subtitle}</p>
       </div>
     </div>

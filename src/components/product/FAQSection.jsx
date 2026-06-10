@@ -262,7 +262,7 @@ export default function FAQSection() {
               {/* Icon circle */}
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-[#6E7E45]/25 bg-[#edf3de]/50 flex items-center justify-center mb-4 sm:mb-5">
                 <img
-                  src="/products/qicon.png"
+                  src="/products/qicon.webp"
                   alt=""
                   className="w-8 h-8 sm:w-10 sm:h-10 object-contain opacity-50"
                 />
@@ -327,7 +327,7 @@ export default function FAQSection() {
             {/* Egg basket image */}
             <div className="relative h-[220px] sm:h-[180px] md:h-[160px] lg:h-[180px] xl:h-[200px] pt-0 md:pt-1 overflow-hidden">
               <img
-                src="/products/eggbasket.png"
+                src="/products/eggbasket.webp"
                 alt="Farm fresh eggs"
                 className="absolute bottom-0 right-0 w-full object-contain object-bottom"
               />

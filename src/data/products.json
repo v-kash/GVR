@@ -273,7 +273,7 @@
       "slug": "kadaknath-eggs",
       "name": "Kadaknath Eggs",
       "category": "Eggs",
-      "image": "/products/Kadaknath.png",
+      "image": "/products/kadaknath2.webp",
       "shortDescription": "Premium eggs from the famous Kadaknath breed.",
       "description": "Kadaknath eggs come from India's renowned Kadaknath breed and are known for their premium nutritional profile, higher protein content, and unique value among specialty eggs.",
       "benefits": [
@@ -319,60 +319,8 @@
     "value": "No Additives"
   }
 ]
-    },
-
-    {
-      "id": 7,
-      "slug": "premium-dry-fish",
-      "name": "Premium Dry Fish",
-      "category": "Dry Fish",
-      "image": "/products/fish.png",
-      "shortDescription": "Naturally dried fish with authentic flavor.",
-      "description": "Our premium dry fish is carefully selected and naturally dried to preserve taste, texture, and nutritional value while maintaining quality standards.",
-      "benefits": [
-        "Naturally preserved",
-        "Rich authentic flavor",
-        "High protein content",
-        "Long shelf life",
-        "Quality assured processing"
-      ],
-      "packaging": [
-        "500g Pack",
-        "1kg Pack",
-        "Bulk Supply"
-      ],
-      "bestSuitedFor": [
-        "Households",
-        "Restaurants",
-        "Hotels",
-        "Retailers"
-      ],
-      "nutrition": [
-  {
-    "title": "Protein",
-    "value": "Rich Source"
-  },
-  {
-    "title": "Vitamin B12",
-    "value": "Essential"
-  },
-  {
-    "title": "Vitamin D",
-    "value": "Natural"
-  },
-  {
-    "title": "Minerals",
-    "value": "Iron & Zinc"
-  },
-  {
-    "title": "Healthy Fats",
-    "value": "Balanced"
-  },
-  {
-    "title": "100% Natural",
-    "value": "No Additives"
-  }
-]
     }
+
+   
   ]
 }

@@ -116,7 +116,7 @@ export default function ProductsHero() {
       {/* ── BG image ──────────────────────────────────────── */}
       <img
         ref={bgImgRef}
-        src="/products/h2.png"
+        src="/products/h2.webp"
         alt="Farm fresh eggs"
         className="absolute right-0 top-0 h-full w-[100%] md:w-[80%] lg:w-[75%] xl:w-[60%] object-cover object-left opacity-0"
       />
@@ -132,7 +132,7 @@ export default function ProductsHero() {
       />
 
       {/* ── Content ───────────────────────────────────────── */}
-      <div className="relative z-20 mx-auto w-full max-w-7xl px-6 lg:px-16 py-20">
+      <div className="relative z-20 mx-auto w-full max-w-7xl px-6 lg:px-16 py-23">
         <div className="max-w-[520px]">
 
           {/* Breadcrumb */}

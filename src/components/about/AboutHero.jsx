@@ -134,7 +134,7 @@ export default function AboutHero() {
       {/* ── MOBILE bg image ───────────────────────────────── */}
       <img
         ref={bgImgMobileRef}
-        src="/about/hero-about-m.png"
+        src="/about/hero-about-m.webp"
         alt="Farm fresh eggs"
         className="
           md:hidden
@@ -147,7 +147,7 @@ export default function AboutHero() {
       {/* ── DESKTOP bg image ──────────────────────────────── */}
       <img
         ref={bgImgDesktopRef}
-        src="/about/hero-about.png"
+        src="/about/hero-about.webp"
         alt="Farm fresh eggs"
         className="
           hidden md:block
@@ -171,7 +171,7 @@ export default function AboutHero() {
       {/* ── Content ───────────────────────────────────────── */}
       <div
         className="relative z-20 mx-auto w-full max-w-7xl px-6 lg:px-16
-          py-14 sm:py-14 md:py-16 lg:py-18 xl:py-20"
+          py-14 sm:py-14 md:py-16 lg:py-18 xl:py-24"
       >
         <div className="max-w-[520px]">
 

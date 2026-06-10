@@ -116,7 +116,7 @@ export default function ContactHero() {
       {/* ── BG image ──────────────────────────────────────── */}
       <img
         ref={bgImgRef}
-        src="/products/contacthero.png"
+        src="/products/contacthero.webp"
         alt="Farm fresh eggs"
         className="absolute right-0 top-0 h-full w-[50%] md:w-[80%] lg:w-[75%] xl:w-[60%] object-cover object-left opacity-0"
         style={{ objectPosition: "left -60px" }}
@@ -133,7 +133,7 @@ export default function ContactHero() {
       />
 
       {/* ── Content ───────────────────────────────────────── */}
-      <div className="relative z-20 mx-auto w-full max-w-7xl px-6 lg:px-16 py-20">
+      <div className="relative z-20 mx-auto w-full max-w-7xl px-6 lg:px-16 py-24">
         <div className="max-w-[520px]">
 
           {/* Breadcrumb */}

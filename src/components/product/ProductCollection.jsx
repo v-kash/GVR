@@ -30,6 +30,90 @@ const iconMap = {
   "premium-dry-fish": "/icons/Fish.svg",
 };
 
+const fishProducts = [
+  {
+    name: "Bombay Duck",
+    image: "/products/Bombay-Duck-3.webp",
+    slug: "bombay-duck",
+    desc: "Traditional dried seafood with rich coastal flavor.",
+  },
+  {
+    name: "Nathli Big Anchovies",
+    image: "/products/Nathli-big-Anchovies.webp",
+    slug: "nathli-big-anchovies",
+    desc: "Premium large anchovies, naturally sun-dried.",
+  },
+  {
+    name: "Nathli Big-cut & Clean",
+    image: "/products/nathli-big-clean.webp",
+    slug: "nathli-big-clean",
+    desc: "Cleaned and ready-to-cook dried anchovies.",
+  },
+  {
+    name: "Nathli Big Spicy",
+    image: "/products/nathli-big-spicy.webp",
+    slug: "nathli-big-spicy",
+    desc: "Flavorful spicy anchovies with authentic taste.",
+  },
+  {
+    name: "Nathli Small",
+    image: "/products/nathli-small.webp",
+    slug: "nathli-small",
+    desc: "Small sun-dried anchovies packed with flavor.",
+  },
+  {
+    name: "Nathli Small Spicy",
+    image: "/products/nathli-small-spicy.webp",
+    slug: "nathli-small-spicy",
+    desc: "Spiced small anchovies for traditional recipes.",
+  },
+  {
+    name: "Prawn Big Cut & Clean",
+    image: "/products/prawn-big-clean.webp",
+    slug: "prawn-big-clean",
+    desc: "Premium cleaned prawns, ready for cooking.",
+  },
+  {
+    name: "Prawn Big Spicy",
+    image: "/products/prawn-big-spicy.webp",
+    slug: "prawn-big-spicy",
+    desc: "Spicy dried prawns with bold coastal flavors.",
+  },
+  {
+    name: "Prawns Big",
+    image: "/products/prawns-big.webp",
+    slug: "prawns-big",
+    desc: "Large premium prawns, naturally preserved.",
+  },
+  {
+    name: "Prawn Small Spicy",
+    image: "/products/prawn-small-spicy.webp",
+    slug: "prawn-small-spicy",
+    desc: "Small spicy prawns with authentic seasoning.",
+  },
+  {
+    name: "Prawns Small",
+    image: "/products/prawns-small.webp",
+    slug: "prawns-small",
+    desc: "Carefully selected small dried prawns.",
+  },
+  {
+    name: "Ribbon Cut & Clean",
+    image: "/products/ribbon-clean.webp",
+    slug: "ribbon-clean",
+    desc: "Neatly cleaned ribbon fish, ready to prepare.",
+  },
+  {
+    name: "Shark Cubes",
+    image: "/products/shark-cubes.webp",
+    slug: "shark-cubes",
+    desc: "Premium shark cubes with traditional taste.",
+  },
+].map((p) => ({
+  ...p,
+  icon: "/icons/Fish.svg",
+}));
+
 const products = productsData.products.map((p) => ({
   image: p.image,
   icon: iconMap[p.slug] || "/icons/eggnest.png",
@@ -44,6 +128,7 @@ const HIDDEN = { opacity: 0 };
 
 export default function ProductCollection() {
   const [current, setCurrent] = useState(0);
+  const [activeTab, setActiveTab] = useState("eggs");
   const scrollRef   = useRef(null);
   const sectionRef  = useRef(null);
   const headingRef  = useRef(null);
@@ -52,14 +137,28 @@ export default function ProductCollection() {
   const dotsRef     = useRef(null);
 
   const CARD_WIDTH = 200;
-  const cloned = [...products.slice(-2), ...products, ...products.slice(0, 2)];
+const displayedProducts =
+  activeTab === "eggs" ? products : fishProducts;
 
+const cloned = [
+  ...displayedProducts.slice(-2),
+  ...displayedProducts,
+  ...displayedProducts.slice(0, 2),
+];
   // ── Carousel scroll init ──────────────────────────────
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollLeft = CARD_WIDTH * 2;
     }
   }, []);
+
+  useEffect(() => {
+  setCurrent(0);
+
+  if (scrollRef.current) {
+    scrollRef.current.scrollLeft = CARD_WIDTH * 2;
+  }
+}, [activeTab]);
 
   // ── Animations ────────────────────────────────────────
   useEffect(() => {
@@ -155,12 +254,12 @@ export default function ProductCollection() {
     const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
     if (scrollLeft < CARD_WIDTH) {
       scrollRef.current.scrollLeft =
-        CARD_WIDTH * (products.length + 2) - clientWidth / 2;
+        CARD_WIDTH * (displayedProducts.length + 2) - clientWidth / 2;
     }
     if (scrollLeft + clientWidth >= scrollWidth - CARD_WIDTH) {
       scrollRef.current.scrollLeft = CARD_WIDTH * 2;
     }
-    setCurrent(Math.round(scrollLeft / CARD_WIDTH - 2) % products.length);
+    setCurrent(Math.round(scrollLeft / CARD_WIDTH - 2) % displayedProducts.length);
   };
 
   const prev = () => {
@@ -264,6 +363,29 @@ export default function ProductCollection() {
             Farm-fresh eggs and carefully selected products, delivered with
             quality, nutrition, and trust.
           </p>
+          <div className="flex justify-center gap-3 mt-8">
+  <button
+    onClick={() => setActiveTab("eggs")}
+    className={`px-6 py-3 rounded-full text-sm font-medium transition-all ${
+      activeTab === "eggs"
+        ? "bg-[#6E7E45] text-white"
+        : "bg-transparent border border-[#d8d2c4] text-[#5f5146]"
+    }`}
+  >
+    Fresh Eggs
+  </button>
+
+  <button
+    onClick={() => setActiveTab("fish")}
+    className={`px-6 py-3 rounded-full text-sm font-medium transition-all ${
+      activeTab === "fish"
+        ? "bg-[#6E7E45] text-white"
+        : "bg-transparent border border-[#d8d2c4] text-[#5f5146]"
+    }`}
+  >
+    Dry Seafood
+  </button>
+</div>
         </div>
 
         {/* ── CAROUSEL ─────────────────────────────────────── */}
@@ -296,9 +418,8 @@ export default function ProductCollection() {
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
               {cloned.map((p, i) => (
-                <Link
+                <div
                   key={i}
-                  href={`/products/${p.slug}`}
                   className="flex-shrink-0 w-[180px] sm:w-[200px] md:w-[220px] lg:w-[240px] xl:w-[240px] bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] border border-[#e8e0d4] relative hover:border-[#6E7E45]/40 hover:shadow-[0_4px_20px_rgba(110,126,69,0.10)] transition-all duration-200 cursor-pointer"
                 >
                   <div className="h-[160px] sm:h-[180px] md:h-[200px] lg:h-[200px] xl:h-[220px] rounded-t-2xl overflow-hidden bg-[#fdf8f0]">
@@ -337,10 +458,11 @@ export default function ProductCollection() {
                       className={`${montserrat.className} text-[10px] sm:text-[10px] md:text-[11px] lg:text-[11px] text-[#5f5146] leading-[1.7]`}
                       style={{ fontWeight: 400 }}
                     >
-                      {p.desc}
-                    </p>
+                          {p.desc}
+
+                 </p>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           </div>
@@ -352,16 +474,18 @@ export default function ProductCollection() {
           style={HIDDEN}
           className="flex items-center justify-center gap-2 mt-4"
         >
-          {products.map((_, i) => (
-            <button
-              key={i}
-              className={`rounded-full transition-all duration-200 ${
-                i === (current + products.length) % products.length
-                  ? "w-4 h-2.5 bg-[#C49A2A]"
-                  : "w-2.5 h-2.5 bg-[#C49A2A]/25"
-              }`}
-            />
-          ))}
+         {displayedProducts.map((_, i) => (
+  <button
+    key={i}
+    className={`rounded-full transition-all duration-200 ${
+      i ===
+      (current + displayedProducts.length) %
+        displayedProducts.length
+        ? "w-4 h-2.5 bg-[#C49A2A]"
+        : "w-2.5 h-2.5 bg-[#C49A2A]/25"
+    }`}
+  />
+))}
         </div>
 
       </div>

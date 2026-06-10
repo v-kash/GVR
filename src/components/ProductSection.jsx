@@ -22,7 +22,7 @@ const montserrat = Montserrat({
 
 const eggVarieties = [
   {
-    image: "/images2/Country.webp",
+    image: "/images2/Countryegg.webp",
     icon: "/icons/Farm.svg",
     name: "Country Eggs",
     desc: "Natural taste, rich nutrition.",
@@ -46,7 +46,7 @@ const eggVarieties = [
     desc: "Larger, richer and delicious.",
   },
   {
-    image: "/images2/Jumbo.webp",
+    image: "/images2/Countryegg.webp",
     icon: "/icons/Eggnest.svg",
     name: "Jumbo Eggs",
     desc: "Extra large size, extra goodness.",
@@ -58,7 +58,7 @@ const eggVarieties = [
     desc: "Tiny in size, big on nutrition.",
   },
   {
-    image: "/images2/kadaknath2.webp",
+    image: "/images2/Countryegg.webp",
     icon: "/icons/Kadaknath.svg",
     name: "Kadaknath Eggs",
     desc: "Premium quality, naturally unique.",
