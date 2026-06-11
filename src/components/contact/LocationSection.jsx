@@ -131,7 +131,7 @@ export default function LocationSection() {
           className="rounded-[5px] overflow-hidden border border-[#e8e0d4] shadow-[0_4px_24px_rgba(0,0,0,0.06)] opacity-0"
         >
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62726.45!2d78.82!3d10.38!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00cfb0d0000001%3A0x1234567890abcdef!2sPudukkottai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1234567890"
+            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3890.9583919342444!2d77.7889823750732!3d12.781212787516898!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTLCsDQ2JzUyLjQiTiA3N8KwNDcnMjkuNiJF!5e0!3m2!1sen!2sin!4v1781178468269!5m2!1sen!2sin"
             width="100%"
             height="260"
             className="block sm:hidden"
@@ -142,7 +142,7 @@ export default function LocationSection() {
             title="GVR Farm Foods Location"
           />
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62726.45!2d78.82!3d10.38!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00cfb0d0000001%3A0x1234567890abcdef!2sPudukkottai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1234567890"
+            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3890.9583919342444!2d77.7889823750732!3d12.781212787516898!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTLCsDQ2JzUyLjQiTiA3N8KwNDcnMjkuNiJF!5e0!3m2!1sen!2sin!4v1781178468269!5m2!1sen!2sin"
             width="100%"
             height="320"
             className="hidden sm:block md:hidden"
@@ -153,7 +153,7 @@ export default function LocationSection() {
             title="GVR Farm Foods Location"
           />
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62726.45!2d78.82!3d10.38!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00cfb0d0000001%3A0x1234567890abcdef!2sPudukkottai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1234567890"
+           src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3890.9583919342444!2d77.7889823750732!3d12.781212787516898!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTLCsDQ2JzUyLjQiTiA3N8KwNDcnMjkuNiJF!5e0!3m2!1sen!2sin!4v1781178468269!5m2!1sen!2sin"
             width="100%"
             height="280"
             className="hidden md:block"
@@ -207,7 +207,7 @@ export default function LocationSection() {
             {/* Get Directions */}
             <div className="flex items-center justify-center px-5 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6 md:col-span-2 lg:col-span-1">
               <a
-                href="https://maps.google.com/?q=Pudukkottai,Tamil+Nadu,India"
+                href="https://www.google.com/maps/place/12%C2%B046'52.4%22N+77%C2%B047'29.6%22E/@12.7812128,77.7889824,17z/data=!3m1!4b1!4m4!3m3!8m2!3d12.7812128!4d77.7915573?hl=en&entry=ttu&g_ep=EgoyMDI2MDYwMy4xIKXMDSoASAFQAw%3D%3D"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 border border-[#f5f0e7]/30 rounded-lg px-5 sm:px-6 py-3 sm:py-3.5 transition-all duration-200 hover:border-[#c5db8e] hover:bg-[#f5f0e7]/10 group"
@@ -228,3 +228,7 @@ export default function LocationSection() {
     </section>
   );
 }
+
+
+
+<iframe  width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>

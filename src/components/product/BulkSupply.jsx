@@ -19,7 +19,9 @@ const montserrat = Montserrat({
 });
 
 const DOT_ANGLES = [50, 130, 180, 230, 312, 360];
-const CONNECTOR_LENGTHS_XL = [90, 90, 70, 70, 75, 60];
+// const CONNECTOR_LENGTHS_XL = [90, 90, 70, 70, 75, 60];
+const CONNECTOR_LENGTHS_XL = [90, 90, 90, 90, 90, 90];
+
 
 export default function BulkSupply() {
   const radialRef         = useRef(null);
@@ -328,33 +330,28 @@ export default function BulkSupply() {
         </div>
 
         {/* ── MOBILE GRID (< md) ────────────────────────────── */}
-        <div ref={mobileGridRef} className="md:hidden grid grid-cols-2 gap-4 mb-8">
-          {[
-            { photo: "/products/c6.png", title: "Retailers",    desc: "Consistent supply of fresh eggs to keep your shelves always stocked." },
-            { photo: "/products/c1.png", title: "Hotels",       desc: "Reliable bulk supply to deliver great experiences every day." },
-            { photo: "/products/c2.png", title: "Cafes",        desc: "From breakfast to brunch, we keep your kitchen running." },
-            { photo: "/products/c5.png", title: "Restaurants",  desc: "Premium quality eggs for delicious dishes your customers love." },
-            { photo: "/products/c4.png", title: "Bakeries",     desc: "Fresh, high-quality eggs that bring perfection to every bake." },
-            { photo: "/products/c3.png", title: "Distributors", desc: "Partner with us for a steady supply you can count on." },
-          ].map((item, i) => (
-            <div
-              key={i}
-              data-card
-              className="bg-white rounded-2xl border border-[#e8e0d4] p-4 flex flex-col items-center text-center shadow-[0_4px_16px_rgba(0,0,0,0.05)]"
-            >
-              <div className="w-[70px] h-[70px] sm:w-[80px] sm:h-[80px] rounded-full overflow-hidden border-2 border-[#C49A2A]/30 bg-[#edf3de] mb-3">
-                <img src={item.photo} alt={item.title} className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
-              </div>
-              <div className="w-1.5 h-1.5 rounded-full bg-[#C49A2A] mb-2" />
-              <p className={`${montserrat.className} text-[11px] uppercase tracking-[0.1em] text-[#241A12] mb-1`} style={{ fontWeight: 700 }}>
-                {item.title}
-              </p>
-              <p className={`${montserrat.className} text-[10px] text-[#5f5146] leading-[1.6]`} style={{ fontWeight: 400 }}>
-                {item.desc}
-              </p>
-            </div>
-          ))}
-        </div>
+        <div
+  ref={mobileGridRef}
+  className="md:hidden grid grid-cols-2 gap-6 mb-8 place-items-center"
+>
+  {[
+    "/products/bigbasket.png",
+    "/products/blinkit.png",
+    "/products/flipkart.png",
+    "/products/Swiggy.png",
+    "/products/zepto.png",
+    "/products/freshtohome.png",
+  ].map((logo, i) => (
+    <div key={i} data-card className="flex items-center justify-center">
+      <img
+        src={logo}
+        alt=""
+        className="w-[120px] h-auto object-contain"
+        onError={(e) => (e.target.style.display = "none")}
+      />
+    </div>
+  ))}
+</div>
 
         {/* ── RADIAL DIAGRAM (md+) ─────────────────────────── */}
         <div
@@ -451,41 +448,41 @@ export default function BulkSupply() {
           {/* Left orbit items */}
           <div ref={leftItemsRef}>
             {/* Retailers — top left */}
-            <div data-orbit-item className="absolute flex items-center gap-3" style={{ top: "6%", left: `${15 * scale}%` }}>
-              <div style={{ width: `${80 * scale}px`, height: `${80 * scale}px` }} className="rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
-                <img src="/products/c6.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
+            <div data-orbit-item className="absolute flex items-center gap-3" style={{ top: "8%", left: `${27 * scale}%` }}>
+              <div style={{ width: `${80 * scale}px`, height: `${80 * scale}px` }} className=" overflow-hidden  flex-shrink-0 bg-transparent">
+                <img src="/products/bigbasket.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
               </div>
               <div>
-                <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Retailers</p>
-                <p className={`${montserrat.className} text-[#5f5146] leading-[1.5]`} style={{ fontWeight: 400, fontSize: `${10 * scale}px`, maxWidth: `${160 * scale}px` }}>
+                {/* <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Big basket</p> */}
+                {/* <p className={`${montserrat.className} text-[#5f5146] leading-[1.5]`} style={{ fontWeight: 400, fontSize: `${10 * scale}px`, maxWidth: `${160 * scale}px` }}>
                   Consistent supply of fresh eggs to keep your shelves always stocked.
-                </p>
+                </p> */}
               </div>
             </div>
 
             {/* Hotels — middle left */}
-            <div data-orbit-item className="absolute flex items-center gap-3" style={{ top: "48%", left: `${7 * scale}%`, transform: "translateY(-50%)" }}>
-              <div style={{ width: `${80 * scale}px`, height: `${80 * scale}px` }} className="rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
-                <img src="/products/c1.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
+            <div data-orbit-item className="absolute flex items-center gap-3" style={{ top: "50%", left: `${18 * scale}%`, transform: "translateY(-50%)" }}>
+              <div style={{ width: `${80 * scale}px`, height: `${80 * scale}px` }} className="overflow-hidden  flex-shrink-0 bg-transparent">
+                <img src="/products/blinkit.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
               </div>
               <div>
-                <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Hotels</p>
-                <p className={`${montserrat.className} text-[#5f5146] leading-[1.5]`} style={{ fontWeight: 400, fontSize: `${10 * scale}px`, maxWidth: `${160 * scale}px` }}>
+                {/* <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Blinkit</p> */}
+                {/* <p className={`${montserrat.className} text-[#5f5146] leading-[1.5]`} style={{ fontWeight: 400, fontSize: `${10 * scale}px`, maxWidth: `${160 * scale}px` }}>
                   Reliable bulk supply to deliver great experiences every day.
-                </p>
+                </p> */}
               </div>
             </div>
 
             {/* Cafes — bottom left */}
-            <div data-orbit-item className="absolute flex items-center gap-3" style={{ bottom: "10%", left: `${15 * scale}%` }}>
-              <div style={{ width: `${80 * scale}px`, height: `${80 * scale}px` }} className="rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
-                <img src="/products/c2.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
+            <div data-orbit-item className="absolute flex items-center gap-3" style={{ bottom: "5%", left: `${24 * scale}%` }}>
+              <div style={{ width: `${100 * scale}px`, height: `${80 * scale}px` }} className="overflow-hidden scale-[1.5] flex-shrink-0 bg-transparent">
+                <img src="/products/flipkart.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
               </div>
               <div>
-                <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Cafes</p>
-                <p className={`${montserrat.className} text-[#5f5146] leading-[1.5]`} style={{ fontWeight: 400, fontSize: `${10 * scale}px`, maxWidth: `${160 * scale}px` }}>
+                {/* <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Flipkart</p> */}
+                {/* <p className={`${montserrat.className} text-[#5f5146] leading-[1.5]`} style={{ fontWeight: 400, fontSize: `${10 * scale}px`, maxWidth: `${160 * scale}px` }}>
                   From breakfast to brunch, we keep your kitchen running.
-                </p>
+                </p> */}
               </div>
             </div>
           </div>
@@ -493,41 +490,41 @@ export default function BulkSupply() {
           {/* Right orbit items */}
           <div ref={rightItemsRef}>
             {/* Restaurants — top right */}
-            <div data-orbit-item className="absolute flex items-center gap-3 flex-row-reverse" style={{ top: "6%", right: `${15 * scale}%` }}>
-              <div style={{ width: `${80 * scale}px`, height: `${80 * scale}px` }} className="rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
-                <img src="/products/c5.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
+            <div data-orbit-item className="absolute flex items-center gap-3 flex-row-reverse" style={{ top: "6%", right: `${28 * scale}%` }}>
+              <div style={{ width: `${80 * scale}px`, height: `${80 * scale}px` }} className="overflow-hidden  flex-shrink-0 bg-transparent">
+                <img src="/products/Swiggy.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
               </div>
               <div className="text-right">
-                <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Restaurants</p>
-                <p className={`${montserrat.className} text-[#5f5146] leading-[1.5]`} style={{ fontWeight: 400, fontSize: `${10 * scale}px`, maxWidth: `${160 * scale}px` }}>
+                {/* <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Swiggy</p> */}
+                {/* <p className={`${montserrat.className} text-[#5f5146] leading-[1.5]`} style={{ fontWeight: 400, fontSize: `${10 * scale}px`, maxWidth: `${160 * scale}px` }}>
                   Premium quality eggs for delicious dishes your customers love.
-                </p>
+                </p> */}
               </div>
             </div>
 
             {/* Bakeries — middle right */}
-            <div data-orbit-item className="absolute flex items-center gap-3 flex-row-reverse" style={{ top: "48%", right: `${7 * scale}%`, transform: "translateY(-50%)" }}>
-              <div style={{ width: `${80 * scale}px`, height: `${80 * scale}px` }} className="rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
-                <img src="/products/c4.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
+            <div data-orbit-item className="absolute flex items-center gap-3 flex-row-reverse" style={{ top: "50%", right: `${17 * scale}%`, transform: "translateY(-50%)" }}>
+              <div style={{ width: `${90 * scale}px`, height: `${80 * scale}px` }} className="overflow-hidden  flex-shrink-0 bg-transparent">
+                <img src="/products/zepto.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
               </div>
               <div className="text-right">
-                <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Bakeries</p>
-                <p className={`${montserrat.className} text-[#5f5146] leading-[1.5]`} style={{ fontWeight: 400, fontSize: `${10 * scale}px`, maxWidth: `${160 * scale}px` }}>
+                {/* <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Zepto</p> */}
+                {/* <p className={`${montserrat.className} text-[#5f5146] leading-[1.5]`} style={{ fontWeight: 400, fontSize: `${10 * scale}px`, maxWidth: `${160 * scale}px` }}>
                   Fresh, high-quality eggs that bring perfection to every bake.
-                </p>
+                </p> */}
               </div>
             </div>
 
             {/* Distributors — bottom right */}
-            <div data-orbit-item className="absolute flex items-center gap-3 flex-row-reverse" style={{ bottom: "10%", right: `${15 * scale}%` }}>
-              <div style={{ width: `${80 * scale}px`, height: `${80 * scale}px` }} className="rounded-full overflow-hidden border-2 border-[#C49A2A]/30 flex-shrink-0 bg-[#edf3de]">
-                <img src="/products/c3.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
+            <div data-orbit-item className="absolute flex items-center gap-3 flex-row-reverse" style={{ bottom: "8%", right: `${25 * scale}%` }}>
+              <div style={{ width: `${90 * scale}px`, height: `${60 * scale}px` }} className="overflow-hidden  flex-shrink-0 bg-transparent">
+                <img src="/products/freshtohome.png" alt="" className="w-full h-full object-cover" onError={(e) => (e.target.style.display = "none")} />
               </div>
               <div className="text-right">
-                <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Distributors</p>
-                <p className={`${montserrat.className} text-[#5f5146] leading-[1.5]`} style={{ fontWeight: 400, fontSize: `${10 * scale}px`, maxWidth: `${160 * scale}px` }}>
+                {/* <p className={`${montserrat.className} uppercase tracking-[0.1em] text-[#241A12]`} style={{ fontWeight: 700, fontSize: `${11 * scale}px` }}>Fresh To Home</p> */}
+                {/* <p className={`${montserrat.className} text-[#5f5146] leading-[1.5]`} style={{ fontWeight: 400, fontSize: `${10 * scale}px`, maxWidth: `${160 * scale}px` }}>
                   Partner with us for a steady supply you can count on.
-                </p>
+                </p> */}
               </div>
             </div>
           </div>
