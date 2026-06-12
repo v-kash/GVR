@@ -194,12 +194,12 @@ export default function LabReportsPage() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#f5f0e7] min-h-screen py-12 sm:py-16 md:py-20"
+      className="relative bg-[#f5f0e7] min-h-screen py-24 sm:py-24 md:py-24"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-16">
         {/* Hero Section */}
         <div className="relative mb-12 md:mb-16">
-          <div className="flex items-center gap-2 mb-6 md:mb-8">
+          <div className="flex items-center gap-2 mb-8 md:mb-8">
             <Link
               href="/"
               className={`${montserrat.className} text-[11px] uppercase tracking-[0.15em] text-[#4D5B2A] font-bold hover:text-[#6E7E45] transition-colors`}
@@ -250,7 +250,7 @@ export default function LabReportsPage() {
         {/* Grid View with PDF Preview */}
         <div ref={gridRef}>
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {[...Array(8)].map((_, i) => (
                 <div
                   key={i}
@@ -286,11 +286,11 @@ export default function LabReportsPage() {
                     onClick={() => window.open(report.file_url, "_blank")}
                     className="group bg-white rounded-xl overflow-hidden shadow-sm border border-[#e8e0d4] hover:shadow-xl hover:border-[#6E7E45]/40 transition-all duration-300 cursor-pointer"
                   >
-                    <div className="relative h-52 overflow-hidden ">
+                    <div className="relative h-18 overflow-hidden ">
                       <img
                         src="/thumnail.jpeg"
                         alt="Report preview"
-                        className="w-full h-full object-contain "
+                        className="w-full h-full object-cover"
                       />
 
                       {/* Hover overlay */}
@@ -329,8 +329,6 @@ export default function LabReportsPage() {
                             {formatDate(report.uploaded_at)}
                           </span>
                         </div>
-
-                        
                       </div>
                     </div>
                   </div>
