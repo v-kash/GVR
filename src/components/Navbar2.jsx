@@ -1,101 +1,92 @@
 "use client";
 
-import { Montserrat } from "next/font/google";
 import { useState, useEffect } from "react";
 import { Phone } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import { Montserrat } from "next/font/google";
 
-const montserrat = Montserrat({
+export const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
-
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Products", href: "/products" },
+  { label: "Lab Reports", href: "/lab-reports" },
   { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    // Read real scroll position immediately on mount —
-    // this runs client-only so no hydration mismatch.
-    setScrolled(window.scrollY > 5);
+    setMounted(true);
 
-    let ticking = false;
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 5);
-          ticking = false;
-        });
-        ticking = true;
-      }
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 5);
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    handleScroll();
 
-  // No `mounted` guard needed — the navbar always renders the same
-  // base JSX; only className values differ based on scrolled state.
-  // The initial server render uses scrolled=false (transparent).
-  // After hydration, useEffect immediately corrects it if needed.
-  // suppressHydrationWarning on the header silences the one-frame
-  // className diff without hiding real bugs.
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <header
-      suppressHydrationWarning
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-200 ${
-        scrolled
+        mounted && scrolled
           ? "bg-[#f5f0e7]/90 backdrop-blur-2xl shadow-[0_4px_24px_rgba(110,126,69,0.08)]"
           : "bg-transparent"
       }`}
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-16">
         <div className="flex h-20 items-center justify-between gap-4">
-
-          {/* ── Logo ─────────────────────────── */}
-          <a href="/" className="flex items-center gap-2 flex-shrink-0">
-            <img
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+            <Image
               src="/GVRLogo.png"
               alt="GVR Fresh Foods"
+              width={180}
+              height={64}
               className="h-16 w-auto object-contain"
+              priority
             />
-          </a>
+          </Link>
 
-          {/* ── Desktop Nav ──────────────────── */}
+          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-10">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
                 href={link.href}
-                suppressHydrationWarning
                 className={`${montserrat.className} text-[11px] uppercase tracking-[0.12em] transition-all duration-300 ${
-                  scrolled
+                  mounted && scrolled
                     ? "text-[#5f5146] hover:text-[#4D5B2A]"
                     : "text-[#241A12]/80 hover:text-[#95af55]"
                 }`}
                 style={{ fontWeight: 500 }}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
-          {/* ── Desktop CTA ──────────────────── */}
+          {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
             <a
               href="https://wa.me/919448453609"
               target="_blank"
               rel="noopener noreferrer"
-              suppressHydrationWarning
               className={`${montserrat.className} inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 text-[10px] uppercase tracking-[0.12em] transition-all duration-300 ${
-                scrolled
+                mounted && scrolled
                   ? "border-[#6E7E45]/30 text-[#4D5B2A] hover:bg-[#6E7E45]/10"
                   : "border-[#241A12]/20 text-[#241A12]/70 hover:border-[#6E7E45]/40 hover:text-[#4D5B2A]"
               }`}
@@ -105,7 +96,7 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* ── Mobile: hamburger ────────────── */}
+          {/* Mobile Hamburger */}
           <div className="lg:hidden flex items-center gap-3 flex-shrink-0">
             <button
               className="flex flex-col gap-[5px] p-1"
@@ -129,11 +120,10 @@ export default function Navbar() {
               />
             </button>
           </div>
-
         </div>
       </div>
 
-      {/* ── Mobile Menu ──────────────────────── */}
+      {/* Mobile Menu */}
       <div
         className={`overflow-hidden transition-all duration-500 lg:hidden ${
           menuOpen ? "max-h-[400px]" : "max-h-0"
@@ -142,7 +132,7 @@ export default function Navbar() {
         <div className="border-t border-[#6E7E45]/15 bg-[#f5f0e7]/97 backdrop-blur-xl px-6 py-6">
           <div className="flex flex-col gap-5">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
@@ -150,7 +140,7 @@ export default function Navbar() {
                 style={{ fontWeight: 500 }}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
 
             {/* Mobile CTAs */}
@@ -162,6 +152,7 @@ export default function Navbar() {
                 <span className="bg-[#3f4a22] px-3.5 flex items-center justify-center">
                   <Phone size={14} className="text-[#f5f0e7]" />
                 </span>
+
                 <span
                   className={`${montserrat.className} flex-1 bg-[#4D5B2A] px-4 py-3 text-center text-[10px] uppercase tracking-[0.12em] text-[#f5f0e7]`}
                   style={{ fontWeight: 500 }}
@@ -169,6 +160,7 @@ export default function Navbar() {
                   Call Now
                 </span>
               </a>
+
               <a
                 href="https://wa.me/919448453609"
                 target="_blank"
