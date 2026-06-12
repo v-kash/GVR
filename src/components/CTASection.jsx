@@ -53,16 +53,16 @@ const testimonials = [
 const stats = [
   {
     icon: "/icons/Person.svg",
-    value: 500,
+    value: 50,
     suffix: "+",
-    display: "500+",
+    display: "50+",
     label: "Happy Partners",
   },
   {
     icon: "/icons/Location.svg",
-    value: 20,
+    value: 78,
     suffix: "+",
-    display: "20+",
+    display: "78+",
     label: "Cities Served",
   },
   {

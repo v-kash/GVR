@@ -4,6 +4,8 @@ import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import Image from "next/image";
+import { Eye, EyeOff } from "lucide-react";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -17,17 +19,23 @@ const montserrat = Montserrat({
 
 export default function AdminLogin() {
   const router = useRouter();
-  const [email,    setEmail]    = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error,    setError]    = useState(null);
-  const [loading,  setLoading]  = useState(false);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
 
   async function handleLogin(e) {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
 
     if (error) {
       setError("Invalid email or password.");
@@ -41,29 +49,23 @@ export default function AdminLogin() {
   }
 
   return (
-    <main className={`${montserrat.className} min-h-screen bg-[#f5f0e7] flex items-center justify-center px-6`}>
+    <main
+      className={`${montserrat.className} min-h-screen bg-[#f5f0e7] flex items-center justify-center px-6`}
+    >
       <div className="w-full max-w-md">
-
         {/* Logo / Brand */}
-        <div className="text-center mb-10">
-          <div
-            className="w-10 h-10 bg-[#6E7E45] mx-auto mb-4"
-            style={{
-              WebkitMaskImage: "url(/icons/HeadLeaf.svg)",
-              maskImage: "url(/icons/HeadLeaf.svg)",
-              WebkitMaskSize: "contain", maskSize: "contain",
-              WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat",
-              WebkitMaskPosition: "center", maskPosition: "center",
-            }}
-          />
-          <h1 className={`${cormorant.className} text-[36px] font-semibold text-[#241A12]`}>
-            Admin{" "}
-            <span className="italic font-medium text-[#6E7E45]">Panel.</span>
-          </h1>
-          <p className={`${montserrat.className} text-[12px] text-[#5f5146] mt-2 uppercase tracking-[0.18em]`}
-            style={{ fontWeight: 500 }}>
-            GVR Farm Foods
-          </p>
+        {/* Logo / Brand */}
+        <div className="text-center mb-4 pr-6">
+          <div className="flex justify-center ">
+            <Image
+              src="/GVRLOGO.png"
+              alt="GVR Fresh Foods Logo"
+              width={160}
+              height={100}
+              className="object-contain"
+              priority
+            />
+          </div>
         </div>
 
         {/* Card */}
@@ -72,7 +74,6 @@ export default function AdminLogin() {
           style={{ border: "1px solid rgba(110,126,69,0.18)" }}
         >
           <form onSubmit={handleLogin} className="flex flex-col gap-5">
-
             {/* Email */}
             <div className="flex flex-col gap-1.5">
               <label
@@ -92,38 +93,62 @@ export default function AdminLogin() {
                   border: "1px solid rgba(110,126,69,0.25)",
                   fontWeight: 400,
                 }}
-                onFocus={(e) => e.target.style.borderColor = "#6E7E45"}
-                onBlur={(e)  => e.target.style.borderColor = "rgba(110,126,69,0.25)"}
+                onFocus={(e) => (e.target.style.borderColor = "#6E7E45")}
+                onBlur={(e) =>
+                  (e.target.style.borderColor = "rgba(110,126,69,0.25)")
+                }
               />
             </div>
 
             {/* Password */}
-            <div className="flex flex-col gap-1.5">
-              <label
-                className={`${montserrat.className} text-[10px] uppercase tracking-[0.2em] text-[#6E7E45]`}
-                style={{ fontWeight: 600 }}
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                placeholder="••••••••"
-                className={`${montserrat.className} w-full px-4 py-3 rounded-[8px] text-[13px] text-[#241A12] bg-[#f5f0e7] outline-none transition-all duration-200 placeholder:text-[#5f5146]/40`}
-                style={{
-                  border: "1px solid rgba(110,126,69,0.25)",
-                  fontWeight: 400,
-                }}
-                onFocus={(e) => e.target.style.borderColor = "#6E7E45"}
-                onBlur={(e)  => e.target.style.borderColor = "rgba(110,126,69,0.25)"}
-              />
-            </div>
+            {/* Password */}
+<div className="flex flex-col gap-1.5">
+  <label
+    className={`${montserrat.className} text-[10px] uppercase tracking-[0.2em] text-[#6E7E45]`}
+    style={{ fontWeight: 600 }}
+  >
+    Password
+  </label>
+
+  <div className="relative">
+    <input
+      type={showPassword ? "text" : "password"}
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      required
+      placeholder="••••••••"
+      className={`${montserrat.className} w-full px-4 py-3 pr-12 rounded-[8px] text-[13px] text-[#241A12] bg-[#f5f0e7] outline-none transition-all duration-200 placeholder:text-[#5f5146]/40`}
+      style={{
+        border: "1px solid rgba(110,126,69,0.25)",
+        fontWeight: 400,
+      }}
+      onFocus={(e) => (e.target.style.borderColor = "#6E7E45")}
+      onBlur={(e) =>
+        (e.target.style.borderColor = "rgba(110,126,69,0.25)")
+      }
+    />
+
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="absolute inset-y-0 right-0 flex items-center pr-4 text-[#5f5146] hover:text-[#6E7E45] transition-colors"
+      aria-label={showPassword ? "Hide password" : "Show password"}
+    >
+      {showPassword ? (
+        <EyeOff size={20} />
+      ) : (
+        <Eye size={20} />
+      )}
+    </button>
+  </div>
+</div>
 
             {/* Error */}
             {error && (
-              <p className={`${montserrat.className} text-[12px] text-red-600`} style={{ fontWeight: 400 }}>
+              <p
+                className={`${montserrat.className} text-[12px] text-red-600`}
+                style={{ fontWeight: 400 }}
+              >
                 {error}
               </p>
             )}

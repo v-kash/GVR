@@ -292,7 +292,7 @@ export default function LabReportsPage() {
   style={{ height: '380px'}}
 >
   <img
-    src="/thumnail.jpeg"
+    src="/thumbnail.jpeg"
     alt="Report preview"
     className="block w-full h-full object-cover"
   />

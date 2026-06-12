@@ -3,6 +3,7 @@
 import Navbar2 from "@/components/Navbar2";
 
 import LabReportsPage from "@/components/labreport/LabReportsPage";
+import Footer from "@/components/Footer";
 
 export default function Page() {
   return (
@@ -10,6 +11,7 @@ export default function Page() {
       
       <Navbar2 />
       <LabReportsPage/>
+      <Footer/>
     </>
   );
 }

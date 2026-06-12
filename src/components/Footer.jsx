@@ -22,10 +22,12 @@ const montserrat = Montserrat({
 });
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Products", href: "#products" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Products", href: "/products" },
+    { label: "Lab Reports", href: "/lab-reports" },
+
+  { label: "Contact", href: "/contact" },
 ];
 
 const products = [
