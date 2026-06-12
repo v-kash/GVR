@@ -286,11 +286,11 @@ export default function LabReportsPage() {
                     onClick={() => window.open(report.file_url, "_blank")}
                     className="group bg-white rounded-xl overflow-hidden shadow-sm border border-[#e8e0d4] hover:shadow-xl hover:border-[#6E7E45]/40 transition-all duration-300 cursor-pointer"
                   >
-                    <div className="relative h-18 overflow-hidden ">
+                    <div className="relative h-15 overflow-hidden ">
                       <img
                         src="/thumnail.jpeg"
                         alt="Report preview"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                       />
 
                       {/* Hover overlay */}
