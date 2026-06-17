@@ -21,7 +21,7 @@ export const homeMetadata = {
     url: `${SITE.url}/`,
     images: [
       {
-        url: "/images/og-home.jpg",
+        url: "/images/og-default.jpg",
         width: 1200,
         height: 630,
         alt: "GVR Farm Foods – Pure Fresh Eggs Everyday",
@@ -31,7 +31,7 @@ export const homeMetadata = {
   twitter: {
     title: PAGE_SEO.home.title,
     description: PAGE_SEO.home.description,
-    images: ["/images/og-home.jpg"],
+    images: ["/images/og-default.jpg"],
   },
 };
 
@@ -51,7 +51,7 @@ export const aboutMetadata = {
     url: `${SITE.url}/about`,
     images: [
       {
-        url: "/images/og-about.jpg",
+        url: "/images/og-default.jpg",
         width: 1200,
         height: 630,
         alt: "About GVR Farm Foods – Our Story and Farm",
@@ -61,7 +61,7 @@ export const aboutMetadata = {
   twitter: {
     title: PAGE_SEO.about.title,
     description: PAGE_SEO.about.description,
-    images: ["/images/og-about.jpg"],
+    images: ["/images/og-default.jpg"],
   },
 };
 
@@ -81,7 +81,7 @@ export const productsMetadata = {
     url: `${SITE.url}/products`,
     images: [
       {
-        url: "/images/og-products.jpg",
+        url: "/images/og-defaults.jpg",
         width: 1200,
         height: 630,
         alt: "GVR Farm Foods Products – Eggs and Dry Fish",
@@ -91,7 +91,7 @@ export const productsMetadata = {
   twitter: {
     title: PAGE_SEO.products.title,
     description: PAGE_SEO.products.description,
-    images: ["/images/og-products.jpg"],
+    images: ["/images/og-defaults.jpg"],
   },
 };
 
@@ -111,7 +111,7 @@ export const contactMetadata = {
     url: `${SITE.url}/contact`,
     images: [
       {
-        url: "/images/og-contact.jpg",
+        url: "/images/og-default.jpg",
         width: 1200,
         height: 630,
         alt: "Contact GVR Farm Foods – Bulk Orders and Partnerships",
@@ -121,6 +121,6 @@ export const contactMetadata = {
   twitter: {
     title: PAGE_SEO.contact.title,
     description: PAGE_SEO.contact.description,
-    images: ["/images/og-contact.jpg"],
+    images: ["/images/og-default.jpg"],
   },
 };

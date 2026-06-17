@@ -181,12 +181,12 @@ export default function LocationSection() {
                 <p
                   className={`${montserrat.className} text-[13px] sm:text-[13px] md:text-[14px] text-[#f5f0e7] font-bold`}
                 >
-                  Pudukkottai, Tamil Nadu
+                  Krishnagiri, Hosur
                 </p>
                 <p
                   className={`${montserrat.className} text-[11px] sm:text-[11px] md:text-[12px] text-[#f5f0e7]/60 mt-0.5 font-normal`}
                 >
-                  Karnataka, India
+                  Tamil Nadu, India
                 </p>
               </div>
             </div>

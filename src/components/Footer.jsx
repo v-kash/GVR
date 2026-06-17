@@ -4,7 +4,6 @@ import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import { Phone, MapPin, Mail, ArrowRight } from "lucide-react";
 import { useRef } from "react";
 
-
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -25,7 +24,7 @@ const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Products", href: "/products" },
-    { label: "Lab Reports", href: "/lab-reports" },
+  { label: "Lab Reports", href: "/lab-reports" },
 
   { label: "Contact", href: "/contact" },
 ];
@@ -329,7 +328,7 @@ export default function Footer() {
               </div>
 
               {/* Location */}
-              <div   data-contact-item className=" flex items-start gap-3">
+              <div data-contact-item className=" flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full bg-[#4D5B2A]/40 border border-[#6E7E45]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <MapPin size={13} className="text-[#c5db8e]" />
                 </div>
@@ -344,7 +343,9 @@ export default function Footer() {
                     className={`${montserrat.className} text-[13px] text-[#f5f0e7]/80 leading-[1.6]`}
                     style={{ fontWeight: 400 }}
                   >
-                    Karnataka, India
+                    SF No 6/2A1, Plot No 6, Upkar Royal Garden, Sector I, Hosur
+                    Industrial Complex, Krishnagiri, Hosur, Tamil Nadu, India –
+                    635126
                   </p>
                 </div>
               </div>

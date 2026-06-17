@@ -259,7 +259,6 @@ export default function FounderMessage() {
             >
               <div className="h-px w-16 bg-[#C49A2A]/50" />
               <div
-                data-divider-leaf
                 className="w-7 h-7 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-9 xl:h-9 bg-[#6E7E45] opacity-80"
                 style={{
                   WebkitMaskImage: "url(/icons/HeadLeaf.svg)",
@@ -333,7 +332,7 @@ export default function FounderMessage() {
             >
               <img
                 data-founder-image
-                src="/about/ceo.png"
+                src="/gvr.png"
                 alt="Founder"
                 className="w-full h-full object-cover"
                 style={{ objectPosition: "75% center" }}
@@ -351,10 +350,9 @@ export default function FounderMessage() {
               <div className="overflow-hidden rounded-[4px] h-full w-full">
                 <img
                   data-founder-image
-                  src="/about/ceo.png"
+                  src="/gvr.png"
                   alt="Founder"
-                  className="w-full h-full object-cover"
-                  style={{ objectPosition: "75% center" }}
+                  className="w-full h-full object-contain"
                 />
               </div>
             </div>

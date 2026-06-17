@@ -245,7 +245,8 @@ export default function ContactSection() {
                 <ContactItem
                   icon={<MapPin size={18} />}
                   value="GVR Eggs Farm"
-                  subtitle="Tamil Nadu, India"
+                  subtitle="SF No 6/2A1, Plot No 6, Upkar Royal Garden, Sector I, Hosur Industrial
+Complex, Krishnagiri, Hosur, Tamil Nadu, India – 635126"
                 />
               </div>
 

@@ -665,7 +665,6 @@ export default function AboutSection() {
 
             {/* LEAF DECORATION */}
             <img
-              ref={collageLeafRef}
               src="/leaf-decoration.png"
               alt=""
               className="
