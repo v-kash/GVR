@@ -8,12 +8,11 @@
 // H2s are section-level. H3s are item-level inside sections.
 // ============================================================
 
-
 // ─────────────────────────────────────────────────────────────
 // HOME PAGE  /
 // ─────────────────────────────────────────────────────────────
 //
-// <h1>Pure Fresh Eggs Everyday – GVR Farm Foods, Karnataka</h1>
+// <h1>Pure Fresh Eggs Everyday – GVR Farm Foods, Tamil Nadu</h1>
 //
 //   <h2>From Our Farm, To Your Table</h2>
 //     (stats: 1000+ customers, 30M+ eggs, 100+ varieties, 30+ districts)
@@ -46,7 +45,6 @@
 //     (testimonials — each name as <h3> optional)
 //
 
-
 // ─────────────────────────────────────────────────────────────
 // ABOUT PAGE  /about
 // ─────────────────────────────────────────────────────────────
@@ -67,7 +65,6 @@
 //
 //   <h2>A Message from Our Founder</h2>
 //
-
 
 // ─────────────────────────────────────────────────────────────
 // PRODUCTS PAGE  /products
@@ -101,7 +98,6 @@
 //     <h3>Do you deliver dry fish as well?</h3>
 //
 
-
 // ─────────────────────────────────────────────────────────────
 // CONTACT PAGE  /contact
 // ─────────────────────────────────────────────────────────────
@@ -120,7 +116,6 @@
 //     (reuse FAQ component from products page)
 //
 
-
 // ─────────────────────────────────────────────────────────────
 // IMPLEMENTATION EXAMPLE (Home Page Hero)
 // ─────────────────────────────────────────────────────────────
@@ -129,7 +124,7 @@
 // <h1>Pure Fresh Eggs Everyday</h1>
 //
 // ✅ CORRECT — primary keyword in H1:
-// <h1>Pure Fresh Eggs Everyday – GVR Farm Foods Karnataka</h1>
+// <h1>Pure Fresh Eggs Everyday – GVR Farm Foods Tamil Nadu</h1>
 //
 // ❌ WRONG — skipping heading levels:
 // <h1>Our Products</h1>

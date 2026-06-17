@@ -9,8 +9,6 @@ const libre = Libre_Baskerville({
   weight: ["400", "700"],
 });
 
-
-
 // ── Viewport ──────────────────────────────────────────────
 export const viewport = {
   width: "device-width",
@@ -46,7 +44,7 @@ export const metadata = {
         url: "/images/og-default.jpg",
         width: 1200,
         height: 630,
-        alt: "GVR Farm Foods – Farm Fresh Eggs and Dry Fish from Karnataka",
+        alt: "GVR Farm Foods – Farm Fresh Eggs and Dry Fish from Tamil Nadu",
       },
     ],
   },
@@ -96,7 +94,7 @@ export const metadata = {
   generator: "Next.js",
   referrer: "origin-when-cross-origin",
   keywords: [
-    "farm fresh eggs Karnataka",
+    "farm fresh eggs Tamil Nadu",
     "buy eggs online",
     "country eggs",
     "brown eggs",
@@ -104,7 +102,7 @@ export const metadata = {
     "duck eggs",
     "quail eggs",
     "premium dry fish",
-    "egg supplier Karnataka",
+    "egg supplier Tamil Nadu",
     "GVR farm foods",
     "bulk egg supply",
   ],

@@ -30,19 +30,27 @@ export function LocalBusinessSchema() {
     email: SITE.email,
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Karnataka",
-      addressRegion: "Karnataka",
+      addressLocality: "Tamil Nadu",
+      addressRegion: "Tamil Nadu",
       addressCountry: "IN",
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: "15.3173",   // 🔁 Replace with exact lat/long
+      latitude: "15.3173", // 🔁 Replace with exact lat/long
       longitude: "75.7139",
     },
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ],
         opens: "06:00",
         closes: "20:00",
       },
@@ -53,7 +61,7 @@ export function LocalBusinessSchema() {
     paymentAccepted: "Cash, UPI, Bank Transfer",
     areaServed: {
       "@type": "State",
-      name: "Karnataka",
+      name: "Tamil Nadu",
     },
     sameAs: [
       // 🔁 Add social URLs when ready
@@ -78,14 +86,19 @@ export function LocalBusinessSchema() {
     ],
     founder: {
       "@type": "Person",
-      name: "GVR Founder",   // 🔁 Replace with actual name
+      name: "GVR Founder", // 🔁 Replace with actual name
       jobTitle: "Founder & CEO",
     },
-    foundingDate: "2020",    // 🔁 Replace with actual year
+    foundingDate: "2020", // 🔁 Replace with actual year
     knowsAbout: [
-      "Farm Fresh Eggs", "Country Eggs", "Brown Eggs",
-      "Kadaknath Eggs", "Duck Eggs", "Quail Eggs",
-      "Premium Dry Fish", "Bulk Egg Supply",
+      "Farm Fresh Eggs",
+      "Country Eggs",
+      "Brown Eggs",
+      "Kadaknath Eggs",
+      "Duck Eggs",
+      "Quail Eggs",
+      "Premium Dry Fish",
+      "Bulk Egg Supply",
     ],
   };
 
@@ -96,7 +109,6 @@ export function LocalBusinessSchema() {
     />
   );
 }
-
 
 // ─────────────────────────────────────────────────────────────
 // 2. WEBSITE SCHEMA (enables Sitelinks Searchbox)
@@ -132,7 +144,6 @@ export function WebSiteSchema() {
   );
 }
 
-
 // ─────────────────────────────────────────────────────────────
 // 3. PRODUCTS SCHEMA
 //    Use on: Products page
@@ -162,7 +173,7 @@ export function ProductsSchema() {
             },
             areaServed: {
               "@type": "State",
-              name: "Karnataka",
+              name: "Tamil Nadu",
             },
           },
           category: product.category,
@@ -179,7 +190,6 @@ export function ProductsSchema() {
     </>
   );
 }
-
 
 // ─────────────────────────────────────────────────────────────
 // 4. FAQ SCHEMA (pulls featured snippets from Google)
@@ -206,7 +216,6 @@ export function FAQSchema() {
     />
   );
 }
-
 
 // ─────────────────────────────────────────────────────────────
 // 5. BREADCRUMB SCHEMA
@@ -238,7 +247,6 @@ export function BreadcrumbSchema({ items }) {
 //   { name: "Products", url: "https://www.gvrfreshfoods.com/products" },
 // ]} />
 
-
 // ─────────────────────────────────────────────────────────────
 // 6. ABOUT PAGE SCHEMA
 //    Use on: About page
@@ -251,14 +259,24 @@ export function AboutPageSchema() {
     url: `${SITE.url}/about`,
     name: "About GVR Farm Foods",
     description:
-      "GVR Farm Foods started as a small family farm and has grown into a trusted brand delivering farm-fresh eggs and dry fish across Karnataka with honesty, care, and quality.",
+      "GVR Farm Foods started as a small family farm and has grown into a trusted brand delivering farm-fresh eggs and dry fish across Tamil Nadu with honesty, care, and quality.",
     isPartOf: { "@id": `${SITE.url}/#website` },
     about: { "@id": `${SITE.url}/#organization` },
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: `${SITE.url}/` },
-        { "@type": "ListItem", position: 2, name: "About", item: `${SITE.url}/about` },
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${SITE.url}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "About",
+          item: `${SITE.url}/about`,
+        },
       ],
     },
   };
@@ -270,7 +288,6 @@ export function AboutPageSchema() {
     />
   );
 }
-
 
 // ─────────────────────────────────────────────────────────────
 // 7. CONTACT PAGE SCHEMA
@@ -284,13 +301,23 @@ export function ContactPageSchema() {
     url: `${SITE.url}/contact`,
     name: "Contact GVR Farm Foods",
     description:
-      "Contact GVR Farm Foods for bulk egg orders, dry fish supply, and business partnerships across Karnataka.",
+      "Contact GVR Farm Foods for bulk egg orders, dry fish supply, and business partnerships across Tamil Nadu.",
     isPartOf: { "@id": `${SITE.url}/#website` },
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: `${SITE.url}/` },
-        { "@type": "ListItem", position: 2, name: "Contact", item: `${SITE.url}/contact` },
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${SITE.url}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Contact",
+          item: `${SITE.url}/contact`,
+        },
       ],
     },
   };

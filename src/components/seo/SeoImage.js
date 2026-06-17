@@ -8,20 +8,23 @@ import Image from "next/image";
 // ── Alt Text for All Key Images ──────────────────────────────
 // Use these exact strings on the corresponding images
 export const IMAGE_ALTS = {
-  hero: "Farm fresh eggs in a basket with a rooster – GVR Farm Foods Karnataka",
+  hero: "Farm fresh eggs in a basket with a rooster – GVR Farm Foods Tamil Nadu",
   heroEggs: "Pure fresh eggs everyday delivered from GVR Farm Foods",
   countryEggs: "Country eggs from naturally raised hens – GVR Farm Foods",
-  brownEggs: "Farm fresh brown eggs with rich flavor – GVR Farm Foods Karnataka",
+  brownEggs:
+    "Farm fresh brown eggs with rich flavor – GVR Farm Foods Tamil Nadu",
   whiteEggs: "Fresh white eggs for daily nutrition – GVR Farm Foods",
-  duckEggs: "Premium duck eggs from GVR Farm Foods Karnataka",
-  kadaknathEggs: "Kadaknath eggs – rare indigenous breed eggs from GVR Farm Foods",
+  duckEggs: "Premium duck eggs from GVR Farm Foods Tamil Nadu",
+  kadaknathEggs:
+    "Kadaknath eggs – rare indigenous breed eggs from GVR Farm Foods",
   quailEggs: "Quail eggs nutrient-dense farm fresh – GVR Farm Foods",
-  dryFish: "Premium dry fish naturally dried with authentic flavor – GVR Farm Foods",
-  eggsCrate: "GVR Farm Foods bulk egg crate for wholesale supply Karnataka",
-  farmPhoto: "GVR farm in Karnataka – hens in natural free-range environment",
-  founderPhoto: "GVR Farm Foods founder – family farm started in Karnataka",
+  dryFish:
+    "Premium dry fish naturally dried with authentic flavor – GVR Farm Foods",
+  eggsCrate: "GVR Farm Foods bulk egg crate for wholesale supply Tamil Nadu",
+  farmPhoto: "GVR farm in Tamil Nadu – hens in natural free-range environment",
+  founderPhoto: "GVR Farm Foods founder – family farm started in Tamil Nadu",
   farmSunrise: "GVR farm at sunrise – hens roaming naturally",
-  farmCollection: "Daily egg collection at GVR Farm Foods Karnataka",
+  farmCollection: "Daily egg collection at GVR Farm Foods Tamil Nadu",
   qualityCheck: "FSSAI quality check process at GVR Farm Foods",
   packaging: "Hygienic egg packaging at GVR Farm Foods",
   delivery: "GVR Farm Foods delivery van – fresh eggs delivered daily",
